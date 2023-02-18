@@ -1,3 +1,5 @@
+Python
+----------------------------------------------------------------------
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         dic = {}
@@ -5,3 +7,22 @@ class Solution:
             if target-v in dic :
                 return [dic[target-v],i]
             dic[v]=i
+
+C
+----------------------------------------------------------------------
+int* twoSum(int* nums, int numsSize, int target, int* returnSize){
+    int count=0;
+    int next=1; 
+    *returnSize = 2;
+    returnSize = (int*)malloc(sizeof(int) * 2);
+    for(count=0;count<numsSize;count++){
+        for(next=1;next<numsSize  && next != count;next++){
+            if(nums[count]+nums[next] == target){
+                returnSize[0]=count;
+                returnSize[1]=next;    
+                return returnSize;
+            }
+        }
+    }
+    return returnSize;
+}
