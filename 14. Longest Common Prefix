@@ -1,0 +1,15 @@
+char * longestCommonPrefix(char ** strs, int strsSize){
+    char *temp;
+    int i=0;
+    int j=0;
+    temp=strs[0];
+    for(i=1;i<strsSize;i++){
+        j=0;
+        while(temp[j] && strs[i][j] && temp[j] ==strs[i][j]){
+            j++;
+            //直接截取到temp读取的地方最后加 '\0'
+        }
+        temp[j]='\0';//第一回合flow 第二回合就剩下fl
+    }
+    return temp;
+}
