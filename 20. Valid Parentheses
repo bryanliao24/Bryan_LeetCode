@@ -1,0 +1,40 @@
+bool isValid(char * s){
+    char *stack;
+    int top=0;
+    char c;
+    
+    int l = strlen(s);
+    stack = malloc(l * sizeof(char));
+
+    while(c=*s ++){
+        switch(c){
+            case'(':
+            case'{':
+            case'[':
+                stack[top++]=c;
+                break;
+            case')':
+                if(top==0 || stack[--top]!='('){
+                    free(stack);
+                    return false;
+                }
+                break;
+            case'}':
+                if(top==0 || stack[--top]!='{'){
+                    free(stack);
+                    return false;
+                }
+                break;
+            case']':
+                if(top==0 || stack[--top]!='['){
+                    free(stack);
+                    return false;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    free(stack);
+    return top == 0 ? true : false;
+}
