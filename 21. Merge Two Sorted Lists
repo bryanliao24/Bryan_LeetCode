@@ -1,0 +1,32 @@
+struct ListNode* mergeTwoLists(struct ListNode* list1, struct ListNode* list2){     
+    if(list1==NULL)return list2;
+    else if(list2==NULL)return list1;
+    
+    struct ListNode *p, *merge;
+    if(list1 -> val <= list2 -> val){//先比较以此l1和l2的头
+        p=list1;
+        list1=list1->next;
+    }
+    else{
+        p=list2;
+        list2=list2->next;
+    }
+    merge=p;//使merge指向p的头
+
+    while(list1 && list2){//遍历l1和l2 
+        if(list1->val <= list2->val){
+            p -> next = list1;
+            list1=list1->next;//指向下一个
+        }
+        else{
+            p -> next = list2;
+            list2=list2->next;//指向下一个
+        }
+        p ->next->next=NULL;
+        p = p->next;
+    } 
+    if(list1)p -> next = list1;//使p->next指向剩下的未完结的list的头
+    if(list2)p -> next = list2; 
+
+    return merge;
+}
