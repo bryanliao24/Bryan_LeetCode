@@ -1,0 +1,24 @@
+int* plusOne(int* digits, int digitsSize, int* returnSize){
+    //returnSize = (int*)malloc(sizeof(int) * 2);
+    int i=digitsSize-1;
+    while(i>=0){
+        if(digits[i]<9){
+            digits[i]++;
+            *returnSize = digitsSize;
+            return digits;
+        }
+        else{
+            digits[i]=0;
+            i-=1;
+        }
+    }
+    //如果全部都是9 多一个1在最前面
+    int* array = (int*)malloc((digitsSize+1) * sizeof(int));
+    array[0]=1;
+    int j;
+    for(j=1;j< digitsSize+1;j++){
+        array[j]=digits[j-1];
+    }
+    *returnSize = digitsSize+1;
+    return array;
+}
