@@ -1,13 +1,11 @@
-//Binary search 分成min,temp,max三部分
-//如果temp^2>x就代表temp右邊平方皆>x都可捨棄
+// Binary search 分成min,temp,max三部分
+// 如果temp^2>x就代表temp右邊平方皆>x都可捨棄
 int mySqrt(int x){
-    int min,temp,max;
-    min=0;
-    max=x;
     if(x==0)return 0;
     if(x==1)return 1;
-    while(max-min!=0){
-        temp=(max+1)/2;
+    double min=0,max=x,temp;
+    while((int)max-(int)min!=0){
+        temp=(max+min)/2;
         if(temp*temp>x){
             max=temp;
         }
@@ -15,8 +13,8 @@ int mySqrt(int x){
             min=temp;
         }
         else{
-            return temp;
+            return (int)temp;
         }
     }
-    return temp;
+    return (int)temp;
 }
