@@ -1,0 +1,15 @@
+斐波那契数列
+--------------------------------
+int climbStairs(int n){
+    int i;
+    int sum[45];
+    sum[0]=1;
+    sum[1]=2;
+    if(n==1)return sum[0];
+    if(n==2)return sum[1];
+    for(i=2;i<n;i++){
+        sum[i]=sum[i-2]+sum[i-1];
+    }
+    return sum[i-1];
+}
+
