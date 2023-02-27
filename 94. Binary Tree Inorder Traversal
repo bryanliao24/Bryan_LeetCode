@@ -1,0 +1,22 @@
+//Preorder traversal (前序遍歷) 需先拜訪父節點再拜訪左右子節點
+//Inorder traversal (中序遍歷) 會先拜訪左子節點，再拜訪父節點，最後拜訪右子節點 
+//Postorder traversal (後序遍歷) 需先拜訪左右子節點，最後拜訪父節點
+void inorder(struct TreeNode *root, int *ret, int *index){
+    if(root==NULL)return;//判断还有没有左右节点
+    inorder(root->left,ret,index);
+    //(*index)++;
+    ret[*index]=root->val;
+    (*index)++;
+    //*index+=1;
+    inorder(root->right,ret,index);
+}
+
+int* inorderTraversal(struct TreeNode* root, int* returnSize){
+    //int *ret=(int*)malloc(sizeof(int)* (*returnSize));
+    int *ret=(int*)malloc(sizeof(int)* 100);
+    *returnSize=0;
+    inorder(root,ret,returnSize);
+    return ret;
+}
+
+
