@@ -1,0 +1,43 @@
+//把nums2直接加入到nums1 然后bubble sort
+---------------------------------------------------------------------
+void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n){
+    int i=0;
+    int j=0;
+    int len=m+n;
+    for(i=m;i<len;i++){
+        nums1[i]=nums2[j];
+        j++;
+    }
+    int k,l,temp;
+    for(k=0;k<len-1;++k){
+        for(l=0;l<len-1-k;++l){
+            if(nums1[l]>nums1[l+1]){
+                temp = nums1[l];
+				nums1[l] = nums1[l + 1];
+				nums1[l + 1] = temp;
+            }
+        }
+    }
+    return nums1;
+}
+
+//直接从后面大到小比较排序
+标准C
+------------------------------------------------
+void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n){
+    int i=m-1,j=n-1,k=m+n-1;
+    //从末端 后面开始比较大小 只要有一个list全部放进去就结束
+    while(i>=0 && j>=0){
+        if(nums1[i]>nums2[j]){
+            nums1[k--]=nums1[i--];
+        }
+        else{
+            nums1[k--]=nums2[j--];
+        }
+    }
+    //如果nums1结束则吧nums2填入后面
+    while(j>=0){
+        nums1[k--]=nums2[j--];
+    }
+    return nums1;
+}
