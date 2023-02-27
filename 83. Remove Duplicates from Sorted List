@@ -1,0 +1,20 @@
+//当前的点如果与指向下一个点相同 则直接指向下下一个点 free下一个点
+
+struct ListNode* deleteDuplicates(struct ListNode* head){
+    if(head){
+        struct ListNode *current,*freenext;
+        current = head;
+        while(current->next){
+            //若相同，则直接指向下下个点
+            if(current->val==current ->next ->val){
+                freenext= current ->next;
+                current ->next=freenext->next;
+                free(freenext);
+            }
+            else{
+                current=current ->next;
+            }
+        }
+    }
+    return head;
+}
