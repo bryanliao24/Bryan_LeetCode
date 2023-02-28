@@ -1,0 +1,11 @@
+bool isMirror(struct TreeNode* rootleft,struct TreeNode* rootright){
+    if(rootleft==NULL && rootright==NULL)return true;
+    else if(rootleft==NULL || rootright==NULL)return false;
+
+    return (rootleft->val == rootright->val) && isMirror(rootleft->left, rootright->right) && isMirror(rootleft->right, rootright->left);
+
+}
+bool isSymmetric(struct TreeNode* root){
+    if(root==NULL)return true;
+    return isMirror(root->left, root->right);
+}
