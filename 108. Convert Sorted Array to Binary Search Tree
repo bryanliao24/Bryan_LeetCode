@@ -1,0 +1,13 @@
+//将数组分成左右两半，左边的构建左子树，右边的构建右子树，中间元素构造根节点
+struct TreeNode* sortedArrayToBST(int* nums, int numsSize){
+    //递归终止条件 numsSize==0
+    if(numsSize==0)return NULL;
+    int mid=0;
+    mid=numsSize/2;
+    struct TreeNode *root= (struct TreeNode*)malloc(sizeof(struct TreeNode)*numsSize);
+    root -> val =nums[mid];
+    root -> left = sortedArrayToBST(nums,mid);//(起始点，终点)
+    root -> right = sortedArrayToBST(nums+mid+1,numsSize-mid-1);
+
+    return root;
+}
