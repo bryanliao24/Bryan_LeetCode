@@ -1,0 +1,20 @@
+//运用code 104. 计算树高度
+//height-balanced左右子树的高度相差不超过1 
+int height(struct TreeNode* root){
+    if(root==NULL)return true;
+    return 1+fmax(height(root->left),height(root->right));
+}
+
+bool isBalanced(struct TreeNode* root){
+    if(root==NULL)return true;
+    //if(root->val != 0 && root -> left== NULL && root -> right== NULL)return true;
+    int rootleft,rootright;
+    rootleft=height(root->left);
+    rootright=height(root->right);
+    int diff=abs(rootleft-rootright);
+    if(diff>1){
+        return false;
+    }
+    //看剩下的节点是否满足height balanced
+    return isBalanced(root->left) && isBalanced(root->right);
+}
