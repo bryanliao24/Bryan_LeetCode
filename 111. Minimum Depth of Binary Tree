@@ -1,0 +1,34 @@
+class Solution(object):
+    def minDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if root == None:
+            return 0
+
+        depth=0
+        q=[root]
+        while len(q) !=0:
+            depth+=1
+            for i in range(0,len(q)):
+                if not q[0].left and not q[0].right:
+                    return depth
+                if q[0].left:
+                    q.append(q[0].left)
+                if q[0].right:
+                    q.append(q[0].right)
+                del q[0]
+        return depth
+
+C
+--------------------------------------
+
+int minDepth(struct TreeNode* root){
+    if(root==NULL)return 0;
+    if(root->left==NULL)return 1+minDepth(root->right);
+    else if(root->right==NULL)return 1+minDepth(root->left); 
+    else{
+        return 1+fmin(minDepth(root->left),minDepth(root->right));
+    }
+}
