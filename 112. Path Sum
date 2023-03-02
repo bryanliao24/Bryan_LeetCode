@@ -1,0 +1,19 @@
+
+bool hasPathSum(struct TreeNode* root, int targetSum){
+    if(root==NULL)return false;
+    if(root->left == NULL && root->right == NULL){
+        targetSum=targetSum- root->val;
+        if(targetSum==0)return true;
+        else return false;
+    }
+    else if(root->left == NULL){
+        targetSum=targetSum-root->val;
+        return hasPathSum(root->right,targetSum);
+    }
+    else if(root->right == NULL){
+        targetSum=targetSum-root->val;
+        return hasPathSum(root->left,targetSum);
+    }
+    targetSum=targetSum-root->val;
+    return hasPathSum(root->left,targetSum) || hasPathSum(root->right,targetSum);
+}
