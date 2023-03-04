@@ -1,0 +1,29 @@
+    int maxProfit(int* prices, int pricesSize){
+    if(pricesSize<=0)return 0;
+    int i;
+    int price=prices[0];//price为找到最小的数
+    int profit=0;
+    for(i=1;i<pricesSize;i++){
+        if(prices[i]<price){
+            price=prices[i];//此时price==1
+        }
+        if(profit<prices[i]-price){
+            profit=prices[i]-price;
+        }
+    }
+    return profit;
+}
+    
+    -----------------------------------------------
+    //暴力解：判断最佳profit
+    int k,j;
+    int profit=0;
+    //后面减前面
+    for(j=pricesSize-1;j>0;j--){
+        for(k=j-1;k>=0;k--){
+            if(prices[j]-prices[k] > profit){
+                profit=prices[j]-prices[k];
+            }
+        }
+    }
+    return profit;
