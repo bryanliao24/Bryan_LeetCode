@@ -1,0 +1,21 @@
+//XOR:如果两个相应位相同，则结果为0，否则为1。
+//即：0^0=0， 1^0=1， 0^1=1， 1^1=0
+//A XOR 0 = A
+int singleNumber(int* nums, int numsSize){
+    int i,ret=0;
+    for(i=0;i<numsSize;i++){
+        ret=nums[i]^ret;
+    }
+    
+    return ret;
+}
+
+--------------------------------------
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+       
+        ans = 0
+        for n in nums:
+            ans ^= n
+        
+        return ans
