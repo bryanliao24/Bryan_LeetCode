@@ -1,0 +1,43 @@
+int pivotIndex(int* nums, int numsSize){
+    int i=0;
+    int left=0;
+    int sum=0;
+    
+    //先求和
+    for(i=0;i<numsSize;i++){
+        sum += nums[i];
+    }
+    
+    for(i=0;i<numsSize;i++){
+        //如果左边总合=全部-左边总合(相当于右边总合)-pivot的值
+        //如果刚好是第一个数直接返回pivot=0
+        if(left == sum-left-nums[i]){
+           return i;
+        }
+        else{
+            left=left+nums[i];
+        }
+    }
+    return -1;
+}
+
+--------------------------------------------------
+class Solution(object):
+    def pivotIndex(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        n=len(nums)
+        sum=0
+        left=0
+        for i in range(n):
+            sum = sum + nums[i]
+        
+        for i in range(n):
+            if left==sum-left-nums[i]:
+                return i
+            else:
+                left= left +nums[i]
+        return -1
+        
