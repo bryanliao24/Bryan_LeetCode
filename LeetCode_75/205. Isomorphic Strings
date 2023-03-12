@@ -1,0 +1,41 @@
+//设两个阵列255 因ascii code然后对数字编码
+// egg = 在e对应ascii的地方=1 g=2
+// add = 在a对应ascii的地方=1 d=2 重复不动
+// 若abc -> a=1 b=2 c=3 所以不同 
+bool isIsomorphic(char * s, char * t){
+    int ston[256]={'\0'},tton[256]={'\0'};
+    int len=strlen(s);
+    int i=0;
+    for(i=0;i<len;i++){
+        if(ston[s[i]]=='\0'){
+            ston[s[i]]=i;
+        }
+        if(tton[t[i]]=='\0'){
+            tton[t[i]]=i;
+        }
+    }
+    for(i=0;i<len;i++){
+        if(ston[s[i]]!=tton[t[i]])return false;
+    }
+    return true;
+}
+
+-----------------------------------------------------------------
+class Solution(object):
+    def isIsomorphic(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        d={}
+        for i in range(len(s)):
+            if s[i] not in d: 
+                if t[i] not in d.values():
+                    d[s[i]]=t[i]
+                else:
+                    return False
+            else:
+                if d[s[i]]!=t[i]:
+                    return False        
+        return True
