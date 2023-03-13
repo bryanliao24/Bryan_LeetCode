@@ -1,0 +1,35 @@
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+#第一個pointer稱作fast，用來遍歷的。
+#第二個pointer稱作slow，用來到中間node的。
+#因為是取中間node，每當fast往前走2個，slow就能往前走1個。
+
+class Solution(object):
+    def middleNode(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        slow=fast=head
+        while(fast and fast.next):
+            slow=slow.next
+            fast=fast.next.next
+           
+        return slow
+        
+-----------------------------------------------
+struct ListNode* middleNode(struct ListNode* head){
+    struct ListNode* slow=head;
+    struct ListNode* fast=head;
+
+    while(fast!=NULL && fast->next!=NULL){
+        slow=slow->next;
+        fast=fast->next->next;
+    }
+    return slow;
+
+}
