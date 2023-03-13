@@ -1,0 +1,46 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode *detectCycle(struct ListNode *head) {
+    if(head == NULL || head->next == NULL)return NULL;
+    struct ListNode *onestep=head;
+    struct ListNode *twostep=head;
+
+    while(head->next != NULL){
+        if(twostep == NULL || twostep->next == NULL)return NULL;
+        onestep = onestep->next;
+        twostep = twostep->next->next;
+
+        if(onestep==twostep)break;//第一次相遇
+    }
+    //若第一次相遇在head头 直接返回
+    onestep=head;
+    //若并非再头 接着一起走到相遇
+    while(onestep!=twostep){
+        onestep = onestep->next;
+        twostep = twostep->next;
+    }
+   
+    return onestep;
+}
+
+-----------------------------------------------------------
+#把走过的点存到set内 如果重复 则直接返回节点
+class Solution(object):
+    def detectCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if not head:return None
+        visit=set()
+        while head:
+            if head in visit:
+                return head
+            visit.add(head)
+            head=head.next
+        return None
