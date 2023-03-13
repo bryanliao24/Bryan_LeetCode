@@ -29,7 +29,11 @@ struct ListNode *detectCycle(struct ListNode *head) {
 }
 
 -----------------------------------------------------------
+#set集合 和 list数组 不同
+#set 用add和remove增减
+#list用append和pop增减
 #把走过的点存到set内 如果重复 则直接返回节点
+
 class Solution(object):
     def detectCycle(self, head):
         """
