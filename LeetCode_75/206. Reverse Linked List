@@ -19,9 +19,9 @@ struct ListNode* reverseList(struct ListNode* head){
     struct ListNode* prev=NULL;
     struct ListNode* next=NULL;
     while(head!=NULL){
-        next = head->next;
-        head->next = prev;
-        prev = head;
+        next = head->next; //先保存下一個節點
+        head->next = prev; //斷開下一個節點指向前一個
+        prev = head;  
         head = next;
     }
     return prev;
