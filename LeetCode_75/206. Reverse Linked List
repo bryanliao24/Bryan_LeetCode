@@ -1,0 +1,28 @@
+#head：指向自己 → 指向下一個（head.next）
+#head.next：指向前一個（prev）
+#prev：指向前一個 → 指向自己（head）
+class Solution(object):
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        prev = None
+        while head:
+            next = head.next
+            head.next = prev
+            prev = head
+            head = next
+        return prev
+---------------------------------------------------------------
+struct ListNode* reverseList(struct ListNode* head){
+    struct ListNode* prev=NULL;
+    struct ListNode* next=NULL;
+    while(head!=NULL){
+        next = head->next;
+        head->next = prev;
+        prev = head;
+        head = next;
+    }
+    return prev;
+}
