@@ -1,0 +1,74 @@
+int *ret;
+int idx;
+
+void append_array(int val) {
+    ret[idx] = val;
+    idx += 1;
+}
+void run_preorder(struct Node* p) {
+    int length = p -> numChildren;
+    int i;
+    if (p != NULL) {
+        append_array(p ->val);    // 先處理自己
+        if (length > 0) {         // 再依序處理自己的子階
+            for (i=0; i<length; i++) {
+                run_preorder(p -> children[i]);
+            }
+        }
+    }
+}
+
+int* preorder(struct Node* root, int* returnSize) {
+    ret = (int*)malloc(sizeof(int)*10000);
+    idx=0;
+
+    if (root == NULL) {
+        *returnSize = 0;
+        return NULL;
+    }
+   
+    run_preorder(root);
+    *returnSize = idx;
+    return ret;
+}
+
+-------------------------------------------------------------------------------
+Python Recursive
+class Solution(object):
+    def preorder(self, root):
+        """
+        :type root: Node
+        :rtype: List[int]
+        """
+        ret=[]
+        def preorderRecursive(root):
+            if root == None:
+                return None
+            ret.append(root.val)
+            for child in root.children:
+                preorderRecursive(child)
+
+        preorderRecursive(root)         
+        return ret
+-------------------------------------------------------------------------------
+Python Iterative (stack)
+
+class Solution(object):
+    def preorder(self, root):
+        """
+        :type root: Node
+        :rtype: List[int]
+        """
+        if not root:
+            return []
+        stack=[root]
+        ret=[]
+        while stack:
+            visit=stack.pop()
+            ret.append(visit.val)
+            #然后把visit的children全部加到stack里面去
+            #要反过来因为pop会先出来
+            stack += visit.children[::-1]
+        return ret
+
+        
