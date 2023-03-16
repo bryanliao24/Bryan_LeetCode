@@ -1,0 +1,97 @@
+//*returnSize：存放的是二叉树的层数
+//**returnColumnSizes：存放的是二叉树每一层的节点个数
+#define MAX 2000
+int** levelOrder(struct TreeNode* root, int* returnSize, int** returnColumnSizes){
+    *returnSize=0;
+    if(root==NULL)return NULL;
+
+    struct TreeNode *Queue[MAX];
+    int front=0,tail=0;
+    //存放二叉树的每一层的节点值
+    int **ret=(int**)malloc(sizeof(int*)*MAX);
+    //存放每一层的节点个数
+    *returnColumnSizes=(int*)malloc(sizeof(int*)*(MAX/2));
+    
+    struct TreeNode *head;
+    Queue[tail++]=root; //root节点入queue
+
+    while(front != tail){
+        int colsize=0;//计算每一层节点数
+        //由于tail会因为层数而改变所以要一个end保存tail的值
+        int end=tail;//end 是每一层最末端的一个节点指针
+
+        //为每一层初始化一个阵列来存放值
+        ret[*returnSize] = (int*)malloc(sizeof(int*)* (end - front));
+        while(front < end){
+            head = Queue[front++];
+            ret[*returnSize][colsize++] = head -> val;
+
+            if(head -> left != NULL){
+                Queue[tail++] = head -> left;
+            }
+            if(head -> right != NULL){
+                Queue[tail++] = head -> right;
+            }
+        }
+        //赋值每一层的节点个数
+        (*returnColumnSizes)[*returnSize] = colsize;
+        *returnSize +=1;
+    }   
+    return ret;
+}
+
+
+---------------------------------------------------------------------------------
+Python Recursive
+class Solution(object):
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        ret =[]
+        if not root:
+            return []
+        
+        def countlevel(node, level):
+            if len(ret) == level :
+                ret.append([])
+
+            ret[level].append(node.val)
+
+            if node.left != None:
+                countlevel(node.left, level+1)
+            if node.right != None:
+                countlevel(node.right, level+1)
+
+        countlevel(root, 0)
+        return ret
+---------------------------------------------------------------------------------
+Python Iterative
+class Solution(object):
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        if not root:
+            return []   
+        ret =[]
+        temp=[]
+        temp.append(root)
+
+        while(temp):
+            ret2=[]
+            temp2=[]
+            for i in temp:  
+                ret2.append(i.val)
+                if i.left:
+                    temp2.append(i.left)
+                if i.right:
+                    temp2.append(i.right)
+            ret.append(ret2)
+            temp=temp2
+        return ret
+
+
+        
