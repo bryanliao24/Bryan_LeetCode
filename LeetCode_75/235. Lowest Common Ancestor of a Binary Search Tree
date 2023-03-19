@@ -1,0 +1,18 @@
+
+/**
+因为是二叉树 所以所有符合： 左 < 根 < 右
+1. root的値和p或q的值相等 => 直接回傳root (p或q就是L)
+2. root的値在p和q的值的範圍之內 => 直接回傳root
+(即p.val < L.val < q.val或p.val > L.val > q.val)
+3. p和q的値都小於root的值 => 往下找root.left的狀況遞迴
+4. p和q的値都大於root的值 => 往下找root.right的狀況遞迴
+*/
+struct TreeNode* lowestCommonAncestor(struct TreeNode* root, struct TreeNode* p, struct TreeNode* q) {
+    if (root->val > p->val && root->val > q->val){//代表都位于左边
+        return lowestCommonAncestor(root->left,p,q);
+    }
+    else if (root->val < p->val && root->val < q->val){//代表都位于左边
+        return lowestCommonAncestor(root->right,p,q);
+    }
+    return root;
+}
