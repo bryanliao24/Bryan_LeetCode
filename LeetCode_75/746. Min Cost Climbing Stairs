@@ -1,0 +1,24 @@
+//minPayment[i]代表爬到第i階最少的花費
+//DP用法：創建一個數組將整個數組拆分為計算到達每一個index所需要的花費
+//創建一個比較大小函數 MIN
+
+#define MIN(x,y) x<y ? x : y
+/**
+int MIN(int x, int y){
+    return x<y ? x : y;
+}
+*/
+
+int minCostClimbingStairs(int* cost, int costSize){
+    int minPayment[1002]={0};
+
+    //起始位置如果就是終點花費 = 0 -> index 0或是index 1 
+    minPayment[0]=0;
+    minPayment[1]=0;
+
+    for(int i=2; i<=costSize; i++){
+        minPayment[i] = MIN(cost[i-1]+minPayment[i-1], cost[i-2]+minPayment[i-2]);
+    }
+
+    return minPayment[costSize];
+}
