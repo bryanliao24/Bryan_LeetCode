@@ -1,0 +1,32 @@
+//对发现的每一块陆地记为 '0'
+//然后在查找下一个新的陆地(上一个陆地已经变'0')
+void countIslands(char **grid, int i, int j, int row, int col){
+    if(i<0 || i>=row || j<0 || j>=col){
+        return;
+    }
+    if(grid[i][j] == '1'){
+        grid[i][j]='0';
+        countIslands(grid, i-1, j, row, col);
+        countIslands(grid, i, j-1, row, col);
+        countIslands(grid, i+1, j, row, col);
+        countIslands(grid, i, j+1, row, col);
+    }
+}
+
+int numIslands(char** grid, int gridSize, int* gridColSize){
+    int islands = 0;
+    int row = gridSize;
+    int col = gridColSize[0];
+
+    if(grid==NULL)return;
+    
+    for(int i=0; i < row; i++){
+        for(int j=0; j < col; j++){
+            if(grid[i][j] == '1'){
+                countIslands(grid, i, j, row, col);
+                islands += 1;
+            }
+        }
+    }
+    return islands;
+}
