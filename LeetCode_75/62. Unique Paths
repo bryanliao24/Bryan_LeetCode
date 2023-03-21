@@ -1,0 +1,23 @@
+int uniquePaths(int m, int n){
+    //初始化一个二维阵列储存到到每一个坐标点所走的方法数
+    //m是row n是col
+    int arr[m][n];
+    int col=0;
+    int row=0;
+    //初始化两边边都是1
+    for(col=0; col<n; col++){
+        arr[0][col]=1;        
+    }
+    for(row=0; row<m; row++){
+        arr[row][0]=1;        
+    }
+    
+    for(row=1; row<m; row++){
+        for(col=1; col<n; col++){
+            arr[row][col]=arr[row-1][col]+arr[row][col-1];
+        }
+    }
+    return arr[m-1][n-1];
+}
+
+//总结：Dynamic Program将总问题分解为创造阵列(一维、二维)去存储小问题的答案以此求出总问题。
