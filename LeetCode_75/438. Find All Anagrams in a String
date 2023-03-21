@@ -1,0 +1,52 @@
+int* findAnagrams(char * s, char * p, int* returnSize){
+  int lens=strlen(s);
+  int lenp=strlen(p);
+  int *ret = (int*)malloc(sizeof(int)*30000);
+
+  *returnSize = 0;
+  if(lens<lenp)return NULL;
+  
+  //分别定义一个阵列，储存字母出现的次数
+  int p_arr[26]={0};
+  int s_arr[26]={0};
+  
+  int i=0;
+  while(p[i]!='\0'){
+    p_arr[p[i] - 'a'] += 1;//计算p字母出现次数
+    i++;
+  }
+
+  int ptr1=0;
+  int ptr2=lenp-1;
+  int counter=0;//计算找到Anagrams次数
+
+  while(s[ptr2]!='\0'){
+    if(ptr1==0){
+      for(int j=ptr1; j<=ptr2; j++){
+        s_arr[s[j] - 'a'] += 1; //计算s在lenp的字母出现次数
+      }
+    }else{
+      //因为每次ptr1只有移动一格index 所以消除前一个就好
+      s_arr[s[ptr1 -1] -'a'] -= 1;//把前一个字母出现的次数消除，清空
+      s_arr[s[ptr2] - 'a'] += 1; //把新增的加进来
+    }
+
+    //检查s_arr和p_arr字母出现次数是否相等
+    int flag=0;
+    for(int k=0; k<26; k++){
+      if(p_arr[k]!=s_arr[k]){
+        flag=1;
+        break;
+      }
+    }
+    
+    if(flag==0){
+      ret[counter]=ptr1;
+      counter++;
+    }
+    ptr1++;
+    ptr2++;
+  }
+  *returnSize = counter;
+  return ret;
+}
