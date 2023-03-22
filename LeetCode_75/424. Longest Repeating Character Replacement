@@ -1,0 +1,35 @@
+//暴力解不优，例如：AABCABBB k=2；求出BBBBBB => 6位最佳解而非AAAAA => 5.
+//设立左右边界 
+//右边界先移动找到一个满足题意可以替换k个字符后，所有字符看成一样作为目前最佳的字串总数
+//右边界再依序往右一格看是否满足
+//直到right-left > 出現最多次的字母 count+k，也就是需要替換的字母數量超過我們可替換的，我們才移動left
+//左边界往右一格，有边界再移动往后找 => Sliding Window
+
+#define MAX(x,y) x>y ? x : y
+
+int characterReplacement(char * s, int k){
+    int lens = strlen(s);
+    if(k==lens)return k;
+
+    //计算字母出现次数
+    int sCounter[26] = {0};
+    //计算长度
+    int counter = 0;
+
+    int left = 0;
+    int right = 0;
+    //int ret = 0;
+    while(right < lens){
+        sCounter[s[right] - 'A']++;
+        counter = MAX(counter, sCounter[s[right] - 'A']);
+        right++;
+
+        if(right - left > counter + k){
+            sCounter[s[left] - 'A']--; //把最左边的字母去掉
+            left++;
+        }
+        //ret = MAX(ret, right - left);
+    }
+    //return ret
+    return right - left;
+}
