@@ -55,3 +55,30 @@ int* findAnagrams(char * s, char * p, int* returnSize){
 //思路二：不使用分别的两个阵列去储存字母出现的次数，而是用一个sums和sump去储存字母转为ascii code的总合 ex: sums += s[i] - 0;
 //然后在比较sums和sump是否相等
 //错误思路!!! 因为有可能遇到总合相同 但字母不同的情况 例如: af = 65 + 70 = 135 和 be = 66 + 69 = 135 !!!
+
+--------------------------------------------------------
+Python
+--------------------------------------------------------
+//s="abcd" s[:-1] = abc, s[:2] = ab
+
+from collections import Counter
+class solution(object):
+  def findAnagrams(s,p):
+    ret=[]
+    m,n = len(s), len(p)
+    if m<n:
+      return ret
+    pCounter = Counter(p)
+    sCounter = Counter(s[:n-1])
+    index = 0 
+    for index in range(n-1, m):
+      sCounter[s[index]] += 1
+      if sCounter == pCounter:
+        ret.append(index - n + 1)
+      sCounter[s[index - n + 1]] -= 1
+      if sCounter[s[index - n + 1]] == 0:
+        del sCounter[s[index - n + 1]]
+    return ret
+    
+    
+    
