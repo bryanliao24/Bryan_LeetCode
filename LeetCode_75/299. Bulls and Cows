@@ -1,0 +1,82 @@
+char output[50];
+char temp[10];
+#define MIN(x,y) x<y ? x : y
+
+char * getHint(char * secret, char * guess){
+    int lens=strlen(secret);
+
+    int A = 0;
+    int B = 0;
+    int CountA[10]={0};
+    int CountB[10]={0};
+
+    for(int i=0; i<lens; i++){
+        if(secret[i] == guess[i]){
+            A++;
+        }else{
+            //计算除了两者数字且位置相同的字母外的次数
+            CountA[secret[i] - '0']++;
+            CountB[guess[i] - '0']++;
+        }
+    }
+
+    /* 計算B */
+    for(int j=0; j<10; j++){
+        B += MIN(CountA[j] , CountB[j]);
+    }
+
+    strcpy(output, "");
+    strcpy(temp, "");
+
+    int a_cal, b_cal, i;
+    //要考虑到如果A或B是大于10的状态 要依次取个十百位数
+
+    /* 將A整數轉為字串: int -> char[] */
+    if (A != 0) {
+        a_cal = A;
+        i = 0;
+        //计算A的位数
+        while (a_cal != 0) {
+            a_cal = a_cal / 10;
+            i++;
+        }
+        temp[i] = '\0';
+
+        while (i > 0) {
+            temp[i - 1] = (A % 10) + '0';
+            A = A / 10;
+            i--;
+        }
+    } else {
+        temp[0] = '0';
+        temp[1] = '\0';
+    }
+
+    strcpy(output, temp);//复制
+    strcat(output, "A");//连接
+
+    /* 將B整數轉為字串: int -> char[] */
+    if (B != 0) {
+        b_cal = B;
+        i = 0;
+        while (b_cal != 0) {
+            b_cal = b_cal / 10;
+            i++;
+        }
+        temp[i] = '\0';
+
+        while (i > 0) {
+            temp[i - 1] = (B % 10) + '0';
+            B = B / 10;
+            i--;
+        }
+    } else {
+        temp[0] = '0';
+        temp[1] = '\0';
+    }
+
+    strcat(output, temp);
+    strcat(output, "B");
+
+    return output;
+}
