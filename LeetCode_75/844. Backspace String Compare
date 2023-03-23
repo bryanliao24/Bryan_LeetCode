@@ -1,0 +1,124 @@
+class Solution(object):
+    def backspaceCompare(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        retS = ""
+        for i in s:
+            if i =='#':
+                if retS: #确保retS不为空
+                    retS = retS[:-1]
+            else:
+                retS += i
+
+        retT = ""
+        for j in t:
+            if j =='#':
+                if retT:
+                    retT = retT[:-1]
+            else:
+                retT += j
+
+        return retS == retT
+-----------------------------------------------------------------
+class Solution(object):
+    def backspaceCompare(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        stackS = []
+        stackT = []
+
+        for i in s:
+            if i != '#':
+                stackS.append(i)
+            elif stackS:
+                stackS.pop() #del stackS[-1]
+        
+        for j in t:
+            if j != '#':
+                stackT.append(j)
+            elif stackT:
+                stackT.pop()
+        
+        return stackS == stackT
+-----------------------------------------------------------------
+#define MAX_STACK_SIZE 200
+
+void push(char *s, int *top, char item) {
+    s[++(*top)] = item;
+}
+
+char pop(char *s, int *top) {
+    return s[(*top)--];
+}
+
+int isEmpty(int *top) {
+    if (*top == -1) return 1;
+    else return 0;
+}
+
+char stack_s[MAX_STACK_SIZE];
+char stack_t[MAX_STACK_SIZE];
+int top_s;
+int top_t;
+
+bool backspaceCompare(char * s, char * t){
+    int i;
+
+    top_s = -1;
+    top_t = -1;
+    
+    /* 處理字串s */
+    // # = 35
+    i = 0;    
+    while (s[i] != '\0') {
+        if (s[i] != 35) {
+            push(stack_s, &top_s, s[i]);
+        } else if (!isEmpty(&top_s) && (s[i] == 35)) {
+            pop(stack_s, &top_s);
+        }
+        i++;
+    }
+
+    /* 處理字串t */
+    i = 0;
+    while (t[i] != '\0') {
+        if (t[i] != 35) {
+            push(stack_t, &top_t, t[i]);
+        } else if (!isEmpty(&top_t) && (t[i] == 35)) {
+            pop(stack_t, &top_t);
+        }
+        i++;
+    }
+
+    /* 比較stack_s和stack_t */
+    //若两者头皆空
+    if ((top_s == -1) && (top_t == -1)) {
+        return true;
+    } 
+    //若两者头不同
+    else if (top_s != top_t) {
+        return false;
+    } 
+    //逐个比较字符
+    else {
+        i = 0;
+        while (top_s >= 0) {
+            if (pop(stack_s, &top_s) != pop(stack_t, &top_t))
+                return false;
+        }
+        return true;
+        // i=0;
+        // for(i=0; i<200; i++){
+        //     if(stack_s[i] != stack_t[i]){
+        //         return false;
+        //     }
+        // }
+        // return true;
+    }
+}
