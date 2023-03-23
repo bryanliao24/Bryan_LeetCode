@@ -1,0 +1,39 @@
+#zip函数使用
+#a = [1,2,3]
+#b = [4,5,6]
+# zipped = zip(a,b) -> 打包为元组的列表
+#[(1, 4), (2, 5), (3, 6)]     
+
+#dict={},添加元素dict[element] =value,
+#但前提是element在字典里，如果不在字典里就会报错
+#所以使用defaultdict()，当字典里的key不存在但被查找时，返回的不是keyError而是一个默认值
+#()内可以使int、list、set、str
+#默认值list对应[ ]，str对应的是空字符串，set对应set( )，int对应0
+
+class Solution(object):
+    def getHint(self, secret, guess):
+        """
+        :type secret: str
+        :type guess: str
+        :rtype: str
+        """
+        countA = defaultdict(int)
+        countB = defaultdict(int)
+        A = B = 0
+
+        for s, g in zip(secret, guess):
+            if s == g:
+                A += 1
+            else:
+                countA[s] += 1
+                countB[g] += 1
+        #计算B -> 字典A中key为secret出现的数字
+        for k in countA.keys():
+            if k in countB:
+                B += min(countA[k], countB[k])
+
+        #return "%sA%sB" % (A, B)
+        return str(A) + "A" + str(B) + 'B'
+
+
+
