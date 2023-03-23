@@ -3,6 +3,7 @@ Python
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         dic = {}
+        # i是index v是nums的数字
         for i,v in enumerate(nums):
             if target-v in dic :
                 return [dic[target-v],i]
