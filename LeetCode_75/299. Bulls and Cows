@@ -1,3 +1,7 @@
+//C语言两种数字转字符的方法
+//一：int a=1; a + '0'直接转成'1'
+//二：int a=1; a + 48 直接转成'1' //利用ascii code因为数字0=48 
+
 char output[50];
 char temp[10];
 #define MIN(x,y) x<y ? x : y
