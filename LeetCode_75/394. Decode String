@@ -1,0 +1,112 @@
+# 将3[a2[c]]提取成3a2c -> 3*(a+2*(c))
+
+class Solution(object):
+    def decodeString(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        repeatNum = 0
+        saveStr = ""
+        stack = []
+
+        for i in s:
+            if i == '[':
+                stack.append(saveStr)
+                stack.append(repeatNum)
+                repeatNum = 0
+                saveStr = ""
+            elif i == ']':
+                preNum = stack.pop()
+                preString = stack.pop()
+                saveStr = preString + preNum * saveStr
+            elif i.isdigit():
+                repeatNum = repeatNum*10 + int(i)
+            else:
+                saveStr += i
+
+        return saveStr
+--------------------------------------------------------------------
+#define MAX_STACK_SIZE 30
+
+typedef struct {
+    char str[MAX_STACK_SIZE];
+    int num;
+} element;
+
+void push(element item, element *s, int *t) {
+    s[++(*t)] = item;
+}
+
+element pop(element *s, int *t) {
+    return s[(*t)--];
+}
+
+int isEmpty(int *t) {
+    if (*t == -1) return 1;
+    else return 0;
+}
+
+element stack1[MAX_STACK_SIZE];
+element stack2[MAX_STACK_SIZE];
+int top1;
+int top2;
+char *ptr;
+char str_temp[MAX_STACK_SIZE];
+
+char * decodeString(char * s){
+    int i, repeat, number;
+    char str_strcat[30];
+    char char_temp[4];
+    element input;
+
+    top1 = -1;
+    top2 = -1;
+    repeat = 0;
+    strcpy(str_temp, "");
+    strcpy(str_strcat, "");
+    strcpy(char_temp, "");
+
+    i = 0;
+    while (s[i] != '\0') {
+        /* 遇到 1-9 */
+        if ((s[i] >= '0') && (s[i] <= '9')) {
+            repeat = (10 * repeat) + (s[i] - '0');
+        /* 遇到 '[' */
+        /* 數字結束了，要準備收字串 */
+        } else if (s[i] == '[') {
+            /* repeat的數字放入Stack裡 */
+            input.num = repeat;
+            push(input, stack2, &top2);  // stack2[i]放數字
+            repeat = 0;
+
+            /* 字串放入Stack裡 */
+            strcpy(input.str, "");
+            strcpy(input.str, str_temp);
+            push(input, stack1, &top1);  // stack1[i]放字串
+            strcpy(str_temp, "");
+        /* 遇到 a-z */
+        } else if ((s[i] >= 'a') && (s[i] <= 'z')) {
+            strcpy(char_temp, "");
+            char_temp[0] = s[i];
+            char_temp[1] = '\0';
+            strcat(str_temp, char_temp);
+        /* 遇到 ']' */
+        } else {
+            /* 從數字的Stack取出頭元素 */
+            number = pop(stack2, &top2).num;
+
+            /* 將字串Stack的頭元素重複 */
+            for (int j=0; j<(number); j++) {
+                strcat(stack1[top1].str, str_temp);
+            }
+            /* 取出頭元素存入字串str_temp */
+            strcpy(str_temp, "");
+            strcpy(str_temp, stack1[top1].str);
+            pop(stack1, &top1);
+        }
+        i++;
+    }
+
+    return str_temp;
+}
