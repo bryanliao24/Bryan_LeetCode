@@ -27,7 +27,7 @@ class Solution(object):
 
         return saveStr
 --------------------------------------------------------------------
-#define MAX_STACK_SIZE 30
+#define MAX_STACK_SIZE 5000
 
 typedef struct {
     char str[MAX_STACK_SIZE];
