@@ -1,0 +1,48 @@
+<法一>
+#弗洛伊德环检测算法（Floyd Cycle Detection Algorithm） -> 快慢指针
+class Solution(object):
+    def isHappy(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        def Sum(x):
+            total = 0
+            while(x>0):
+                temp = x % 10
+                total += temp*temp
+                x = x // 10
+            return total 
+
+        slow = fast = n
+        while True:
+            slow = Sum(slow)
+            fast = Sum(fast)
+            fast = Sum(fast)
+            if slow == fast:
+                break
+        return slow == 1
+--------------------------------------------------------------------
+<法二>
+#用一个字典来保存已经出现的数字 or list or set -> 在运算效率上dic最高
+class Solution(object):
+    def isHappy(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        dic = {}
+        while True:
+            dic[n] = True 
+            sum = 0 
+            while (n>0):
+                temp = n % 10
+                sum +=  temp**2
+                n = n // 10
+            if sum == 1:
+                return True 
+            elif sum in dic:
+                return False
+            else:
+                n = sum 
+
