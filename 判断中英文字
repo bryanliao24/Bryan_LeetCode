@@ -1,0 +1,5 @@
+s = "你"
+if '\u0e00' <= s <= '\u9fa5':
+    print("isChinese")
+else:
+    print("notChinese")
