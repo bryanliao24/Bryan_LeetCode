@@ -1,0 +1,46 @@
+# 求二维数组长度
+# ex.arr = [[1, 2, 3], [4, 5, 6]]
+# rows(横) = len(arr) -> 2
+# cols(竖) = len(arr[0]) -> 3
+
+#设四个边界方向 每次碰到边界 转换移动方向90°
+class Solution(object):
+    def spiralOrder(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[int]
+        """
+        row = len(matrix)
+        col = len(matrix[0])
+        left = 0
+        right = col - 1
+        up = 0
+        down = row - 1
+         
+        ret = []
+        x = 0 # x, y 现在坐标位置
+        y = 0 
+
+        directions = [(0,1), (1,0), (0,-1), (-1,0)]
+        cur_dir = 0 #现在方向
+
+        while len(ret) != row*col:
+            ret.append(matrix[x][y])
+            if cur_dir == 0 and y == right: #到最右边 -> row往下一格 -> x+1 y+0 
+                cur_dir += 1
+                up += 1
+            elif cur_dir == 1 and x == down: #到最右下(最后一个数) -> 开始往左走 -> x+0 y-1
+                cur_dir += 1
+                right -=1 
+            elif cur_dir == 2 and y == left: #到最左边 -> 往上走 -> x-1 y+0
+                cur_dir += 1
+                down -= 1
+            elif cur_dir == 3 and x == up:
+                cur_dir += 1 #cur_dir = 4 重新开始 -> % 4 
+                left += 1
+
+            cur_dir %= 4
+            x += directions[cur_dir][0]
+            y += directions[cur_dir][1]
+    
+        return ret 
