@@ -31,7 +31,7 @@ class Solution(object):
         """      
         row = len(grid)
         col = len(grid[0])
-
+        # i控制row j控制球所在col
         def dfs(i, j):
             
             if i == row:
