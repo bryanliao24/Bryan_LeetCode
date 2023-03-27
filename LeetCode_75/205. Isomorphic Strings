@@ -2,6 +2,8 @@
 // egg = 在e对应ascii的地方=1 g=2
 // add = 在a对应ascii的地方=1 d=2 重复不动
 // 若abc -> a=1 b=2 c=3 所以不同 
+// 这一题其实和字符出现的位置没有关系， 因为主要是字符一对一就好 如果重复出现的对应成功即可
+
 bool isIsomorphic(char * s, char * t){
     int ston[256]={'\0'},tton[256]={'\0'};
     int len=strlen(s);
