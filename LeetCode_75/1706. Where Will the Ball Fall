@@ -1,0 +1,49 @@
+class Solution(object):
+    def findBall(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: List[int]
+        """      
+        row = len(grid)
+        col = len(grid[0])
+        ret = [0] * col
+        
+        for i in range(col):
+            k = i   # k表示球的状态 -> 到哪一row
+            for j in range(row):
+                if k != col-1 and grid[j][k] == 1 and grid[j][k+1] == 1:
+                    k += 1
+                elif k != 0 and grid[j][k] == -1 and grid[j][k-1] == -1:
+                    k -= 1
+                else:
+                    ret[i] = -1
+                    break
+                if j == row -1: #到最后一row
+                    ret[i] = k
+        return ret
+
+-----------------------------------------------------------------------
+class Solution(object):
+    def findBall(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: List[int]
+        """      
+        row = len(grid)
+        col = len(grid[0])
+
+        def dfs(i, j):
+            
+            if i == row:
+                return j
+            if j == 0 and grid[i][j] == -1: #最左边碰壁
+                return -1
+            if j == col-1 and grid[i][j] == 1: #最右边碰壁
+                return -1
+            if grid[i][j] == 1 and grid[i][j+1] == -1:
+                return -1
+            if grid[i][j] == -1 and grid[i][j-1] == 1:
+                return -1
+            return dfs(i+1, j+1) if grid[i][j] == 1 else dfs(i+1, j-1)
+        
+        return [dfs(0, k)for k in range(col)]
