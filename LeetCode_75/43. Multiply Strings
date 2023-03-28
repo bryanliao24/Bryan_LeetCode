@@ -1,0 +1,64 @@
+#模拟直竖乘法
+# ord('a') -> 97
+
+class Solution(object):
+    def multiply(self, num1, num2):
+        """
+        :type num1: str
+        :type num2: str
+        :rtype: str
+        """
+        if num1 == '0' or num2 == '0':return '0'
+        
+        ret = 0
+        #i是index 0,1,2... n1是nums2倒过来的各数 
+        #ex. num2 = 713
+        #0,3 1,1 2,7
+        for i, n1 in enumerate(num2[::-1]):
+            pre = 0 
+            cur = 0
+            for j, n2 in enumerate(num1[::-1]):
+                product = (ord(n1) - ord('0')) * (ord(n2) - ord('0')) 
+                ShiWeiShu = product // 10 #十位数
+                GeWeiShu = product % 10 #个位数
+                cur += (GeWeiShu + pre)*(10**j)
+                pre = ShiWeiShu
+            cur += pre * (10 ** len(num1)) #最前头的数
+            ret += cur * (10 ** i)
+        
+        return str(ret)
+---------------------------------------------------------------------
+char * multiply(char * num1, char * num2){
+    int m = strlen(num1);
+    int n = strlen(num2);
+    int total = m + n;
+    int index = 0;
+    int valueIndex = 0;
+    
+    int *value = (int*)malloc(sizeof(int)*total);
+    memset(value, 0, sizeof(int)*total);
+
+    char *result = (char*)malloc(sizeof(char)*(total+1));
+
+    for(int i=m-1; i>=0; i--){
+        for(int j=n-1; j>=0; j--){
+            value[i+j+1] += (num1[i]-'0')*(num2[j]-'0');
+        }
+    }
+    
+    for(int i=total-1; i>0; i--){
+        value[i-1] += value[i] / 10;
+        value[i] = value[i] % 10;
+    }
+
+    while(value[index] == 0 && (index < total - 1)){
+        index++;
+    }
+
+    while(index < total){
+        result[valueIndex++] = value[index++] +'0';
+    }
+    
+    result[valueIndex] = '\0';
+    return result;
+}
