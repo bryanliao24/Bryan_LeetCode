@@ -13,3 +13,48 @@ char * longestCommonPrefix(char ** strs, int strsSize){
     }
     return temp;
 }
+-----------------------------------------------------------------------
+class Solution(object):
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        if len(strs) == 0: return ""
+        for i in range(len(strs[0])):
+            c = strs[0][i]
+            for j in range(len(strs)):
+                if i >= len(strs[j]) or c != strs[j][i]:
+                    return strs[0][:i]
+        
+        return strs[0]
+-----------------------------------------------------------------------
+# a = [1,2,3]
+# b = [4,5,6]
+# zipped = zip(a,b) ->  [(1, 4), (2, 5), (3, 6)]  # 打包为元组的列表
+# zip(*zipped) ->  [(1, 2, 3), (4, 5, 6)]
+# 与 zip 相反，*zipped 可理解为解压，返回二维矩阵式
+# set() 函数创建一个无序不重复元素集 Set沒辦法使用索引 (Index) 來印出
+class Solution(object):
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        ret = ""
+        for i in zip(*strs):
+            # i = ('f', 'f', 'f') 
+            #     ('l', 'l', 'l') 
+            #     ('o', 'o', 'i') 
+            #     ('w', 'w', 'g')
+
+            # set(i) = {'f'} 
+            #          {'l'} 
+            #          {'i', 'o'} 
+            #          {'g', 'w'}
+            if len(set(i)) == 1:
+                ret += i[0]
+            else:
+                break
+
+        return ret       
