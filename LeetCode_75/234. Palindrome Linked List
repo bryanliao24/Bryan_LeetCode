@@ -1,0 +1,82 @@
+/**
+(1) 遇到 list 要想到 slow and fast pointer
+(2) 遇到 palindrome 要想到 reverse
+*/
+//Two-Pointer 一個一次兩步 另一個一次一步
+//第一個指針走到末尾的時候 另一個會正好在中間
+//此時這個比較慢的指針會指向中間(偶數)or後半部的第一個(奇數) -> 指向後半部
+//利用這個比較慢的指針reverse後半部的數字在與head重新比較
+typedef struct ListNode node_t;
+node_t* reverse_list(node_t *head){
+    node_t *prev = NULL;
+
+    while(head){
+        node_t *nextnode = head -> next;
+        head -> next = prev;
+        prev = head;
+        head = nextnode;
+    }
+    return prev;
+}
+
+bool isPalindrome(struct ListNode* head){
+    if(!head || !head->next)return true;
+
+    node_t *slow = head;
+    node_t *fast = head;
+
+    //找中心點,此時slow指向後半部分第一個結點
+    while(fast && fast->next){
+        slow = slow -> next;
+        fast = fast -> next -> next;
+    }
+
+    struct ListNode *reverse = NULL;
+    reverse = reverse_list(slow);
+    while(reverse && head){
+        if(head->val != reverse->val){
+            return false;
+        }   
+        reverse = reverse -> next;
+        head = head -> next;
+    }
+
+    return true;
+
+}
+--------------------------------------------------------------------------
+
+/**
+定義一個數組，將鏈表值賦值給數組
+然後判定數組是否是迴文的
+*/
+bool isPalindrome(struct ListNode* head){
+    struct ListNode *p = head;
+    int length = 1;
+    //計算linked list長度
+    while(p != NULL){
+        length += 1;
+        p = p -> next;
+    }
+
+    //創建數組
+    int list[length];
+    int index = 0;
+    p = head;
+    while(p != NULL){
+        list[index++] = p -> val;
+        p = p -> next;
+    }
+
+    int i = 0;
+    int j = length - 2;
+    while(i<j){
+        if(list[i] != list[j]){
+            return false;
+        }
+        i += 1;
+        j -= 1;
+    }   
+    return true;
+
+}
