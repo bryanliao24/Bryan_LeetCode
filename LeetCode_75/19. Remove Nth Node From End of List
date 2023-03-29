@@ -1,0 +1,47 @@
+//<法一>先得到list的長度，就可以知道由正向去找要刪掉哪一個數字
+struct ListNode* removeNthFromEnd(struct ListNode* head, int n){
+    struct ListNode* temp = head;
+    int length = 0;
+
+    // for(s=0 ; temp ;s++){
+    //     temp = temp -> next;
+    // }
+    for(length=0 ; temp!=NULL ;length++){
+        temp = temp -> next;
+    }
+
+    n = length - n ; 
+    temp = head;
+    if(n==0)return head -> next;
+
+    for(int i=0; i<n-1; i++){
+        temp = temp -> next;
+    }
+
+    if(temp -> next){
+        temp -> next = temp -> next -> next;
+    }
+    return head;
+}
+------------------------------------------------------------------------------
+
+//<法二>用兩個指標，第一個先跑n步，接著兩個一起跑
+// 當第一個到底的時候，第二個所指的就是要移除的數字了
+struct ListNode* removeNthFromEnd(struct ListNode* head, int n){
+    struct ListNode* first = head;
+    for(int i=0; i<n; i++){
+        first = first -> next;
+    }
+    if(!first)return head -> next;
+
+    struct ListNode* second = head;
+    for(;first -> next; first = first->next){
+        second = second -> next;
+    }
+
+    if(second -> next){
+        second -> next = second -> next -> next;
+    }
+
+    return head;
+}
