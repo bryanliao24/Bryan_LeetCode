@@ -1,4 +1,11 @@
-//merge sort -> O(N * logN)
+/**
+题目要求空间要O(1)常量未达成！
+可以使用Bottom-Up的merge sort达成 
+top-down: 对半分 再对半分 最后在合并
+bottom-up：一开始不要对半分，而是两两一组，再来4个4个一组直到全部分完 直接排序
+*/
+
+//merge sort(top-down) -> O(N * logN)
 //recursion -> 空间 O(logN)
 struct ListNode * merge(struct ListNode *l1, struct ListNode *l2){
     if(l1 == NULL) return l2;
