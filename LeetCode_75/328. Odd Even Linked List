@@ -1,0 +1,41 @@
+struct ListNode* oddEvenList(struct ListNode* head){
+    if(!head)return NULL;
+
+    struct ListNode *odd = head;
+    struct ListNode *even = head -> next;
+    //记录even开始的地方
+    struct ListNode *even_start = head -> next;
+    
+    while(even != NULL && even -> next != NULL){
+        odd -> next = odd -> next -> next;
+        even -> next = even -> next -> next;
+        odd = odd -> next;
+        even = even -> next;
+    }
+    odd -> next = even_start;
+    
+    return head;
+}
+------------------------------------------------------------
+/**
+用三个指标轮流工作
+odd -> 指向下一个p p是even->next
+even -> 指向下一个偶数
+p -> 交换节点
+**/ 
+struct ListNode* oddEvenList(struct ListNode* head){
+    if(!head)return NULL;
+    struct ListNode *odd = head; //偶数最后一个
+    struct ListNode *even = head -> next; //奇数最后一个
+    struct ListNode *p;
+
+    while(even && even -> next){
+        p = even -> next; // p指向偶数第一个
+        even -> next = even -> next -> next;
+        p -> next = odd -> next;
+        odd -> next = p;
+        odd = odd -> next;
+        even = even -> next;
+    }
+    return head;
+}
