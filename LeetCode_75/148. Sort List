@@ -1,0 +1,81 @@
+//merge sort -> O(N * logN)
+//recursion -> 空间 O(logN)
+struct ListNode * merge(struct ListNode *l1, struct ListNode *l2){
+    if(l1 == NULL) return l2;
+    if(l2 == NULL) return l1;
+    if( (l1 == NULL) && (l2 == NULL) ) return NULL;
+     
+    struct ListNode *head=NULL;
+    if(l1->val < l2->val){
+        head = l1;
+        l1 = l1->next;
+    }else{
+        head = l2;
+        l2 = l2->next;
+    }
+     
+    struct ListNode *p=head;
+    while(l1 != NULL && l2 != NULL){
+        if(l1->val < l2->val){
+            p->next = l1;
+            l1 = l1->next;
+        }else{
+            p->next = l2;
+            l2 = l2->next;
+        }
+        p = p->next;
+    }
+     
+    if(l1 != NULL) p->next = l1;
+    if(l2 != NULL) p->next = l2;
+    return head;
+}
+
+struct ListNode* sortList(struct ListNode* head){
+    if(head == NULL || head->next == NULL)return head;
+    struct ListNode *slow = head;
+    struct ListNode *fast = head;
+    struct ListNode *p = NULL;
+    
+    // 切成兩半
+    while(fast != NULL && fast->next != NULL)
+    {
+        p = slow;
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    p->next = NULL; //将p从中半段断开 以此使head从头一直指到最中间
+    
+    //兩半分別歸併
+    struct ListNode *l1=sortList(head); //继续sort前半段做分开
+    struct ListNode *l2=sortList(slow); //sort后半段做分开
+    
+    //調用merge
+    return merge(l1,l2);
+}
+----------------------------------------------------------------
+//bubble sort
+struct ListNode* sortList(struct ListNode* head){
+    int temp;
+    if(!head || !head -> next )return NULL;
+
+    struct ListNode *p;
+    struct ListNode *q;
+    struct ListNode *r;
+
+    for(p=head; p->next!=NULL; p=p->next){
+        r = p;
+        for(q=p->next; q!=NULL; q=q->next){
+            if(r->val > q->val){
+                r = q;
+            }
+        }
+        if(r!=p){
+            temp = p -> val;
+            p -> val = r -> val;
+            r -> val = temp;
+        }
+    }
+    return head;
+}
+
