@@ -1,0 +1,31 @@
+"""
+ex. AAAABBBBCCDE，n=3。
+将具有相同个数的A和B视为一个任务对
+最终满足要求的分配为：ABXXABXXABXXAB
+剩余的任务穿插进间隔位置即可，空缺位置补idle。
+最终需要最少的任务时间：（最多任务数-1）*（n + 1） + （相同最多任务的任务个数）。
+（最多任务数-1）*（n + 1） -> ABXXABXXABXX
+（相同最多任务的任务个数）-> A and B
+所求：(num(A)-1) * (3+1) + (2)
+最后注意要与time求最大值 因为有可能不够字母去插入闲置时间
+"""
+# most_common(n) -> 回传数量最多的前n个元素 
+# if n=0 return all value in a tuple
+
+class Solution(object):
+    def leastInterval(self, tasks, n):
+        """
+        :type tasks: List[str]
+        :type n: int
+        :rtype: int
+        """
+        dic = Counter(tasks)
+        most = dic.most_common()[0][1]
+        sameTasks = 0
+        for k,v in dic.items():
+            if v == most:
+                sameTasks += 1
+
+        time = (most - 1) * (n + 1) + sameTasks
+
+        return max(time, len(tasks))
