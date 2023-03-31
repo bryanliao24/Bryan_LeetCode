@@ -1,1 +1,4 @@
 https://blog.csdn.net/qdPython/article/details/125603477
+
+int count[26][26] 
+最好使用 =>  count = [[0 for i in range(26)] for j in range(26)]
