@@ -1,0 +1,42 @@
+int height(struct TreeNode* root, int *ans){
+    if(root == NULL)return 0;
+    int left, right;
+    left = height(root -> left, ans);
+    right = height(root -> right, ans);
+
+    if(*ans < left + right)*ans = left + right;
+    return 1 + fmax(left, right);
+}
+
+int diameterOfBinaryTree(struct TreeNode* root){
+    if(root == NULL)return 0;
+    
+    int ans = 0;
+    height(root, &ans);
+    return ans;
+}
+---------------------------------------------------------------------
+int height(struct TreeNode *root){
+    if(root == NULL)return 0;
+    
+    int left = height(root -> left);
+    int right = height(root -> right);
+    
+    return fmax(left, right) + 1;
+}
+
+int diameterOfBinaryTree(struct TreeNode* root){
+    if(root == NULL)return 0;
+
+    int left_depth = diameterOfBinaryTree(root -> left);
+    int right_depth = diameterOfBinaryTree(root -> right);    
+    int ans = height(root -> left) + height(root -> right);
+    
+    if(left_depth > right_depth){
+        ans = (ans > left_depth) ? ans : left_depth;
+    }else{
+        ans = (ans > right_depth) ? ans : right_depth;
+    }
+    
+    return ans;
+}
