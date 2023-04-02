@@ -1,0 +1,57 @@
+//<法一>寻找每个节点为根的向下的所有路径，并累加统计总和为 num 的路径 -> O(N²)
+
+int findPath(struct TreeNode* root, double sum){
+  if(root == NULL)return 0;
+  int ans = 0;
+  if(root -> val == sum){
+    ans += 1;
+  }
+  //由于list中有负数 所以加上后续的路径的值还是有可能等于sum
+  ans += findPath(root->left, sum - root->val);
+  ans += findPath(root->right, sum - root->val);
+  return ans;
+}
+
+int pathSum(struct TreeNode* root, int targetSum){
+  if(root == NULL)return 0;
+  int ans = 0;
+
+  // 1. 处理以root为根节点且总合为sum的路径
+  ans = findPath(root, targetSum);
+
+  // 2. 处理不包含root的节点 only子节点路径和为sum的路径
+  ans += pathSum(root -> left, targetSum);
+  ans += pathSum(root -> right, targetSum);
+  return ans;
+}
+---------------------------------------------------------------------------
+//<法二>https://www.youtube.com/watch?v=6jYxwdwjwKg
+class Solution(object):
+    def pathSum(self, root, targetSum):
+        """
+        :type root: TreeNode
+        :type targetSum: int
+        :rtype: int
+        """
+        def dfs(root, prev_sum):
+          if not root:
+            return
+
+          cur_sum = prev_sum + root.val
+          x = cur_sum - targetSum
+          if x in freq:
+            self.count += freq[x]
+
+          if cur_sum in freq:
+            freq[cur_sum] += 1
+          else:
+            freq[cur_sum] = 1
+          
+          dfs(root.left, cur_sum)
+          dfs(root.right, cur_sum)
+          freq[cur_sum] -= 1
+       
+        self.count = 0
+        freq = {0:1}
+        dfs(root, 0)
+        return self.count
