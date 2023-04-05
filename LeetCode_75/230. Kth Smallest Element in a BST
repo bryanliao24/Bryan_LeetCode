@@ -1,0 +1,19 @@
+# 因为已经是二叉搜索树 (排序好了-> 左子树小于根节点小于右子树)
+
+class Solution(object):
+    def kthSmallest(self, root, k):
+        """
+        :type root: TreeNode
+        :type k: int
+        :rtype: int
+        """
+        def findsmall(root,li):
+            if not root:
+                return None
+            findsmall(root.left, li)
+            li.append(root.val)
+            findsmall(root.right, li)
+
+        li = []
+        findsmall(root, li)
+        return li[k-1]
