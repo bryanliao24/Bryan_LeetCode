@@ -1,0 +1,41 @@
+# <法一>右上角向左下角进行遍历
+# 每次比较每行最后一个数 大于他->往下找, 小于他->在这行
+
+class Solution(object):
+    def searchMatrix(self, matrix, target):
+      
+        row = len(matrix)
+        col = len(matrix[0])
+
+        i = 0 
+        j = col - 1
+
+        while True:
+            if i < row and j >= 0:
+                if matrix[i][j] == target:
+                    return True
+                elif matrix[i][j] < target:
+                    i += 1
+                else:
+                    j -= 1
+            else: 
+                return False
+-----------------------------------------------------------------
+# <法二>只是用一个变量i遍历整个矩阵
+# -> matrix[i/col][i%col]即为当前遍历到的元素
+
+class Solution(object):
+    def searchMatrix(self, matrix, target):
+     
+        row = len(matrix)
+        col = len(matrix[0])
+
+        i = 0 
+
+        while i < row * col:
+            if matrix[i/col][i%col] == target:
+                return True
+            else:
+                i += 1
+        
+        return False
