@@ -11,3 +11,20 @@ struct TreeNode* sortedArrayToBST(int* nums, int numsSize){
 
     return root;
 }
+-----------------------------------------------------------
+class Solution(object):
+    def sortedArrayToBST(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: TreeNode
+        """
+        length = len(nums)
+        if length == 0:
+            return None
+        
+        mid = length / 2
+        root = TreeNode(nums[mid])
+        root.left = self.sortedArrayToBST(nums[:mid])
+        root.right = self.sortedArrayToBST(nums[(mid+1):])
+
+        return root
