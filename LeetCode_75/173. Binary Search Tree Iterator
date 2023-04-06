@@ -1,0 +1,64 @@
+# O(h) 做法
+
+class BSTIterator(object):
+
+    def __init__(self, root):
+        """
+        :type root: TreeNode
+        """
+        self.stack = []
+        self.push_left(root)
+    
+    def push_left(self, root):
+        while root:
+            self.stack.append(root)
+            root = root.left
+
+    def next(self):
+        """
+        :rtype: int
+        """
+        root = self.stack.pop()
+        self.push_left(root.right)
+        return root.val
+
+    def hasNext(self):
+        """
+        :rtype: bool
+        """
+        if not self.stack:
+            return False
+        return True
+----------------------------------------------------
+# O(n) 做法
+
+class BSTIterator(object):
+
+    def __init__(self, root):
+        """
+        :type root: TreeNode
+        """
+        self.stack = []
+        self.inorder(root)
+    
+    def inorder(self, root):
+        if not root:
+            return None
+        self.inorder(root.right)
+        self.stack.append(root.val)
+        self.inorder(root.left)
+
+    def next(self):
+        """
+        :rtype: int
+        """
+       
+        return self.stack.pop()
+
+    def hasNext(self):
+        """
+        :rtype: bool
+        """
+        if not self.stack:
+            return False
+        return True
