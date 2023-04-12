@@ -1,0 +1,36 @@
+#  divmod()把除数和余数运算结果结合起来，返回一个包含商和余数的元组
+#  (a // b, a % b)。
+# ex. divmod(7,2) -> 返回(3,1)
+
+# 记得先判断总合是否为偶数 否则奇数直接False
+# dp[i]数组 用于i是从0到nums的总合 一开始dp初始为0
+# 将nums中加起来有可能出现的数字作为index 该index值 = 1
+# 当sum / 2 的index改值 = 1时
+# 代表可以分为一半
+# ex. nums = [1,5,11,5]
+# dp = {0,1} 加入5-> {0,1,5,5+1=6} 加入11 -> {0,1,5,6,11,12,16,17}
+# 上述{}中的值为index 该index的dp值都为1 其余为0
+# 此时判断22 / 2 == 11 -> dp[11] == 1 -> True
+
+class Solution(object):
+    def canPartition(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        # 先判断总合是否为偶数 若为奇数 -> False
+        total = sum(nums)
+        div, mod = divmod(total, 2)
+        if mod !=0 : return False
+
+        dp = [0] * (total + 1)
+        dp[0] = 1
+        for num in nums:
+            for i in range(total,-1,-1):
+                if dp[i]:
+                    dp[i + num] = 1
+            
+            if dp[total // 2]:
+                return True
+        
+        return False
