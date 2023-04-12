@@ -1,0 +1,23 @@
+# float('inf') 正无穷
+# float('-inf') 负无穷
+# 构建一个dp数组，其index是金额
+# 从0到该index需要使用的最少的硬币数量
+
+class Solution(object):
+    def coinChange(self, coins, amount):
+        """
+        :type coins: List[int]
+        :type amount: int
+        :rtype: int
+        """
+        dp = [float('inf')] * (amount + 1)
+        dp[0] = 0
+
+        for coin in coins:
+            for i in range(coin, amount + 1):
+                if dp[i - coin] != float('inf'):
+                    dp[i] = min(dp[i], dp[i - coin] + 1)
+        
+        if dp[amount] == float('inf'):
+            return -1
+        else:
