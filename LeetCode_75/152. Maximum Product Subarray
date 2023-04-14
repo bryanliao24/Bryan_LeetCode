@@ -1,0 +1,40 @@
+# 因为有可能遇见0或者负数。
+# 所以设两个数组 一个是截止到当前index的最大值 另一个是最小值
+# 乘上当前index后更新数组
+
+class Solution(object):
+    def maxProduct(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        length = len(nums)
+      
+        big = [0] * length
+        small = [0] * length
+        big[0] = small[0] = ans = nums[0]
+
+        for i in range(1, length):
+            big[i] = max(big[i-1] * nums[i], nums[i], small[i-1] * nums[i])
+            small[i] = min(big[i-1] * nums[i], nums[i], small[i-1] * nums[i])
+            ans = max(ans, big[i])
+        
+        return ans
+-------------------------------------------------------------
+# <可以把数组变成一个变量就好>
+
+class Solution(object):
+    def maxProduct(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        length = len(nums)
+        big = small = ans = nums[0]
+        for i in range(1, length):
+            prev_big , prev_small = big , small
+            big = max(prev_big * nums[i], nums[i], prev_small * nums[i])
+            small = min(prev_big * nums[i], nums[i], prev_small * nums[i])
+            ans = max(ans, big)
+        
+        return ans
