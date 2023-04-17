@@ -1,0 +1,30 @@
+# https://blog.csdn.net/XX_123_1_RJ/article/details/86756306
+class Solution(object):
+    def minWindow(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: str
+        """
+        lens = len(s)
+        lent = len(t)
+        if lens < lent:return ""
+        count = collections.Counter(t)
+        windowLength = len(t)
+        i = left = right = 0
+
+        for j, k in enumerate(s,1): # 从 1:A 开始
+            if count[k] > 0:
+                windowLength -= 1
+            # windowLength -= (count[k] > 0)
+            count[k] -= 1
+
+            if not windowLength:
+                while i < j and count[s[i]] < 0:
+                    count[s[i]] += 1
+                    i += 1
+
+                if not right or j-i <= right-left:
+                    right, left = j, i
+        
+        return s[left:right] 
