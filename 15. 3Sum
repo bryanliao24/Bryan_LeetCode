@@ -27,6 +27,6 @@ class Solution(object):
                     ans.append([v, nums[left], nums[right]])  
                     left += 1
                     right -= 1
-                    while nums[left] == nums[left - 1] and left < right: #若left与前一项相同 则非distinct -> 跳过
+                    while nums[left] == nums[left - 1] and left < right: #若left与前一项相同 则非distinct -> 下一个
                         left += 1    
         return ans
