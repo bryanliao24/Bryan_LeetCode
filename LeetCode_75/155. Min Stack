@@ -1,0 +1,37 @@
+# stack 同时保存的是每个数字进栈的时候的值与栈内最小值
+# 即每次新元素 x 入栈的时候保存一个[]：[当前值 x，栈内最小值]。
+class MinStack(object):
+
+    def __init__(self):
+        self.stack = []
+
+    def push(self, val):
+        """
+        :type val: int
+        :rtype: None
+        """
+        if not self.stack:
+            self.stack.append([val, val])
+        else:
+            self.stack.append([val, min(val, self.stack[-1][1])])
+        
+
+    def pop(self):
+        """
+        :rtype: None
+        """
+        self.stack.pop()
+        
+        
+
+    def top(self):
+        """
+        :rtype: int
+        """
+        return self.stack[-1][0]
+
+    def getMin(self):
+        """
+        :rtype: int
+        """
+        return self.stack[-1][1]
