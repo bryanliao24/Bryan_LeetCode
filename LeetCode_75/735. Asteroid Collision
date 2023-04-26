@@ -1,0 +1,23 @@
+# 从左到右遍历每个行星，并和stack 的最后数字相比较
+# 当碰撞判断留下来的数字保存到i里
+
+class Solution(object):
+    def asteroidCollision(self, asteroids):
+        """
+        :type asteroids: List[int]
+        :rtype: List[int]
+        """
+        ans = []
+        for i in asteroids:
+            while ans and i < 0 and ans[-1] >= 0:
+                prev = ans.pop()
+                if i == prev * (-1):
+                    i = None
+                    break
+                elif -i < prev:
+                    i = prev    
+
+            if ans != None and i != None:
+                ans.append(i)
+
+        return ans
