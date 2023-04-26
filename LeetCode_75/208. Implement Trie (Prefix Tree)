@@ -1,0 +1,46 @@
+# <法1> 构建字典树 -> 前缀树
+https://blog.csdn.net/fuxuemingzhu/article/details/79388432
+
+-------------------------------------------------------------
+
+# <法2>
+# get 返回字典中指定键的值
+# get(key) 方法在 key（键）不在字典中时，可以返回默认值 None 或者设置的默认值。
+# dict[key] 在 key（键）不在字典中时，会触发 KeyError 异常。
+# i.startswith(prefix) -> 搜索prefix是否为i单词的开头
+
+class Trie(object):
+
+    def __init__(self):
+        self.vocabulary = []
+
+    def insert(self, word):
+        """
+        :type word: str
+        :rtype: None
+        """
+        self.vocabulary.append(word)
+        
+
+    def search(self, word):
+        """
+        :type word: str
+        :rtype: bool
+        """
+        if word in self.vocabulary:
+            return True
+        
+        else:
+            return False
+
+    def startsWith(self, prefix):
+        """
+        :type prefix: str
+        :rtype: bool
+        """
+        for i in self.vocabulary:
+            if i.startswith(prefix):
+                return True
+        
+        else:
+            return False
