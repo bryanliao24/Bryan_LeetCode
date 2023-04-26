@@ -1,0 +1,9 @@
+python 与 C++ 不同
+使用for - loop 时无法控制回圈数 i
+
+如 -> https://blog.csdn.net/lizy_fish/article/details/109334011
+
+每次for循环，相当于是从range(1,5) -> [1,2,3,4,5 ]这个类似list里做取数的动作，修改的只是取出的值，并不是取数来源的值(无法修改list中的数)
+
+解决： 用while取代for
+while i < length: ...
