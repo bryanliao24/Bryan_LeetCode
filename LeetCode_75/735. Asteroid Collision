@@ -2,6 +2,7 @@
 # None表示空，但它不等于空字符串、空列表
 # 从左到右遍历每个行星，并和stack 的最后数字相比较
 # 当碰撞判断留下来的数字保存到i里
+# 若碰撞时 abs(当前数) > prev 则直接继续往前碰撞 直到撞到比他大的
 
 class Solution(object):
     def asteroidCollision(self, asteroids):
