@@ -24,3 +24,36 @@ class Solution(object):
                 ans.append(i)
 
         return ans
+
+----------------------------------------------
+# <法2> 快许多
+# 遍历asteroids元素 当元素为正 直接加入
+# 当元素为负如下
+# 情况1 ：若stack为空或者stack内仅由负数 直接加入
+# 情况2 ：stack内有正数 就一直碰撞到停止
+
+class Solution(object):
+    def asteroidCollision(self, asteroids):
+        """
+        :type asteroids: List[int]
+        :rtype: List[int]
+        """
+       
+        ans = []
+        length = len(asteroids)
+        i = 0
+        while i < length:
+            size = asteroids[i]
+            if size > 0:
+                ans.append(size)
+            else:
+                if ans == [] or ans[-1] < 0:
+                    ans.append(size)
+                elif abs(ans[-1]) <= abs(size):
+                    if abs(ans[-1]) < abs(size):
+                        i -= 1 # 这是为了下一个回合让size变数继续使用当前这个负数 注意此时不能和前一个正数正负数相抵消
+                    ans.pop()
+            
+            i += 1
+            
+        return ans
