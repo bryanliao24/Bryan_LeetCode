@@ -1,0 +1,41 @@
+# 注意Python除法 -> 如 -3//2 =2
+# num保存上一个数字，operation保存上一个操作符
+# +，把之前的数字num进栈，然后等待下一个操作数的到来
+# -，那么需要把之前的数字求反-num进栈，然后等待下一个操作数的到来。
+# ×，那么需要立刻出栈和之前的数字相乘，重新进栈，然后等待下一个操作数的到来。
+# /，那么需要立刻出栈和之前的数字相除，重新进栈，然后等待下一个操作数的到来。
+
+class Solution(object):
+    def calculate(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        stack = []
+        operation = '+'
+        num = 0
+
+        for i, element in enumerate(s):
+            if element.isdigit():
+                num = 10 * num + int(element)
+            if i == len(s) - 1 or element in '+-*/':
+                if operation == '+':
+                    stack.append(num)
+                elif operation == '-':
+                    stack.append(num * (-1))
+                elif operation == '*':
+                    prev = stack.pop()
+                    stack.append(prev * num)
+                elif operation == '/':
+                    prev = stack.pop()
+                    if prev < 0:
+                        if abs(prev) % num == 0: #是整除
+                            stack.append(int(prev / num))
+                        else: #是小数 所以直接+1
+                            stack.append(int(prev / num)+1)
+                    else:
+                        stack.append(prev // num)
+                operation = element
+                num = 0
+        
+        return sum(stack)
