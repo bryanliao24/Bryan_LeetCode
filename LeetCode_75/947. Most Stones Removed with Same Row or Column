@@ -1,0 +1,59 @@
+class Solution(object):
+    def removeStones(self, stones):
+        """
+        :type stones: List[List[int]]
+        :rtype: int
+        """
+        graph=collections.defaultdict(list)
+
+        for i, list1 in enumerate(stones):
+            for j in range(i): # i = 0 不会进回圈
+                list2 = stones[j] # list2 = 上一个stones
+                if(list1[0] == list2[0] or list1[1] == list2[1]):
+                    graph[i].append(j)
+                    graph[j].append(i)
+        # graph = 1代表stones中index为1的list => [0, 1]分别对应到index0和4是可以消除
+        # {1: [0, 4], 0: [1, 2], 2: [0, 3], 3: [2, 5], 4: [1, 5], 5: [3, 4]})
+
+        length = len(stones)
+        ans = 0
+        visited = [False] * length
+
+        for i in range(length):
+            if not visited[i]:
+                visited[i] = True
+                stack = [i]
+                count = 0
+
+                while stack:
+                    count += 1
+                    node = stack.pop()
+                    for nei in graph[node]:
+                        if not visited[nei] :
+                            visited[nei] = True
+                            stack.append(nei)
+                ans += count - 1
+        return ans
+
+------------------------------------------------------------------
+class Solution(object):
+    def removeStones(self, stones):
+        """
+        :type stones: List[List[int]]
+        :rtype: int
+        """
+        length = len(stones)
+        self.map = [-1] * 20000
+        for x, y in stones:
+            self.union(x, y + 10000)
+       
+        return length - len({self.find(x) for x, y in stones})
+    
+    def find(self, x):
+        return x if self.map[x] == -1 else self.find(self.map[x])
+
+    def union(self, x, y):
+        fx = self.find(x)
+        fy = self.find(y)
+        if fx != fy:
+            self.map[fx] = fy
