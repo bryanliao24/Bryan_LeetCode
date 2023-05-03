@@ -1,0 +1,28 @@
+# visited集合用来储存所有我们遍历过的城市
+# dfs找到所有互相连通的城市，将新城市加入到visited中
+# 如果在到了新城市但visited中并没有去过 -> count+1
+
+
+class Solution(object):
+    def findCircleNum(self, isConnected):
+        """
+        :type isConnected: List[List[int]]
+        :rtype: int
+        """
+        length = len(isConnected)
+        visited = set()
+        count = 0
+
+        def dfs(cur):
+            for j in range(length):
+                if isConnected[cur][j] == 1 and j not in visited:
+                    visited.add(j)
+                    dfs(j)
+
+        for i in range(length):
+            if i not in visited:
+                count += 1
+                visited.add(i)
+                dfs(i)
+
+        return count
