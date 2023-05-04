@@ -1,0 +1,56 @@
+# <法一> 递归
+# 遍历每个元素，判断其与剩余数字的大小用target减去当前元素，如果>0那么就放入到path继续减
+# 在for回圈中index为起始元素，在继续减相同的元素 直到不能减 <0 或 =0
+# 因为是递归 所以在for回圈后会依序往回走path回到上一个少了最后一个元素的list中
+
+
+class Solution(object):
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        def dfs(candidates, target, index, ans, path):
+            if target < 0:
+                return None
+            
+            elif target == 0:
+                ans.append(path)
+                return None
+            
+            for i in range(index, len(candidates)):
+                if candidates[index] > target:
+                    return None
+                dfs(candidates, target - candidates[i], i, ans, path + [candidates[i]])
+                
+        ans = []
+        candidates.sort()
+        dfs(candidates, target, 0, ans, [])
+        
+        return ans
+-------------------------------------------------------------
+# <法二> 快！
+
+class Solution(object):
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        def dfs(target, path):
+            if target == 0:
+                ans.append(path)
+            for n in candidates:
+                if n > target:
+                    break
+                if path and n < path[-1]:
+                    continue
+                dfs(target - n, path + [n])
+                
+        ans = []
+        candidates.sort()
+        dfs(target, [])
+        return ans
+
