@@ -1,0 +1,52 @@
+# <法一> iterative
+
+class Solution(object):
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        ans = ListNode(0)
+        cur = ans
+        temp = 0 
+        while l1 or l2 or temp > 0:
+            if l1:
+                temp += l1.val
+                l1 = l1.next
+            if l2:
+                temp += l2.val
+                l2 = l2.next
+            
+            Ge_value = temp % 10  # 个位数
+            cur.next = ListNode(Ge_value)
+            cur = cur.next
+            temp = temp // 10 # 是否进位
+        
+        return ans.next
+--------------------------------------------------
+# <法二> recursive
+
+class Solution(object):
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        if not l1:
+            return l2
+        if not l2:
+            return l1
+        
+        temp = l1.val + l2.val
+        Ge_value = temp % 10
+        ans = ListNode(Ge_value)
+
+        ans.next = self.addTwoNumbers(l1.next, l2.next)
+        if temp >= 10:
+            ans.next = self.addTwoNumbers(ans.next, ListNode(1))
+        
+        return ans
+
+            
