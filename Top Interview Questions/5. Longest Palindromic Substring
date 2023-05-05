@@ -1,0 +1,33 @@
+# 二维数组 dp，dp[i][j] 表示字符串区间 [i, j] 是否为回文串
+# 三种情况如下
+# dp[j][i] = (s[i] == s[j]) and ((i - j < 2) or dp[j + 1][i - 1])
+# (1)  i = j 时，只有一个字符，肯定是回文串
+# (2)  i = j + 1 ，说明是相邻字符，此时需要判断s[i]是否等于 s[j] 
+# (3)  i 和 j 不相邻，即 i - j >= 2 时，除了判断 s[i] 和 s[j] 相等之外，dp[j + 1][i - 1] 若为真，就是回文串
+
+# 其中dp[j + 1][i - 1] 若为真 -> 表示去掉首尾是否为回文
+# 假设 s = "bbabab" 当i=5 j=1时 代表的是babab
+# 此时 i - j > 2， 先判断s[i] == s[j] = 'b' 在来判断dp[j + 1][i - 1]是否真
+# 此时去掉首尾是否为回文这个动作在dp[2][4]时代表的是"aba"
+# 所以说去掉首尾b仍然是回文 -> dp[5][1] = True
+
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        length = len(s)
+        left = right = 0
+        maxLength = 0
+
+        dp = [[0] * length for i in range(length)]
+        for i in range(length):
+            for j in range(i):
+                dp[j][i] = (s[i] == s[j]) and ((i - j <= 2) or dp[j + 1][i - 1])
+                if dp[j][i] and maxLength < i - j + 1:
+                    maxLength = i - j + 1
+                    left = j 
+                    right = i
+            
+        return s[left : right + 1]
