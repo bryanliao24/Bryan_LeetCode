@@ -1,0 +1,7 @@
+nums = 1234
+
+法一： list = map(int, str(nums))
+
+or 
+
+法二： list = [int(x) for x in str(nums)]
