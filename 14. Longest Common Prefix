@@ -24,6 +24,7 @@ class Solution(object):
         for i in range(len(strs[0])):
             c = strs[0][i]
             for j in range(len(strs)):
+                # i >= len(strs[j]) 是看当前的这个单词是否有超过其他的单词
                 if i >= len(strs[j]) or c != strs[j][i]:
                     return strs[0][:i]
         
