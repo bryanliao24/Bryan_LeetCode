@@ -1,0 +1,32 @@
+class Solution(object):
+    def myAtoi(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        if not s:
+            return 0
+        
+        # 修剪首尾的空格
+        s = s.strip()
+        if not s:
+            return 0
+        num = 0
+        negative = 1
+
+        if s[0] == '-':
+            s = s[1:]
+            negative = -1
+        elif s[0] == '+':
+            s = s[1:]
+        
+        for n in s:
+            if n >= '0' and n <= '9':
+                num = 10 * num + ord(n) - ord('0')
+            else:
+                break
+
+        num = negative * num
+        num = num if num <= (2**31) - 1 else (2**31) - 1
+        num = num if num >= -(2**31) else -2**31 
+        return num
