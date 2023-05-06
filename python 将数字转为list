@@ -5,3 +5,13 @@ nums = 1234
 or 
 
 法二： list = [int(x) for x in str(nums)]
+
+## 数字list 转为 str的list##
+
+strList = [str(i) for i in list]
+
+-> ['1', '2', '3', '4']
+
+## str的list 转为 数字 ##
+IntNum = int(''.join(strList))
+-> 1234
