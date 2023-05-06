@@ -1,0 +1,57 @@
+# <法一> 转list翻转再合并
+# 把数字转成 [1,2,3] 
+# 然后转str ['1', '2', '3']
+# 然后翻转 
+# 最后使用join转Int
+# symbol = "-"
+# seq = ("a", "b", "c")
+# symbol.join( seq ) -> a-b-c
+
+class Solution(object):
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        def ToListReverseToInt(x):
+            listt = [int(i) for i in str(x)]
+            listtt = listt[::-1]
+            reverse = [str(i) for i in listtt]
+            reverseInt = int(''.join(reverse))
+            if -(2 ** 31) > reverseInt or reverseInt > (2 ** 31) - 1:
+                return 0
+            return reverseInt
+        if x > 0 :
+            ans = ToListReverseToInt(x)
+        
+        else:
+            ans = (-1) * ToListReverseToInt((-1) * x)
+        
+        return ans
+        
+---------------------------------------
+x = int(str(x)[::-1]) if x >= 0 else -int(str(-x)[::-1])
+return x if x >= -(2 ** 31) and x < (2 ** 31)-1 else 0
+
+----------------------------------------
+# <法二> 快！
+# 123 % 10 得到 3 作为个数(尾数)
+# 每次都要乘10构造再加上新的个数
+
+class Solution(object):
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        negative = 1 if x >= 0 else -1
+
+        reverse_x = 0
+        x = abs(x)
+
+        while x:
+            reverse_x = 10* reverse_x + x % 10
+            x //= 10
+        
+        reverse_x *= negative 
+        return reverse_x if reverse_x >= -(2 ** 31) and reverse_x < (2 ** 31)-1 else 0
