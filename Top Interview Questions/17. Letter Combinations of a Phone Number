@@ -1,0 +1,70 @@
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        if not digits:
+            return None
+        
+        dic = collections.defaultdict(list)
+        a = 97
+        for i in range(2,10):
+            for j in range(3):
+                dic[i].append(chr(a))
+                a += 1
+            if i == 7 or i == 9:
+                dic[i].append(chr(a))
+                a += 1
+        
+        phone = [int(i) for i in digits] # [2,3]
+        ans = [""]
+        
+        # 一行做法
+        # for num in phone:
+        #     ans =[w + c for c in dic[num] for w in ans]
+        
+        for num in phone:
+            temp = []
+            for c in dic[num]:
+                for w in ans:
+                    temp.append(w + c) 
+            ans = temp
+        return ans
+        
+--------------------------------------------------
+# <用array代替dic>
+phone = ["","","abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
+        ans = [""]
+        for i in digits:
+            tem = []
+            for j in phone[int(i)]:
+                for k in ans:
+                    tem.append( k + j)
+            ans = tem
+        return ans
+--------------------------------------------------       
+# iteration 
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        if not digits:
+            return None
+
+        dic = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'}
+
+        ans = []
+        self.dfs(digits, 0, ans, '', dic)
+        return ans
+
+    def dfs(self, digits, index, ans, path, dic):
+        if index == len(digits):
+            if path != '':
+                ans.append(path)        
+            return 
+
+        for j in dic[digits[index]]:
+            self.dfs(digits, index + 1, ans, path + j, dic)
