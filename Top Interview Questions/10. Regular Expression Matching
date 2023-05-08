@@ -1,0 +1,55 @@
+# 动态规划
+class Solution(object):
+    def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        # dp数组 dp[i][j]代表 s[0到i] 与 p[0到j] 是否匹配
+        dp = [[False for i in range(len(p)+1)] for j in range(len(s)+1)]
+        # 若s为空 (1)则p也必须为空
+        dp[0][0] = True 
+
+        # 若s为空 (2)必须有*才可满足 并且一定和去掉*及其前面的符号相同
+        for i in range(1, len(p)+1):
+            dp[0][i] = p[i-1] == '*' and dp[0][i-2] and i>1
+                
+        for i in range(1, len(s)+1):
+            for j in range(1, len(p)+1):
+                if p[j-1] == '*':
+                    dp[i][j] = dp[i][j-2] or (dp[i-1][j] and (s[i-1] == p[j-2] or p[j-2] == '.'))
+                else:
+                    dp[i][j] = dp[i-1][j-1] and (p[j-1] == '.' or p[j-1] == s[i-1])
+        return dp[len(s)][len(p)]
+
+----------------------------------------------------------
+# iterative -> over time limit 
+class Solution(object):
+    def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        # 若p为空，s也应为空 
+        if len(p) == 0: return len(s) == 0 
+        
+        # 比较s与p的第一个字符是否相同并做标记
+        if len(s) != 0 and p[0] in [s[0], '.']:
+            flag = True 
+        else:
+            flag = False
+            
+        # 若p[1] = '*'时分为两种情况
+        # (1)前一个字符出现0次，则跳过p两个字符（一个是'*'）->递归比较s与p[2:]
+        # (2)前一个字符出现n次，则p不动但跳过s一个字符->递归比较s[1:]与p，
+        #    其中"flag and"表示前一个字符相同
+        if len(p) >= 2 and p[1] == '*':
+            return (flag and self.isMatch(s[1:], p) or (self.isMatch(s, p[2:])))
+            
+        # 若p[1] != '*'直接递归比较s[1:]与p[1:]，flag and表示前一个字符相同。
+        else:
+            return flag and self.isMatch(s[1:], p[1:])
+
+
