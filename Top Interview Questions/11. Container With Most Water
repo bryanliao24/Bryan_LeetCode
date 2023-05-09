@@ -1,0 +1,21 @@
+# 双指针 
+# 计算左右挡板之间的面积，然后在向中间移动
+# 如果哪个挡板比较矮，就舍弃掉这个挡板，把指向这个挡板的指针向中间移动
+class Solution(object):
+    def maxArea(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        ans = 0 
+        left = 0
+        right = len(height) - 1 
+        while left < right:
+            high = min(height[left], height[right])
+            ans = max(ans, high * (right - left))
+            if height[left] < height[right]:
+                left += 1
+            else:
+                right -= 1
+        
+        return ans
