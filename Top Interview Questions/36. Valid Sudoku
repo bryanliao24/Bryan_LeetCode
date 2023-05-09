@@ -1,0 +1,42 @@
+# 三个规则： 判断行 判断列 判断九宫格
+# 用set()去除重复 比较长度是否相同
+
+class Solution(object):
+    def isValidSudoku(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: bool
+        """
+        length = 9
+        return self.isRow(board, length) and self.isCol(board, length) and self.isNineCell(board, length)
+    # 判断行
+    def isRow(self, board, length):
+        for i in range(length):
+            row = [x for x in board[i] if x != '.']
+            if len(set(row)) != len(row):
+                return False
+        return True
+
+    # 判断列
+    def isCol(self, board, length):
+        for y in range(length):
+            col = [board[x][y] for x in range(length) if board[x][y] != '.']
+            if len(set(col)) != len(col):
+                return False
+        return True
+    
+    # 判断九宫格
+    def isNineCell(self, board, length):
+        for i in range(0, length, 3):
+            for j in range(0, length, 3):
+                cell = []
+                for x in range(3):
+                    for y in range(3):
+                        num = board[i + x][j + y]
+                        if num != '.':
+                            cell.append(num)
+                
+                if len(set(cell)) != len(cell):
+                    return False
+        
+        return True
