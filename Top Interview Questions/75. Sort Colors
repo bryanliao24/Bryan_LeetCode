@@ -1,0 +1,49 @@
+# 計數排序 計算出現次數然後扣掉 注意是使用index(i)去判斷個數
+class Solution(object):
+    def sortColors(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        dic = collections.Counter(nums)
+        for i in range(len(nums)):
+            if i < dic[0]:
+                nums[i] = 0
+            elif i < dic[0] + dic[1]:
+                nums[i] = 1
+            else:
+                nums[i] = 2 
+----------------------------------------------------------------
+
+# two pointer
+# 把数组分成三段，分别是小于1，等于1和大于1
+# 两个指针，zero和two；zero指向第一个1的位置（0串的末尾），two指向第一个非2的位置# i遇到0就换到左边去，遇到2就换到右边去，遇到1就跳过
+
+class Solution(object):
+    def sortColors(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        zero = 0
+        two = len(nums) - 1
+        i = 0 
+        while i <= two:
+            if nums[i] == 0:
+                nums[zero], nums[i] = nums[i], nums[zero]
+                i += 1
+                zero += 1
+            elif nums[i] == 1:
+                i += 1
+            elif nums[i] == 2:
+                nums[two], nums[i] = nums[i], nums[two]
+                two -= 1
+----------------------------------------------------------------
+
+# bubble sort 
+for i in range(len(nums)-1):
+            for j in range(len(nums)-i-1):
+                if nums[j] > nums[j+1]:        # 比大小然後互換
+                    nums[j], nums[j+1] = nums[j+1], nums[j]
+
+        return nums
