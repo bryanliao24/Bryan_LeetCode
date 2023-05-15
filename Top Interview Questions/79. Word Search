@@ -1,0 +1,31 @@
+class Solution(object):
+    def exist(self, board, word):
+        """
+        :type board: List[List[str]]
+        :type word: str
+        :rtype: bool
+        """
+        row = len(board)
+        col = len(board[0])
+
+        def dfs(x, y, index):
+            if index == len(word):
+                return True
+            if x < 0 or x >= row or y < 0 or y >= col:
+                return False
+            if board[x][y] != word[index]:
+                return False
+            # 先标记 * 避免重复搜索
+            board[x][y] = '*'
+
+            ifisexist = dfs(x+1, y, index+1) or dfs(x, y+1, index+1) or dfs(x-1, y, index+1) or dfs(x, y-1, index+1)
+            
+            # 如果前一次搜索失败 回复原始word字母继续dfs
+            board[x][y] = word[index]
+            return ifisexist
+        
+        for x in range(row):
+            for y in range(col):
+                if dfs(x, y, 0):
+                    return True
+        return False
