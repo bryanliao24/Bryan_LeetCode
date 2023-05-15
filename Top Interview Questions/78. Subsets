@@ -1,0 +1,20 @@
+class Solution(object):
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        def dfs(ans, index, path):
+            ans.append(path)
+            for i in range(index, len(nums)):
+                dfs(ans, i + 1, path + [nums[i]])
+            
+        ans = []
+        dfs(ans, 0, [])
+        return ans
+        
+----------------------------------------------------
+ans = [[]]
+for num in nums:
+    ans += [item+[num] for item in ans]
+return ans
