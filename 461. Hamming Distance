@@ -1,0 +1,20 @@
+class Solution(object):
+    def hammingDistance(self, x, y):
+        """
+        :type x: int
+        :type y: int
+        :rtype: int
+        """
+        binaryx = bin(x).replace("0b", "")
+        binaryy = bin(y).replace("0b", "")
+        
+        if len(binaryx) < len(binaryy):
+            binaryx = binaryx.zfill(len(binaryy))
+        elif len(binaryx) > len(binaryy):
+            binaryy = binaryy.zfill(len(binaryx))
+        count = 0
+        for i in range(len(binaryx)):
+            if binaryx[i] != binaryy[i]:
+                count += 1
+
+        return count
