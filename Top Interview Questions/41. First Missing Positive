@@ -1,0 +1,27 @@
+# 如果数组的长度是l，那么结果最大就是l+1
+# 首先把所有是负数和是大于 l+1 的数，都变成0，並给数组加一个0（处理原本數組就有0的情况）
+# 然后遍历数组，把数对应下标的数加上 l+1
+# 此時如果下標對應的就是跳過的數 比如index到3 但nums[3]是4
+# 此時就會變nums[4] + (l+1) —> 這樣index為3的原本的4就不會動 
+# 最后再遍历一遍，第一个小于等于l的数，就是结果 以上面來說 就是4沒有動 返回index -> 3
+
+class Solution(object):
+    def firstMissingPositive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        
+        nums.append(0)
+        length = len(nums)
+        if length == 1:
+            return 1
+        for i in range(length):
+            if nums[i] < 0 or nums[i] >= length:
+                nums[i] = 0
+        for i in range(length):
+            nums[nums[i] % length] += length
+        for i in range(1, length): #从1开始因为最小的数是1
+            if nums[i] < length:
+                return i
+        return length
