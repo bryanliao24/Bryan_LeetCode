@@ -1,0 +1,28 @@
+# https://www.cnblogs.com/boring09/p/4231906.html 
+# stack內保存的是一直逐步上增高度的index
+# 遍歷heights, 如果新来的元素高度比栈末尾元素高，那么需要入栈，因为面积最大的元素会出现在后面
+# 如果比栈顶元素小，那么pop，并且同時计算到目前的最大面積
+
+class Solution(object):
+    def largestRectangleArea(self, heights):
+        """
+        :type heights: List[int]
+        :rtype: int
+        """
+        stack = [] # 保存的是index -> 右邊界
+        ans = 0
+        heights.append(0) # 為了最後處理高度 因為高度0必定小於任何前高度
+        for i in range(len(heights)):
+            if not stack or heights[i] > heights[stack[-1]]:
+                stack.append(i)
+        
+            else:
+                while stack and heights[i] <= heights[stack[-1]]:
+                    high = heights[stack[-1]]
+                    stack.pop()
+                    width = i if not stack else i - stack[-1] - 1
+                    ans = max(ans, width * high)
+                stack.append(i)
+        return ans
+            
+        
