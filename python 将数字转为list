@@ -8,7 +8,8 @@ or
 
 ## 数字list 转为 str的list##
 
-strList = [str(i) for i in list]
+法一： strList = [str(i) for i in list]
+法二： strList = map(str, b)
 
 -> ['1', '2', '3', '4']
 
