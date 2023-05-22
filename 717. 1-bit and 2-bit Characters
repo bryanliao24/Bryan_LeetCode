@@ -1,0 +1,21 @@
+# 有两种字符串，一种是 0，一种是 10 或 11
+# 遍历一遍，当前值是是 0 走 一 步，是 1 走 两 步
+
+class Solution(object):
+    def isOneBitCharacter(self, bits):
+        """
+        :type bits: List[int]
+        :rtype: bool
+        """
+        i = 0
+        lenbits = len(bits) - 1
+        while(i < lenbits):
+            if bits[i] == 0:
+                i += 1
+            elif bits[i] == 1:
+                i += 2
+        
+        if i == lenbits:
+            return True
+        else:
+            return False
