@@ -1,0 +1,15 @@
+# 1. 字母转ASCII -> ord() -> ord('字符')
+# 2. ASCII转字母 -> chr() -> chr(ASCII码)
+class Solution(object):
+    def toLowerCase(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        ans = ""
+        for i in s:
+            if 'A' <= i <= 'Z':
+                i = chr(ord(i) + 32)
+            ans += i
+        return ans
+        # return s.lower()
