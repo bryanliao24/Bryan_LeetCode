@@ -1,0 +1,24 @@
+# 如果是偶数层就正常向后添加
+# 奇数层就把新元素插入到第一个
+
+class Solution(object):
+    def zigzagLevelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """ 
+        ans = []
+        self.preorder(root, 0, ans)
+        return ans
+    
+    def preorder(self, root, level, ans):
+        if root:
+            if len(ans) < level + 1:
+                ans.append([])
+        # 判断奇偶层
+            if level % 2 == 0:
+                ans[level].append(root.val)
+            else:
+                ans[level].insert(0, root.val)
+            self.preorder(root.left, level + 1, ans)
+            self.preorder(root.right, level + 1, ans)
