@@ -1,0 +1,20 @@
+# 中序遍历：左子树，根节点，右子树
+# 后序遍历：左子树，右子树，根节点
+# postorder[index:-1] 从index开始到最后一个数 但不包括
+
+class Solution(object):
+    def buildTree(self, inorder, postorder):
+        """
+        :type inorder: List[int]
+        :type postorder: List[int]
+        :rtype: TreeNode
+        """
+        if not inorder or not postorder:
+            return None
+        
+        NewRoot = TreeNode(postorder[-1]) # 根節點
+        index = inorder.index(postorder[-1]) # 找到上面根節點在中序的位置
+        NewRoot.left = self.buildTree(inorder[:index], postorder[:index])
+        NewRoot.right = self.buildTree(inorder[index+1:], postorder[index:-1])
+
+        return NewRoot
