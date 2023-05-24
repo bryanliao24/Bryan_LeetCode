@@ -1,0 +1,10 @@
+# 将后一节点的值赋给当前节点，将后一节点直接指向下一个
+
+class Solution(object):
+    def deleteNode(self, node):
+        """
+        :type node: ListNode
+        :rtype: void Do not return anything, modify node in-place instead.
+        """
+        node.val = node.next.val
+        node.next = node.next.next
