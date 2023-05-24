@@ -1,0 +1,35 @@
+# <法一> 回溯 超时！！！
+class Solution(object):
+    def minCut(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        def dfs(index, cut):
+            if index == len(s):
+                self.ans = min(self.ans, cut - 1)        
+            for j in range(index, len(s)):
+                if s[index: j+1] == s[index: j+1][::-1]:
+                    dfs(j+1, cut+1)
+            
+        if s == s[::-1]:
+            return 0
+        self.ans = float('inf')
+        dfs(0, 0)
+        return self.ans
+        
+------------------------------------------
+# <法二> dp
+# dp[i]代表从0到i位置回文子串需要的最小切分次数
+class Solution(object):
+    def minCut(self, s):
+ 
+        dp = [float("inf")] * (len(s) + 1)
+        dp[0] = -1 # -1是为了+1后 = 0 代表s本身完整的就是回文
+
+        for i in range(1, len(s) + 1):
+            for j in range(1, i + 1):
+                if s[j-1: i] == s[j-1: i][::-1]:
+                    dp[i] = min(dp[i], dp[j-1] + 1)
+        
+        return dp[-1]
