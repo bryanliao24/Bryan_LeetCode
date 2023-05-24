@@ -1,0 +1,63 @@
+# <法一> 回溯
+# 继续开始回溯的条件是目前的结果已经是回文串
+# 然后从后面的字符开始继续回溯
+
+class Solution(object):
+    def partition(self, s):
+        """
+        :type s: str
+        :rtype: List[List[str]]
+        """
+        # 利用lambda 传进来一个s子字串 返回比较是否相同于翻转后 True/False
+        self.palin = lambda s : s == s[::-1]
+        ans = []
+        self.dfs(s, ans, [])
+        return ans
+
+    def dfs(self, s, ans, path):
+        if not s:
+            ans.append(path)
+            return None
+        for i in range(1, len(s) + 1):
+            if self.palin(s[:i]): #比较是否回文 若是 则直接传后面的字串 
+                self.dfs(s[i:], ans, path + [s[:i]])
+                
+--------------------------------------------------------------------
+# 撰写函式替代lambda function
+def palin(s):
+    if not s:
+        return True
+    head = 0
+    tail = len(s)-1
+    while head <= tail:
+        if s[head] != s[tail]:
+            return False
+        head += 1
+        tail -= 1
+    return True
+    
+--------------------------------------------------------------------
+
+# <法二> dp
+# dp[i]存的為s 从 0 到 i 的所有回文子字串
+
+class Solution(object):
+    def partition(self, s):
+        """
+        :type s: str
+        :rtype: List[List[str]]
+        """
+        palin = lambda s : s == s[::-1]
+        dp = [ [] for _ in range(len(s)+1)]
+
+        for i in range(1,len(s)+1):
+            for j in range(i):
+                if palin(s[j:i]): #若s[j:i]為回文 
+                    if len(dp[j]) > 0:
+                        #把dp[j]儲存的所有分割與s[j:i]連線並append到dp[i]中
+                        #dp[j]是储存到当前字母所有可能的方法
+                        for path in dp[j]:
+                            dp[i].append(path+[s[j:i]])
+                    else:
+                        dp[i].append([s[j:i]])
+        return dp[-1]
