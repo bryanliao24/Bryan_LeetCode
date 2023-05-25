@@ -1,0 +1,48 @@
+# Dynamic Programming
+# local[i][j] 为在到达第 i 天时最多可进行 j 次交易并且最后一次交易在最后一天卖出的最大利润，此为局部最优
+# 然后 global[i][j] 为在到达第 i 天时最多可进行 j 次交易的最大利润，此为全局最优。
+# local[i][j] = max(global[i - 1][j - 1] + max(diff, 0), local[i - 1][j] + diff)
+# global[i][j] = max(local[i][j], global[i - 1][j])
+# 其中local 是比较前一天并少交易一次的全局最优加上大于0的差值，和前一天的局部最优加上差值中取较大值
+# 而全局最优比较局部最优和前一天的全局最优
+
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        globall = [[0] * 3 for i in range(len(prices))]
+        locall = [[0] * 3 for i in range(len(prices))]
+
+        for i in range(1, len(prices)):
+            diff = prices[i] - prices[i - 1]
+            for j in range(1, 3):
+                locall[i][j] = max(globall[i - 1][j - 1] + max(diff, 0), locall[i - 1][j] + diff)
+                globall[i][j] = max(locall[i][j], globall[i - 1][j])
+        
+        return globall[-1][-1]
+--------------------------------------------------------------------------------
+# <法二> 快！
+# buy1 - 到目前為止看到的第一筆交易的最低價格
+# sell1 - 到目前為止第一筆交易的最大利潤
+# buy2 - 考慮到第一筆交易的利潤，第二筆交易的最低價格
+# sell2 - 到目前為止看到的第二筆交易的最大利潤
+
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        buy1 = buy2 = float('inf')
+        sell1 = sell2 = 0
+
+        for i in prices:
+          buy1 = min(buy1, i)
+          sell1 = max(sell1, i-buy1)
+
+          buy2 = min(buy2, i-sell1)
+          sell2 = max(sell2, i-buy2)
+
+        return sell2
