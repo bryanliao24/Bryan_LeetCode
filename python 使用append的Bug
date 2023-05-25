@@ -1,0 +1,6 @@
+若直接使用append后修改数值恐会掉入bug
+因此要先copy再append
+ex. (list)reverse要append一个list叫image
+
+1. T = image.copy()
+2. reverse.apppend(T)
