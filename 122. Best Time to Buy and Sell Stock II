@@ -1,0 +1,16 @@
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        price = prices[0]
+        daily = 0
+        profit = 0
+        for i in prices:
+            if i < price:
+                price = i
+            if i - price > 0:
+                profit += i - price
+                price = i
+        return profit 
