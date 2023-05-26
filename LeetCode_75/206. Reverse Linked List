@@ -10,10 +10,21 @@ class Solution(object):
         prev = None
         while head:
             next = head.next
-            head.next = prev
-            prev = head
+            head.next = prev 
+            prev = head      
             head = next
         return prev
+###############################################################
+        prev = None
+        nextPoint = None 
+        cur = head 
+        while cur:
+            nextPoint = cur.next  # 第一步：设立节点next指向原本的下一个节点(原本head list)
+            cur.next = prev       # 第二步：把当前节点指向前一个点(reverse list)
+            prev = cur            # 第三步：移动到当前节点(reverse list)
+            cur = nextPoint       # 第四步：往下一个节点(原本head list)
+        return prev
+###############################################################
 ---------------------------------------------------------------
 struct ListNode* reverseList(struct ListNode* head){
     struct ListNode* prev=NULL;
