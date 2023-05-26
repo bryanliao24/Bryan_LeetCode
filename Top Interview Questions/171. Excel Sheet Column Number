@@ -1,9 +1,19 @@
+# 正著做
+class Solution(object):
+    def titleToNumber(self, columnTitle):     
+        ans = 0
+        exp = 0
+        length = len(columnTitle)
+        
+        for i in range(length):
+            ans = ans * 26 + (ord(columnTitle[i]) - 64)
+              
+        return ans if ans <= 2147483647 else 2147483647
+---------------------------------------------------------------
+# 倒著做
 class Solution(object):
     def titleToNumber(self, columnTitle):
-        """
-        :type columnTitle: str
-        :rtype: int
-        """ 
+       
         ans = 0
         exp = 0
         length = len(columnTitle)
