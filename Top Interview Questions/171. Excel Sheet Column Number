@@ -1,0 +1,15 @@
+class Solution(object):
+    def titleToNumber(self, columnTitle):
+        """
+        :type columnTitle: str
+        :rtype: int
+        """ 
+        ans = 0
+        exp = 0
+        length = len(columnTitle)
+        
+        for i in range(length-1, -1, -1):
+            ans += 26 ** exp * (ord(columnTitle[i]) - 64)
+            exp += 1
+            
+        return ans if ans <= 2147483647 else 2147483647
