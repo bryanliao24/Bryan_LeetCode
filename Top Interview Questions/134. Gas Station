@@ -30,12 +30,3 @@ class Solution(object):
         
         return start if tank + lack >= 0 else -1
 
-
-
-
-
-
-
-
-
-
