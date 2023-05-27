@@ -1,0 +1,41 @@
+# tank，代表当前油箱剩余油量 
+# lack，代表走到当前的station欠了多少油量 
+# start变量，代表开始station的index
+# 遍历station，如果tank<0,将开始的station向前移位
+# 并将tank累加到lack上，然后将tank清零
+# 因为如果tank>0，说明从我们之前的start节点是可以走到当前节点的因为tank会一直大于0
+# 一旦tank出现小于0时，说明从之前的start节点到不了当前节点
+# 而lack变量会一直累计拖欠的油量
+# 遍历完之后再做判断，如果说剩余油量大于拖欠油量，说明剩下的部分可以安全的走完
+
+class Solution(object):
+    def canCompleteCircuit(self, gas, cost):
+        """
+        :type gas: List[int]
+        :type cost: List[int]
+        :rtype: int
+        """
+        if sum(gas) < sum(cost): return -1
+        
+        tank = 0
+        lack = 0
+        start = 0
+        for i in range(len(gas)):
+            tank += gas[i] - cost[i]
+
+            if tank < 0:
+                lack += tank
+                start = i + 1
+                tank = 0
+        
+        return start if tank + lack >= 0 else -1
+
+
+
+
+
+
+
+
+
+
