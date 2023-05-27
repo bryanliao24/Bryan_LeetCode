@@ -8,6 +8,8 @@
 # 而lack变量会一直累计拖欠的油量
 # 遍历完之后再做判断，如果说剩余油量大于拖欠油量，说明剩下的部分可以安全的走完
 
+# 一句话总结：只要从第一个gas-cost为正的station开始若走不完一圈 就是-1
+
 class Solution(object):
     def canCompleteCircuit(self, gas, cost):
         """
