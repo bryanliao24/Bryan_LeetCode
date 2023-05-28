@@ -1,0 +1,41 @@
+# 反向思路 -> 如果要去判断某个O所在的位置是不是被包围，挺困难的
+# 所以反向去找那些没有被包围的所有O的位置
+# 条件是：在四条boundary上的O是不被包围的
+# 因此做法是遍历四条边界上找所有O的位置开始延伸找到与该点直接相连的点加入到visited中
+# 其实也可以通过修改这些位置的mark，也可以直接记录位置 -> 降低空间
+# 最后遍历整个board，只要是不在visited内的同时又是O的就直接修改为X
+
+class Solution(object):
+    def solve(self, board):
+        """
+        :type board: List[List[str]]
+        :rtype: None Do not return anything, modify board in-place instead.
+        """
+        row = len(board)
+        col = len(board[0])
+        visited = []
+        ans = []
+
+        def dfs(i, j):
+            if i < 0 or i >= row or j < 0 or j >= col or board[i][j] != "O" or [i, j] in visited:
+                return None
+            
+            ans.append([i, j])
+            visited.append([i, j])
+            dfs(i + 1, j)
+            dfs(i - 1, j)
+            dfs(i, j + 1)
+            dfs(i, j - 1)
+        
+        for i in range(row): # 第一列和最后一列
+            dfs(i, 0)
+            dfs(i, col-1)
+        
+        for j in range(col): # 第一行和最后一行
+            dfs(0 , j)
+            dfs(row-1, j)
+
+        for i in range(row):
+            for j in range(col):
+                if board[i][j] == "O" and [i, j] not in ans:
+                    board[i][j] = "X"
