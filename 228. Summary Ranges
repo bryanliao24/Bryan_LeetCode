@@ -1,0 +1,20 @@
+class Solution(object):
+    def summaryRanges(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[str]
+        """
+        if not nums:return None
+        ans = []
+        i = 0
+        while i < len(nums):
+            end = i
+            while end < len(nums)-1 and nums[end] == nums[end+1]-1:
+                end += 1
+            if end == i:
+                ans.append(str(nums[i]))
+            else:
+                ans.append("{ii}->{endd}".format(ii=str(nums[i]),endd=str(nums[end])))
+                #ans.append("%s->%s" % (str(nums[i]), str(nums[end])))
+            i = end+1
+        return ans
