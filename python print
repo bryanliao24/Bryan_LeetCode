@@ -1,0 +1,7 @@
+li = [1, 2, 3]
+x = 3
+s = "YES"
+
+<法一> print("list is", li, ", integer is %d, str is %s" % (x, s))
+
+<法二> print("list is {l}, integer is {i}, str is {strr}".format(l=li, i=x, strr=s))
