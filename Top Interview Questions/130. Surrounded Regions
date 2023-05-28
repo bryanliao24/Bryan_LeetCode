@@ -27,11 +27,11 @@ class Solution(object):
             dfs(i, j + 1)
             dfs(i, j - 1)
         
-        for i in range(row): # 第一列和最后一列
+        for i in range(row): # 第一列和最后一列是否有O
             dfs(i, 0)
             dfs(i, col-1)
         
-        for j in range(col): # 第一行和最后一行
+        for j in range(col): # 第一行和最后一行是否有O
             dfs(0 , j)
             dfs(row-1, j)
 
