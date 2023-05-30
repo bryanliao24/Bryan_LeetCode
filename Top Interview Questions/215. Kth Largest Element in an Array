@@ -1,0 +1,30 @@
+nums.sort()
+return nums[-k]
+----------------------------------------
+# 目标：将nums分为三个list部分 left mid right
+# left为所有大于nums[0]的数 
+# mid为等于nums[0]的数 
+# right为小于nums[0]的数 
+# 若k小于left的长度 -> 代表要的数就在left内 -> 重复递归直到left长度< k
+# 若k大于left + mid的长度 -> 递归right直到left长度< k
+
+class Solution(object):
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        if not nums: return
+        pivot = random.choice(nums)
+        # pivot = nums[0]
+        left = [x for x in nums if x > pivot]
+        mid = [x for x in nums if x == pivot]
+        right = [x for x in nums if x < pivot]
+        L, M = len(left), len(mid)
+        if k <= L:
+            return self.findKthLargest(left, k)
+        elif k > L+M:
+            return self.findKthLargest(right, k - L - M)
+        else:
+            return mid[0]
