@@ -1,0 +1,47 @@
+# 素数筛法
+# 素数筛法就是把这个数的所有倍数都删除掉，因为这些数一定不是素数
+# 最后统计一下剩余的没有被删除的个数
+# 其实，当輪到下一個的素数的平方大于 n 时，那么后面没有划去的数都是素数，就不用继续判斷
+# 所以可以大幅縮減遍歷的次數 只要從 2 到 n開根號 就可以了 
+class Solution(object):
+    def countPrimes(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n<2: return 0
+
+        prime = [True] * n
+        prime[0] = prime[1] = False
+        for i in range(2, int(n ** 0.5)+1):
+            if prime[i]:
+                for j in range(i+i, n, i): # 取i的倍數（用加的）變成false  
+                    prime[j] = False
+                # 更快：直接從i*i開始 同樣與第四點道理一樣 因為平方之前的都已經被劃掉了
+                # <1.> for j in range(i*i, n, i)
+                # <2.> prime[i*i: n: i] = [False] * len(prime[i*i: n: i]) 
+                # 比如到 n = 12
+                # i=2 開始 prime[i*i: n: i] = [4, 6, 8, 10] 所以要乘上len(prime[i*i: n: i]) = 4 
+        return prime.count(True)
+-----------------------------------------------------------
+class Solution(object):
+    def countPrimes(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n == 1 or n == 0:
+            return 0
+        
+        count = [True] * n
+        for i in range(2, n):
+            j = 2
+            while i*j < n:
+                count[i*j] = False
+                j += 1
+        
+        ans = 0
+        for i in range(2, n):
+            if count[i] == True:
+                ans += 1
+        return ans
