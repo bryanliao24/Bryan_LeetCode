@@ -11,6 +11,8 @@ class Solution(object):
             if i not in numset:
                 ans.append(i)
         return ans
+        # numset = set(nums)
+        # return [i for i in range(1, len(nums)+1) if i not in numset]
 -----------------------------------------------------
 class Solution(object):
     def findDisappearedNumbers(self, nums):
