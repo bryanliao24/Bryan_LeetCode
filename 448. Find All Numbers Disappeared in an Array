@@ -1,0 +1,24 @@
+class Solution(object):
+    def findDisappearedNumbers(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        ans = []
+        numset = set(nums)
+        length = len(nums)
+        for i in range(1,length + 1):
+            if i not in numset:
+                ans.append(i)
+        return ans
+-----------------------------------------------------
+class Solution(object):
+    def findDisappearedNumbers(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        numset1 = set(range(1, len(nums)+1))
+        numset2 = set(nums)
+        ans = numset1 - numset2
+        return ans
