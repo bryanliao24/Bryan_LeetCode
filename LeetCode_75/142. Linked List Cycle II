@@ -1,10 +1,4 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     struct ListNode *next;
- * };
- */
+
 struct ListNode *detectCycle(struct ListNode *head) {
     if(head == NULL || head->next == NULL)return NULL;
     struct ListNode *onestep=head;
@@ -48,3 +42,24 @@ class Solution(object):
             visit.add(head)
             head=head.next
         return None
+-----------------------------------------------------------
+
+class Solution(object):
+    def detectCycle(self, head):
+       
+        if not head: return None
+        slow = fast = head
+
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+            if fast == slow:
+                break
+            
+        if not slow or not slow.next: return None
+        
+        p = head
+        while p != slow:
+            slow = slow.next
+            p = p.next
+        return p
