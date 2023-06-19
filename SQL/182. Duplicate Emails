@@ -1,0 +1,14 @@
+-- <法一>
+-- 拿一个不重复的表和自己作对照
+SELECT DISTINCT a.email 
+FROM Person AS a, Person AS b
+WHERE a.email = b.email and a.id <> b.id;
+
+----------------------------------------------
+
+-- <法二>
+-- 看到 重複、不重複 這關鍵字 一看就會想到用群組(GROUP BY方式去解決)
+SELECT Email
+FROM Person
+GROUP BY Email
+HAVING COUNT(Email) > 1;
