@@ -1,0 +1,15 @@
+# 使用字典
+# 对字符串进行排序 判断排序后是否一样 
+# 同样的字符串映射到同一个key
+
+class Solution(object):
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        ans = collections.defaultdict(list)
+        for s in strs:
+            sorted_str = ''.join(sorted(s))
+            ans[sorted_str].append(s)
+        return ans.values()
