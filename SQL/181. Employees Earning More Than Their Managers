@@ -1,0 +1,8 @@
+-- 將該表(a表)跟另一個自己(b表)結合
+-- 條件設a表ManagerId等於b表的Id且a表的Salary大於b表的Salary
+
+SELECT A.name AS Employee 
+FROM Employee AS A
+LEFT JOIN Employee AS B
+ON A.ManagerId = B.Id
+WHERE A.salary > B.salary;
