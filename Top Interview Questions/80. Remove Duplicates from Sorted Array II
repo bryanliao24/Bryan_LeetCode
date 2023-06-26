@@ -1,0 +1,22 @@
+# right 一直寻找下一个不同的数
+# 只有当right == prev 且 count==0 时不会进条件
+# 此时right直接继续找下一个不同于prev的数
+# 然后再刷新count
+
+class Solution(object):
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        prev = None
+        left = 0
+        for right in nums:
+            if (right == prev and count > 0) or right != prev:
+                if right != prev:
+                    count = 2
+                nums[left] = right
+                left += 1
+                count -= 1
+            prev = right
+        return left
