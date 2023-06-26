@@ -1,0 +1,11 @@
+SELECT A.name AS Customers
+FROM Customers AS A
+LEFT JOIN Orders AS B
+ON A.id = B.customerId  
+WHERE B.customerId is NULL
+
+---------------------------------------
+SELECT A.name AS Customers
+FROM Customers AS A
+WHERE A.id NOT IN(SELECT Orders.customerId FROM Orders)
+
