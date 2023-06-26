@@ -20,3 +20,13 @@ class Solution(object):
                 count -= 1
             prev = right
         return left
+----------------------------------------------
+class Solution(object):
+    def removeDuplicates(self, nums):
+      
+        left = 0 
+        for i in nums:
+            if left < 2 or i != nums[left - 2]:
+                nums[left] = i
+                left += 1
+        return left
