@@ -1,0 +1,19 @@
+# two pointers
+# left 指向应该放入元素的位置，每次移动一格
+# right 找到与left不同的元素，也就是应该放的元素，每次找到下一个新的元素。一直往后
+class Solution(object):
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        length = len(nums)
+        left, right = 0, 1
+        while right < length :
+            while right < length and nums[right] == nums[left]:
+                right += 1
+            left += 1
+
+            if right < length:
+                nums[left] = nums[right]
+        return left
