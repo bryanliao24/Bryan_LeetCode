@@ -8,6 +8,7 @@ class Solution(object):
         :rtype: int
         """
         length = len(nums)
+        if length <= 1: return length
         left, right = 0, 1
         while right < length :
             while right < length and nums[right] == nums[left]:
