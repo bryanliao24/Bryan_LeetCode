@@ -1,0 +1,8 @@
+class Solution(object):
+    def rotate(self, nums, k):
+        ans = []
+        index =  k % len(nums)
+        ans = nums[-index:] + nums[:-index]
+        
+        for i in range(len(ans)):
+            nums[i] = ans[i]
