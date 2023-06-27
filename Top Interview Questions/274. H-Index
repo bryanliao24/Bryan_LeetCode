@@ -1,0 +1,18 @@
+# 当h=3时表示至少有3篇影响力为3的论文；当h=5时表示至少有5篇影响力为5的论文（不成立） -> return 3 
+# length - i 是该index后面还有几篇文章(后面citation一定都大于当前index此数)
+# 求当前index的citation数和不小于该citation的论文个数的最小值
+# 然后再求这个最小值的最大值
+
+class Solution(object):
+    def hIndex(self, citations):
+        """
+        :type citations: List[int]
+        :rtype: int
+        """
+        citations.sort()
+        length = len(citations)
+        ans = 0
+        for i, cita in enumerate(citations):
+            ans = max(ans, min(cita, length-i))
+
+        return ans
