@@ -1,0 +1,21 @@
+# 贪心
+# longest保存当前能到达最远处的index
+# 遍历nums判断当前位置能不能到达
+# 若当前index大于longest说明前面无论怎么走也走不到后面 -> 返回False
+# 否则更新策略是当前位置索引+这个数字代表的能向右走多少步，代表了向右能到达的最远距离
+
+
+class Solution(object):
+    def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+
+        longest = 0
+        for i, num in enumerate(nums):
+            if i > longest:
+                return False
+            longest = max(longest, i + num)
+
+        return True
