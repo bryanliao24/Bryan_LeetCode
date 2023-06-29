@@ -1,4 +1,3 @@
-
 SELECT tweet_id 
-FROM Tweet
+FROM Tweets
 WHERE CHAR_LENGTH > 15;
