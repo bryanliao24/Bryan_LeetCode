@@ -1,5 +1,10 @@
 # 从顶向下的DP会导致元素越来越多 所以DP所维持的阵列会一直变大
 # 因此是从下向上做的DP
+# 先看下面那个二维DP 
+
+# <法二>
+# 因为每一层其实只会使用一次 更短的路径会更新到上一层
+# 所以可以使用一维DP就好
 # 对于第layer层，dp为当前的index -> “triangle[layer][i]”加上该index左子树和右子树的最小值
 # dp[i] = min(dp[i], dp[i + 1]) + triangle[layer][i]
 # dp的初始化从最底层开始，从倒数第二层开始遍历
@@ -20,3 +25,16 @@ class Solution(object):
                 dp[i] = min(dp[i], dp[i + 1]) + triangle[layer][i]
 
         return dp[0]
+
+
+-----------------------------------------------------
+# <法一>
+# 若用二维阵列维护dp
+
+height = len(triangle)
+for layer in range(height - 1, -1, -1):
+    cols = len(triangle[layer]) #当前layer有几个元素
+    for j in range(cols-1):
+        triangle[layer-1][j] += min(triangle[layer][j], triangle[layer][j+1])
+
+return triangle[0][0]
