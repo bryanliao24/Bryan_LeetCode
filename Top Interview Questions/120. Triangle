@@ -1,0 +1,22 @@
+# 从顶向下的DP会导致元素越来越多 所以DP所维持的阵列会一直变大
+# 因此是从下向上做的DP
+# 对于第layer层，dp为当前的index -> “triangle[layer][i]”加上该index左子树和右子树的最小值
+# dp[i] = min(dp[i], dp[i + 1]) + triangle[layer][i]
+# dp的初始化从最底层开始，从倒数第二层开始遍历
+# 第layer的元素是layer + 1个 -> 因为是三角形
+
+class Solution(object):
+    def minimumTotal(self, triangle):
+        """
+        :type triangle: List[List[int]]
+        :rtype: int
+        """
+        
+        height = len(triangle) # 三角形高度
+        dp = triangle[-1]
+
+        for layer in range(height - 2, -1, -1):
+            for i in range(layer + 1):
+                dp[i] = min(dp[i], dp[i + 1]) + triangle[layer][i]
+
+        return dp[0]
