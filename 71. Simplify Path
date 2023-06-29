@@ -1,0 +1,19 @@
+class Solution(object):
+    def simplifyPath(self, path):
+
+        ans = []
+        # split 返回字符串
+        # ['', 'home', '', 'foo', '']
+        s = path.split('/') 
+
+        for c in s:
+            if c == '' or c == '.':
+                continue
+            elif c == '..':
+                if ans:
+                    ans.pop()
+            else:
+                ans.append(c)
+        # ans = ['home', 'foo']
+
+        return '/' + '/'.join(ans)
