@@ -1,0 +1,54 @@
+# DP创建ans数组
+# ans[i][j]代表了从左上角到该index的最短路径
+# 先初始化第一横行是左边的和
+# 初始化第一直列是上边的和
+# ans = copy.deepcopy(grid)
+class Solution(object):
+    def minPathSum(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        if len(grid) == 1: 
+            return sum(grid[0])
+        row = len(grid)
+        col = len(grid[0])
+        ans = [[0 for i in range(col)] for j in range(row)]
+
+        for i in range(col):
+            ans[0][i] = ans[0][i-1] + grid[0][i]
+
+        for i in range(row):
+            ans[i][0] = ans[i-1][0] + grid[i][0]
+
+        for i in range(1, row):
+            for j in range(1, col):
+                ans[i][j] = min(ans[i-1][j], ans[i][j-1]) + grid[i][j]
+            
+        return ans[-1][-1]
+------------------------------------------------------------
+# 把初始直接写进去迴圈
+
+class Solution(object):
+    def minPathSum(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        if not grid or not grid[0]: return 0
+        row = len(grid)
+        col = len(grid[0])
+        ans = [[0 for i in range(col)] for j in range(row)]
+
+        for i in range(row):
+            for j in range(col):
+                if i == 0 and j == 0 :
+                    num = 0  # 直接=grid[i][j]
+                elif i == 0: # 横的行
+                    num = ans[i][j-1]
+                elif j == 0: # 直的列
+                    num = ans[i-1][j]
+                else:
+                    num = min(ans[i-1][j], ans[i][j-1])
+                ans[i][j] = num + grid[i][j]
+        return ans[-1][-1]
