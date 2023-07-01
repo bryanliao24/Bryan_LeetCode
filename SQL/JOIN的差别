@@ -1,0 +1,29 @@
+LEFT JOIN -> 以左表为主
+RIGHT JOIN -> 以右表为主
+JOIN = INNER JOIN -> 取交集
+
+EX. 两表
+id   subject
+1    语文
+2    数学
+3    英文
+
+id   grade
+2    70
+3    80
+4    90
+
+<LEFT JOIN>
+id ...
+1
+2
+3
+<RIGHT JOIN>
+id ...
+2
+3
+4
+<JOIN>
+id ...
+2 
+3
