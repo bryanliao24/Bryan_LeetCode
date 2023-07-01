@@ -30,3 +30,55 @@ int numIslands(char** grid, int gridSize, int* gridColSize){
     }
     return islands;
 }
+-----------------------------------------------------------------------
+row = len(grid)
+col = len(grid[0])
+
+def dfs(grid, i, j):
+    dirs = [[-1, 0], [0, 1], [0, -1], [1, 0]]
+    grid[i][j] = "0"
+    for d in dirs:
+        x = i + d[0]
+        y = j + d[1]
+        if x >= 0 and y >= 0 and x < row and y < col:
+            if grid[x][y] == "1":
+                dfs(grid, x, y)
+
+
+ans = 0
+for i in range(row):
+    for j in range(col):
+        if grid[i][j] == "1":
+            dfs(grid, i, j)
+            ans += 1
+return ans
+-----------------------------------------------------------------------
+class Solution(object):
+    def numIslands(self, grid):
+        """
+        :type grid: List[List[str]]
+        :rtype: int
+        """
+
+        row = len(grid)
+        col = len(grid[0])
+        ans = 0
+        
+        def dfs(x, y):
+            if x < 0 or y < 0 or x >= row or y >= col:
+                return 
+            
+            if grid[x][y] == "1":
+                grid[x][y] = "0"
+                dfs(x+1, y)
+                dfs(x, y+1)
+                dfs(x, y-1)
+                dfs(x-1, y)
+
+        for i in range(row):
+            for j in range(col):
+                if grid[i][j] == "1":
+                    dfs(i, j)
+                    ans += 1
+                
+        return ans
