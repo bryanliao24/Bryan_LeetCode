@@ -2,6 +2,8 @@
 # float('-inf') 负无穷
 # 构建一个dp数组，其index是金额
 # 从0到该index需要使用的最少的硬币数量
+# 更新的策略是从coin面额作为index开始 (因为比那个数大开始)
+# 到 amount+1 的面额依次向后查找，看这个位置能不能用更少的硬币组成（即使用面额是i - coin的需要硬币数量+ 1 )
 
 class Solution(object):
     def coinChange(self, coins, amount):
@@ -18,6 +20,4 @@ class Solution(object):
                 if dp[i - coin] != float('inf'):
                     dp[i] = min(dp[i], dp[i - coin] + 1)
         
-        if dp[amount] == float('inf'):
-            return -1
-        else:
+        return -1 if dp[amount] == float('inf') else dp[amount]
