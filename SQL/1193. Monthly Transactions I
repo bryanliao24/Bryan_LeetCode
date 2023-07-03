@@ -27,3 +27,19 @@ sum(amount) as 'trans_total_amount',
 sum(if(state = 'approved', amount, 0)) as 'approved_total_amount'
 from Transactions
 group by date_format(trans_date, "%Y-%m"), country
+
+-------------------------------------------------------------
+SELECT DATE_FORMAT(a.trans_date, "%Y-%m") AS month, 
+a.country,
+COUNT(a.id) AS trans_count,
+COUNT(b.id) AS approved_count,
+SUM(a.amount) AS trans_total_amount,
+SUM(COALESCE(b.amount,0)) AS approved_total_amount 
+FROM Transactions AS a
+LEFT JOIN (
+SELECT id, country, state, amount, 
+DATE_FORMAT(trans_date, "%Y-%m") AS month FROM Transactions
+WHERE state = 'approved'
+) AS b
+ON a.id = b.id
+GROUP BY DATE_FORMAT(a.trans_date, "%Y-%m"), a.country;
