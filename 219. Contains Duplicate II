@@ -1,0 +1,18 @@
+# dict保存每个数字出现过最新的，最近的一次index
+
+class Solution(object):
+    def containsNearbyDuplicate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        """
+        dic = {}
+
+        for i, v in enumerate(nums):
+            if v in dic:
+                if i - dic[v] <= k:
+                    return True
+            dic[v] = i
+
+        return False
