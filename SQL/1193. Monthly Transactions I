@@ -16,3 +16,14 @@ sum(if(state='approved',amount,0)) AS approved_total_amount
 FROM Transactions
 GROUP BY 1, 2
 -- 等同于group by month, country
+
+-------------------------------------------------------------
+select
+date_format(trans_date, "%Y-%m") AS month,
+country,
+count(*) as 'trans_count',
+sum(state = 'approved') as 'approved_count',
+sum(amount) as 'trans_total_amount',
+sum(if(state = 'approved', amount, 0)) as 'approved_total_amount'
+from Transactions
+group by date_format(trans_date, "%Y-%m"), country
