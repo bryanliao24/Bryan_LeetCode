@@ -1,0 +1,18 @@
+# Write your MySQL query statement below
+-- LEFT(trans_date, 7) 中的7是前7个字符
+-- COUNT(*) = COUNT(1)
+-- sum(if(state='approved',amount,0)) 
+-- IF(字段=‘某一值’, yes就为xxx或另一字段的值,no就为xxx或另一字段的值)
+-- 例如： IF(expr1,expr2,expr3)
+-- 如果 expr1 是TRUE
+-- 则 IF()的返回值为expr2; 否则返回值则为 expr3。
+
+SELECT LEFT(trans_date, 7) AS month, 
+country,
+COUNT(*) trans_count,
+sum(state='approved') AS approved_count,
+sum(amount) AS trans_total_amount,
+sum(if(state='approved',amount,0)) AS approved_total_amount
+FROM Transactions
+GROUP BY 1, 2
+-- 等同于group by month, country
