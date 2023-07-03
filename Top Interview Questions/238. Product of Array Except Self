@@ -1,0 +1,24 @@
+# 两次遍历
+# 第一次遍历在ans里保存当前index每个左边的数字乘积
+# 第二个遍历保存的是左边乘积 和 这个数字右边的乘积的乘积
+
+class Solution(object):
+    def productExceptSelf(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        length = len(nums)
+        ans = []
+
+        product = 1
+        for i in range(length):
+            ans.append(product)
+            product *= nums[i]
+
+        product = 1 
+        for i in range(length-1, -1, -1):
+            ans[i] *= product
+            product *= nums[i]
+        
+        return ans
