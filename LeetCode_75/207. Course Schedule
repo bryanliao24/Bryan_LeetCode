@@ -1,0 +1,38 @@
+# 同210. Course Schedule II
+
+class Solution(object):
+    def canFinish(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: bool
+        """
+        graph = collections.defaultdict(list)
+        for u, v in prerequisites:
+            graph[u].append(v)
+        # graph = {1: [0], 2: [0], 3: [1, 2]}
+        # 0 = 未知, 1 = 正在遍历的, 2 = 已经遍历过的
+
+        visited = [0] * numCourses
+        path = []
+        for i in range(numCourses):
+            # if not False: means True -> do condition
+            # True -> 有环 False无环
+            if self.dfs(graph, visited, i, path):
+                return []
+
+        return path
+    
+    def dfs(self, graph, visited, i, path):
+        if visited[i] == 1: return True  # 有环
+        if visited[i] == 2: return False # 无环
+
+        visited[i] = 1
+
+        for j in graph[i]: # 对该节点的neighbor做递归
+            if self.dfs(graph, visited, j, path): # 若任意的neighbor返回True代表有环
+                return True
+        
+        visited[i] = 2
+        path.append(i)
+        return False
