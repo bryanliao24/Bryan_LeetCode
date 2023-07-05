@@ -24,3 +24,32 @@ class Solution(object):
         for i in range(numRows - 1, len(s), interval):
             ans += s[i]
         return ans
+
+-----------------------------------------------------------------
+# 更快的方法
+# 創造一個同numRows行數的一維陣列
+# 當index(第幾行) = 0代表在第一行，interval是行數的間隔，interval恆等於一
+# index觸碰到最後一行時interval變為-1開始往上層後退形成Z形移動
+
+class Solution(object):
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        if numRows == 1:return s
+        ans = [""] * numRows
+
+        index = 0
+        interval = 1
+
+        for c in s:
+            ans[index] += c
+            if index == 0: # 第一行
+                interval = 1
+            elif index == numRows - 1: # 最後一行
+                interval = -1
+            index += interval
+
+        return "".join(ans)
