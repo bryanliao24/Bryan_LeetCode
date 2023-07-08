@@ -1,0 +1,18 @@
+class Solution(object):
+    def getMinimumDifference(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """     
+        self.ans = float("inf")
+        self.prev = None
+        self.inorder(root)
+        return self.ans
+
+    def inorder(self, root):
+        if not root:return None
+        self.inorder(root.left)
+        if self.prev:
+            self.ans = min(self.ans, root.val - self.prev.val)
+        self.prev = root
+        self.inorder(root.right)
