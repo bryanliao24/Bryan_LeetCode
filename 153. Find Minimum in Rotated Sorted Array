@@ -1,0 +1,24 @@
+# 有序的数组就想到二分查找
+class Solution(object):
+    def findMin(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if len(nums) == 1: return nums[0]
+        length = len(nums)
+        right = length - 1
+        left =  0
+        mid = 0
+        while nums[left] >= nums[right]:
+            if left + 1 == right:
+                mid = right 
+                break
+
+            mid = (right + left) / 2
+            if nums[mid] > nums[left]:
+                left = mid
+            elif nums[mid] < nums[right]:
+                right = mid
+        
+        return nums[mid]
