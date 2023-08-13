@@ -15,12 +15,12 @@ class Solution(object):
 
             if nums[mid] == target:
                return mid
-            if nums[mid] < nums[right]:
-                if nums[mid] < target and target <= nums[right]:
+            if nums[mid] < nums[right]: #代表m-r是有序数组 ordered 
+                if nums[mid] < target and target <= nums[right]: # 判断target是否在m-r之间
                     left = mid + 1
                 else:
                     right = mid - 1
-            else:
+            else: # 代表l-m是有序数组
                 if nums[mid] > target and target >= nums[left]:
                     right = mid - 1
                 else:
