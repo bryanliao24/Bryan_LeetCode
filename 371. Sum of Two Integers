@@ -1,0 +1,22 @@
+# 0 + 0 = 0
+# 1 + 0 = 1
+# 0 + 1 = 1
+# 1 + 1 = 0(with carry)
+# XOR 只有在两个加数的值都是1的时候才会产生进位
+# 然後將&的结果左移一位，然后再和XOR的结果相加。
+
+class Solution(object):
+    def getSum(self, a, b):
+        """
+        :type a: int
+        :type b: int
+        :rtype: int
+        """
+        mask = 0xFFFFFFFF
+        
+        while (b & mask) > 0:
+            carry = ( a & b ) << 1
+            a = a ^ b
+            b = carry
+        
+        return (a & mask) if b > 0 else a
