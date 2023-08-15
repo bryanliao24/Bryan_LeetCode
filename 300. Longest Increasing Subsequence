@@ -1,0 +1,22 @@
+# dp[i]的意义是到该位置为止的最长递增子序列
+# 每次遍历该index以前所有的数寻找最长
+# 更新的规则是找到前一个数该数之前也有更新过 -> >0
+# 最后求dp的最大值
+
+class Solution(object):
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        dp = [0] * len(nums)
+        dp[0] = 1
+        
+        for i in range(1, len(nums)):
+            sofarbig = 1
+            for j in range(0, i):
+                if nums[i] > nums[j]:
+                    sofarbig = max(sofarbig, dp[j] + 1)
+            dp[i] = sofarbig
+        
+        return max(dp)
