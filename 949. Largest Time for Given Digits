@@ -14,3 +14,48 @@ class Solution(object):
                 if Counter(arr) == Counter(t):
                     return str(t[0]) + str(t[1]) + ":" + str(t[2]) + str(t[3])
         return ""
+
+------------------------------------------------------------
+# 先把input list全部排序在比較大小
+
+import itertools
+class Solution(object):
+    def largestTimeFromDigits(self, arr):
+        """
+        :type arr: List[int]
+        :rtype: str
+        """
+        ans = ""
+        for a in itertools.permutations(arr):
+            hour = a[0]*10 + a[1]
+            minu = a[2]*10 + a[3]
+            if hour > 23 or minu > 59:
+                continue
+            
+            s_hour = str(hour)
+            s_minu = str(minu)
+            
+            if a[0] == 0:
+                s_hour = '0' + s_hour
+                
+            if a[2] == 0:
+                s_minu = '0' + s_minu
+                
+            cur =  s_hour + ":" + s_minu
+            ans = max(ans, cur)
+
+        return ans
+------------------------------------------------------------
+# 把所有排序在23:59內的項全部加入list 最後取最大
+
+class Solution(object):
+    def largestTimeFromDigits(self, arr):
+        
+        ans = [""] 
+        for a in itertools.permutations(arr):
+            if a[:2] > (2, 3) or a[2:] > (5, 9):
+                continue
+            else:
+                ans.append("%d%d:%d%d" % a)
+
+        return max(ans)
