@@ -1,0 +1,18 @@
+# s若要拆分，條件是s[0:k]能拆成功，並且 s[k:i]是一个在字典中的单词。
+# 要確保s[0:k]能拆分條件是dp[i](目前到的字母) = True
+
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        dp = [False] * (len(s) + 1)
+        dp[0] = True
+        for i in range(1, len(s) + 1):
+            for k in range(i):
+                if dp[k] and s[k:i] in wordDict:
+                    dp[i] = True
+
+        return dp[-1]
