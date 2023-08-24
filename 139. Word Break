@@ -16,3 +16,19 @@ class Solution(object):
                     dp[i] = True
 
         return dp[-1]
+-------------------------------------------------------
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        boolean dp[] = new boolean[s.length()+1];
+        dp[0] = true;
+        for (int i = 1 ; i < (s.length()+1); i++){
+            for(int k = 0; k < i; k++){
+                if (dp[k] && wordDict.contains(s.substring(k, i))){
+                    dp[i] = true;
+                }
+                
+            }
+        }
+        return dp[s.length()];
+    }
+}
