@@ -19,3 +19,23 @@ class Solution(object):
                 if i >= num:
                     dp[i] += dp[i - num]
         return dp[-1]
+
+------------------------------------------------------
+def dfs(target, index, path):
+            if target < 0:
+                return None         
+            elif target == 0:
+                ans.append(path)               
+                return None
+            
+            for i in range(len(nums)):
+                if nums[i] > target:
+                    return None
+                dfs(target - nums[i], i, path + [nums[i]])
+                
+
+        nums.sort()
+        ans = []
+        count = 0
+        dfs(target, 0, []) 
+        return len(ans)
