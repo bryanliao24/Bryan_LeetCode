@@ -1,0 +1,26 @@
+class Solution(object):
+    def combinationSum3(self, k, n):
+        """
+        :type k: int
+        :type n: int
+        :rtype: List[List[int]]
+        """
+        def dfs(k, n, index, ans, path):
+            if k < 0 or n < 0:
+                return None
+            elif k == 0 and n == 0:
+                ans.append(path)
+                return None
+            for i in range(index, len(nums)):
+                if nums[index] > n:
+                    return None
+                dfs(k - 1, n - nums[i], i+1, ans, path + [nums[i]])
+
+        nums = [0] * 9
+        for i in range(1, 10):
+            nums[i-1] = i
+
+        ans = []
+        path = []
+        dfs(k, n, 0, ans, path)
+        return ans
