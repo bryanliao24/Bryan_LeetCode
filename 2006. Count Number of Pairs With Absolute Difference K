@@ -5,13 +5,13 @@ class Solution {
         int ans = 0;
         for (int i = 0; i < nums.length; i++){
             int more2 = nums[i] + k, less2 = nums[i] - k;
-            if count.containsKey(more2){
+            if (count.containsKey(more2)){
                 ans += count.getOrDefault(more2, 0);
             }
-            if map.containsKey(less2){
+            if (count.containsKey(less2)){
                 ans += count.getOrDefault(less2, 0);
             }
-            count.put(nums[i], map.getOrDefault(nums[i],0) + 1 );
+            count.put(nums[i], count.getOrDefault(nums[i],0) + 1);
         }
         return ans;
 
