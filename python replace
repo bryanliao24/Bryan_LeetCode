@@ -1,0 +1,6 @@
+input_str = "2015年2月15日"
+
+# Remove "年" and "月," then replace "日" with an empty string
+output_str = input_str.replace("年", "-").replace("月", "-").replace("日", "")
+
+print(output_str) -> "2015-2-15"
