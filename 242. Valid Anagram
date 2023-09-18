@@ -21,3 +21,26 @@ class Solution(object):
                 tdic[j] = 1
         
         return True if sdic == tdic else False
+-------------------------------------------------------------------------
+
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        Map<Character, Integer> count = new HashMap<>();
+        
+        for (char x : s.toCharArray()) {
+            count.put(x, count.getOrDefault(x, 0) + 1);
+        }
+        
+        for (char x : t.toCharArray()) {
+            count.put(x, count.getOrDefault(x, 0) - 1);
+        }
+        
+        for (int val : count.values()) {
+            if (val != 0) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}
