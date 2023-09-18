@@ -1,0 +1,23 @@
+arr = [1, 2, 3]
+<法一> 
+from itertools import combinations
+
+subarrays = []
+for i in range(len(arr) + 1):
+    for combo in combinations(arr, i):
+        subarrays.append(list(combo))
+
+--------------------------------------
+
+<法二> 递归
+def sublists(arr, ans, index, path):
+    if index == len(arr):
+        ans.append(path)
+        return 
+  
+    sublists(arr, ans, index+1, path)
+    sublists(arr, ans, index+1, path + [arr[index]])
+
+ans = []
+arr = [1, 2, 3]
+sublists(arr, ans, 0, [])
