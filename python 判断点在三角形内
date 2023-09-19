@@ -11,3 +11,55 @@ determine if a given point is inside the triangle or not
 
 
 ***费马点是指三角形内部一点到三个顶点距离之和为最小值的点***
+
+
+----------------------------------------------------
+# cross product rule
+import math
+a = [2,2]
+b = [5,4]
+c = [7,2]
+p = [5,2]
+
+
+def have_same_sign(a, b, c):
+    if a > 0 and b > 0 and c > 0:
+        print("pos")
+        return True  
+    elif a < 0 and b < 0 and c < 0:
+        print("neg")
+        return True  
+    elif a == 0 or b == 0 or c == 0:
+        return True 
+    else:
+        return False  
+        
+def isInside(a, b, c, p):
+    ac = [0] * 2 
+    cb = [0] * 2 
+    ba = [0] * 2  
+    ap = [0] * 2  
+    cp = [0] * 2 
+    bp = [0] * 2
+    ac[0] = c[0] - a[0]
+    ac[1] = c[1] - a[1]
+    cb[0] = b[0] - c[0]
+    cb[1] = b[1] - c[1]
+    ba[0] = a[0] - b[0]
+    ba[1] = a[1] - b[1]
+    ap[0] = p[0] - a[0]
+    ap[1] = p[1] - a[1]
+    cp[0] = p[0] - c[0]
+    cp[1] = p[1] - c[1]
+    bp[0] = p[0] - b[0]
+    bp[1] = p[1] - b[1]
+    crossapac = ap[0]*ac[1] - ap[1] * ac[0]
+    crosscpcb = cp[0]*cb[1] - cp[1] * cb[0]
+    crossbpba = bp[0]*ba[1] - bp[1] * ba[0]
+    
+    if have_same_sign(crossapac, crosscpcb, crossbpba):
+        print("Yes, it's inside")
+    else:
+        print("No, it's outside")
+
+isInside(a, b, c, p)
