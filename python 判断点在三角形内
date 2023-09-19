@@ -1,0 +1,13 @@
+given three point to form a triangle 
+determine if a given point is inside the triangle or not
+
+<一> Area : the sum of three sub areas should equal to the total area of triangle
+
+<二> projection from the point to infinity and count the intersection is odd or even with the triangle -> 一条射线看几次相交
+
+<三> Cross product : go from a point with clockwise, the given point should always stay in the leftside of the vector we went.
+-> 给定ABC三点，从A开始逆时针走，如果点p在ABC三角形内部，p永远会在向量AC，CB和BA的左边。
+-> 利用外积(叉乘) 得到的值是否同号 -> 代表在同一侧
+
+
+***费马点是指三角形内部一点到三个顶点距离之和为最小值的点***
