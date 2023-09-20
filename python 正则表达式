@@ -1,0 +1,25 @@
+input -> a = "a6c9b12c5"
+output-> a = "a6b12c14"
+
+<法一> 正则表达式
+a = "a6c9b12c5"
+pair = re.findall(r'([a-zA-Z])(\d+)([a-zA-Z])', a)
+
+<法二>
+dic = {}
+i = 0
+while i < len(a):
+    alpha = a[i]
+    i += 1
+    num = ""
+    while i < len(a) and a[i].isdigit():
+        num += a[i]
+        i += 1
+    
+    if alpha in dic:
+        dic[alpha] += int(num)
+    else:
+        dic[alpha] =  int(num) 
+    
+dic_s = sorted(dic.keys())
+ans = "".join(f"{x}{dic[x]}" for x in dic)
