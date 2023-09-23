@@ -3,7 +3,7 @@ output-> a = "a6b12c14"
 
 <法一> 正则表达式
 a = "a6c9b12c5"
-pair = re.findall(r'([a-zA-Z])(\d+)([a-zA-Z])', a)
+pair = re.findall(r'([a-zA-Z])(\d+)', a)
 
 <法二>
 dic = {}
