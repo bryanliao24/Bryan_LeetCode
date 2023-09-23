@@ -11,20 +11,20 @@ class Solution(object):
         # 1:[0] 0:[1]
         visited = [0] * numCourses
         path = []
-        for i in range(numCourses):
-            if self.dfs(graph, visited, i):
-                return False
+        for i in range(numCourses): 
+            if self.dfs(graph, visited, i): # 判断是否有环
+                return False # 有环所以无法学习所有课程
 
-        return True
+        return True 
     
     def dfs(self, graph, visited, i):
-        if visited[i] == 1: return True  
-        if visited[i] == 2: return False 
+        if visited[i] == 1: return True  #有环
+        if visited[i] == 2: return False  #无环
 
         visited[i] = 1
         for j in graph[i]: 
-            if self.dfs(graph, visited, j): 
-                return True
+            if self.dfs(graph, visited, j):  #判断是否有环
+                return True # 有环
         
         visited[i] = 2
-        return False
+        return False #无环
