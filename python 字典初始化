@@ -1,0 +1,6 @@
+当值还没插入dict的时候有两个方法
+dic = collections.defaultdict(type)
+当直接取dic没有的值他会自动创建默认0
+
+a = dic.get(目标数, 0)
+当直接取dic没有的值他一样会返回0，但不会创建默认值在dict中，不同与上面的地方就是取不存在的值后他不会自动创建
