@@ -4,3 +4,5 @@ ex. (list)reverse要append一个list叫image
 
 1. T = image.copy()
 2. reverse.apppend(T)
+
+copy a[:]
