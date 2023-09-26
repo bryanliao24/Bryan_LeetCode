@@ -1,0 +1,11 @@
+class Solution:
+    def sortByBits(self, arr: List[int]) -> List[int]:
+        b = [0] * len(arr)
+        for i in range(len(arr)):
+            binary = bin(arr[i])[2:]
+            b[i] = binary.count("1")
+        new = sorted(zip(b, arr))
+        ans = [x[1] for x in new]
+      
+        return ans
+
