@@ -56,3 +56,16 @@ class Solution:
             ans = max(ans, right - left + 1)
         
         return ans
+-------------------------------------------------------------------
+
+d = {}
+window = 0
+
+for i, char in enumerate(s):
+    d[char] = d.get(char, 0) + 1
+    if window+1 - max(d.values()) <= k:
+        window += 1
+    else:
+        d[s[i-window]] -= 1
+
+print(window)
