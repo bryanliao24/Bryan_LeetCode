@@ -1,0 +1,3 @@
+a = Web Development
+找b list = Web Development@Graphic Design是否存在
+FIND_IN_SET(a.string,REPLACE(b.list, '@', ','))
