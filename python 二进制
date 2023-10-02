@@ -13,4 +13,6 @@ def custom_sort(item):
 sorted_list = sorted(ans, key=custom_sort)[::-1]
 
 print(sorted_list)
+
+--=>num.sort(key = lambda x : (bin(x).count("1"), x))
     
