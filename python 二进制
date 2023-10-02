@@ -1,2 +1,16 @@
 a = 5
 ans = bin(a)[2:].zfill(4) -> 0101
+
+# 将num中的数字按照转成二进制后“1”的次数排序大小
+num = [7,8,5,6]
+ans = num[:]
+for i in range(len(ans)):
+    ans[i] = bin(num[i])[2:].zfill(4)
+    
+def custom_sort(item):
+    return (item.count('1'), int(item, 2))
+    
+sorted_list = sorted(ans, key=custom_sort)[::-1]
+
+print(sorted_list)
+    
