@@ -1,0 +1,11 @@
+class Solution:
+    def breakPalindrome(self, palindrome: str) -> str:
+        path = ""
+        length = len(palindrome)
+ 
+        for i in range(length // 2 ):
+            if palindrome[i] != 'a':
+                path += palindrome[:i] + 'a' + palindrome[i+1:]
+                return path
+        
+        return palindrome[:-1] + 'b' if length > 1 else ""
