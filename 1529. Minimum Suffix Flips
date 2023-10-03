@@ -1,0 +1,11 @@
+# 把题目换成如何把字串变为 0 的次数
+# 如果中间元素是相邻的同类型，比如同为 1，或同为0 只能视为同一个
+class Solution:
+    def minFlips(self, target: str) -> int:
+        ans = 0
+        prev = '0'
+        for i in target:
+            if i != prev:
+                ans += 1
+                prev = i
+        return ans
