@@ -1,0 +1,13 @@
+import re
+
+# 原始字符串
+s = "今天天气很nice哦！"
+
+# 使用正则表达式匹配中文字符
+chinese_characters = re.findall(r'[\u4e00-\u9fa5]', s)
+
+# 将匹配到的中文字符拼接起来
+result = ''.join(chinese_characters)
+
+# 输出结果
+print(result)  # 输出 "今天天很哦"
