@@ -70,3 +70,12 @@ class Solution(object):
                 left += 1
                 right -= 1
         return True
+
+----------------------------------------------------------------
+
+new = []
+for i in s.lower():
+    if i.isalnum():
+        new.append(i)
+
+return new == new[::-1]
