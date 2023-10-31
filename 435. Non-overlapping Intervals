@@ -1,0 +1,23 @@
+# 排序，然后进行遍历
+# 如果新的区间起点比老的区间终点小的话，说明有重叠，需要选择保留的区间
+# 保留较小的终点的区间 -> 第二个数字较小的区间 。
+
+class Solution(object):
+    def eraseOverlapIntervals(self, intervals):
+        """
+        :type intervals: List[List[int]]
+        :rtype: int
+        """
+        ans = 0
+        cur = 0
+
+        intervals.sort()
+        for i in range(1, len(intervals)):
+            if intervals[cur][1] > intervals[i][0] : # -> overlapping
+                if intervals[cur][1] > intervals[i][1] :
+                    cur = i
+                ans += 1
+            else:
+                cur = i
+        
+        return ans
