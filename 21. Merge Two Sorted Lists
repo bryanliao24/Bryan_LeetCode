@@ -54,4 +54,6 @@ class Solution(object):
             p.next = list2
         else:
             p.next = list1
+
+        return merge.next # 因为第一个点是0
             
