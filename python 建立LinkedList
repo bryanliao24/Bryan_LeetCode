@@ -1,0 +1,45 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+当你调用 append 方法时，它将在链表中添加一个新的节点。这是通过以下步骤实现的：
+
+创建一个新节点：首先，append 方法创建一个新的节点，这个节点包含要添加的数据。
+
+检查链表是否为空：它检查链表是否为空，即检查链表的头节点是否为 None。如果链表为空，新节点将成为链表的第一个节点，也就是头节点。
+
+遍历链表：如果链表不为空，append 方法会遍历链表直到找到最后一个节点（即下一个节点为 None 的节点）。
+
+将新节点连接到链表：在找到最后一个节点后，将新节点链接到最后一个节点的 next 属性上，使新节点成为链表中的新最后一个节点。
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def append(self, data):
+        new_node = Node(data)
+        if not self.head:
+            self.head = new_node
+            return
+        last_node = self.head
+        while last_node.next:
+            last_node = last_node.next
+        last_node.next = new_node
+
+    def display(self):
+        current = self.head
+        while current:
+            print(current.data, end=" -> ")
+            current = current.next
+        print("None")
+
+# 创建一个链表并进行操作示例
+my_linked_list = LinkedList()
+my_linked_list.append(1)
+my_linked_list.append(2)
+my_linked_list.append(3)
+
+my_linked_list.display()
+
