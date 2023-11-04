@@ -1,0 +1,55 @@
+# 其实就是之前题目的整合
+# 解题方法是：
+# 1. 找到链表中点 -> head1
+# 2. 翻转中点以后，后半段的链表 -> head2
+# 3. 以此连接head1和head2
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def reorderList(self, head):
+        """
+        :type head: ListNode
+        :rtype: None Do not return anything, modify head in-place instead.
+        """
+        if head.next and head.next.next:
+            # 找中点
+            slow, fast = head, head
+            while fast.next and fast.next.next:
+                slow = slow.next
+                fast = fast.next.next
+
+            head1 = head # 从头开始
+            head2 = slow.next # head2从中点后一个为起点
+            slow.next = None
+
+            # 翻转head2
+            dummy = ListNode(0)
+            dummy.next = head2 # dummy 现在指向中点后一个
+            prev = head2.next  # prev现在指向从中点后两个
+            head2.next = None
+            
+            while prev:
+                temp = prev
+                prev = prev.next
+                temp.next = dummy.next #指向自己
+                dummy.next = temp
+            
+            head2 = dummy.next
+
+            l1 = head1
+            l2 = head2
+            while l2:
+                temp1 = l1.next
+                temp2 = l2.next
+                l1.next = l2
+                l2.next = temp1
+                l1 = temp1
+                l2 = temp2
+
+
+
+        
