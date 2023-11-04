@@ -37,3 +37,11 @@ struct ListNode* reverseList(struct ListNode* head){
     }
     return prev;
 }
+
+
+-----------------------------
+# 总结四步
+# 1. 分配下一个点 n
+# 2. 当前.next 指向前一个p
+# 3. p 往前一个等于当前
+# 4. 当前往前一个等于之前分配的n
