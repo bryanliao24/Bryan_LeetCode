@@ -14,3 +14,5 @@ matrix = [[0, 2, 0], [5, 0, 3], [0, 9, 0]]
 row = len(matrix)
 col = len(matrix[0])
 transpose_matrix = [[matrix[i][j] for i in range(row)] for j in range(col)]
+
+==> transpose_matrix = [[row[i] for row in matrix] for i in range(col)]
