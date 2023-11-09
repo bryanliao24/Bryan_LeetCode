@@ -1,3 +1,8 @@
+# dp
+# dp初始为从0到nums中最大数
+# 遍历时以当前index数与 -1 与 + 1的和比大小取大
+# prev 保留该index前最大的和
+
 class Solution(object):
     def deleteAndEarn(self, nums):
         """
