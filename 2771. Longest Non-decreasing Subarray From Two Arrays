@@ -1,0 +1,37 @@
+# nums1 = [1,3,2,1], nums2 = [2,2,3,4]
+# 第一轮： p1,n1              p2,n2
+# 每次遍历n1要和p1以及p2比较， 同理，n2也要和p2和p1比较。
+# 依次找到 1 -> 2 -> 2 -> 4
+
+class Solution(object):
+    def maxNonDecreasingLength(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: int
+        """
+        cur1 = 1
+        cur2 = 1
+        ans = 1
+
+        for i in range(1, len(nums1)):
+            n1 = nums1[i]
+            n2 = nums2[i]
+            prev1 = nums1[i-1]
+            prev2 = nums2[i-1]
+            next1 = 1
+            next2 = 1
+            if n1 >= prev1:
+                next1 += cur1
+            if n1 >= prev2:
+                next1 = max(next1, cur2 + 1)
+            
+            if n2 >= prev1:
+                next2 += cur1
+            if n2 >= prev2:
+                next2 = max(next2, cur2 + 1)
+            
+            ans = max(ans, next1, next2)
+            cur1 = next1
+            cur2 = next2
+        return ans
