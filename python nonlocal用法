@@ -1,0 +1,27 @@
+# nonlocal就是当嵌入的循环或者funtion需要改变外围的局部变数 不用重新定义一个名字一样的变数
+
+def outer_function():
+    x = 10
+
+    def inner_function_nonlocal():
+        nonlocal x
+        x += 5
+        print("Inner function (nonlocal): x =", x)
+
+    def inner_function_parameter(x):
+        x += 5
+        print("Inner function (parameter): x =", x)
+
+    inner_function_nonlocal()
+    inner_function_parameter(x)
+
+    print("Outer function: x =", x)
+
+outer_function()
+
+-----------》》》
+Inner function (nonlocal): x = 15
+Inner function (parameter): x = 20
+Outer function: x = 15
+
+直接改变外围x，但是传入的不改变
