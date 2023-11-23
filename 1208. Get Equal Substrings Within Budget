@@ -1,0 +1,35 @@
+# sliding window
+
+class Solution(object):
+    def equalSubstring(self, s, t, maxCost):
+        """
+        :type s: str
+        :type t: str
+        :type maxCost: int
+        :rtype: int
+        """
+        
+        s_num = []
+        for i in s:
+            s_num.append(ord(i))
+            
+        t_num = []
+        for i in t:
+            t_num.append(ord(i))
+
+        asci = []
+
+        for i in range(len(s)):
+            asci.append(abs(t_num[i] - s_num[i]))
+
+        ans, left, c = 0, 0, maxCost
+
+        for right in range(len(s)):
+            c -= asci[right]
+            if c >= 0: 
+                ans = max(ans, right - left + 1)
+            else:
+                c +=  asci[left]
+                left += 1
+        
+        return ans
