@@ -6,3 +6,8 @@ for i in w:
         w_dic[i] += 1
     else:
         w_dic[i] = 1
+
+----------------------------------------------
+w_dic = {}
+for i in w:
+    w_dic[i] = w_dic.get(i, 0) + 1 
