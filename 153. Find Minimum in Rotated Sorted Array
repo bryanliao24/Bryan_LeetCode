@@ -22,3 +22,14 @@ class Solution(object):
                 right = mid
         
         return nums[mid]
+
+
+假设 left = 1000000000，right = 2000000000，直接使用 mid = (left + right) / 2 会导致溢出：
+
+// This may overflow
+int mid = (left + right) / 2; 
+而使用 mid = left + (right - left) / 2 则不会：
+
+
+// This is safe and avoids overflow
+int mid = left + (right - left) / 2;
