@@ -12,7 +12,7 @@ class Solution(object):
         :type b: int
         :rtype: int
         """
-        mask = 0xFFFFFFFF
+        mask = 0xFFFFFFFF # 32 个 1
         
         while (b & mask) > 0:
             carry = ( a & b ) << 1
