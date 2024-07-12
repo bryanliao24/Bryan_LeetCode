@@ -21,3 +21,26 @@ int uniquePaths(int m, int n){
 }
 
 //总结：Dynamic Program将总问题分解为创造阵列(一维、二维)去存储小问题的答案以此求出总问题。
+
+-----------------------------------------------------------------------
+
+n = 7
+m =3 
+def dfs(dp,r,c):
+    print(dp)
+    if r < 0 or c < 0:
+        return 0
+    
+    if r == 0 or c == 0:
+        return 1
+        
+    if dp[r][c] > 0:
+        return dp[r][c]
+        
+    dp[r][c] = dfs(dp, r-1, c) + dfs(dp, r, c-1)
+    return dp[r][c]
+    
+dp = [[0 for i in range(n)] for j in range(m)]
+
+dfs(dp, m-1, n-1)
+print(dp)
