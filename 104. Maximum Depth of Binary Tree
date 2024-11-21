@@ -4,3 +4,35 @@ int maxDepth(struct TreeNode* root){
     if(root==NULL)return 0;
     return 1+fmax(maxDepth(root->left),maxDepth(root->right));
 }
+
+
+--------------------------------------------
+# BFS 解法
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+import collections
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root: return 0
+
+        depth = 0
+        tree = collections.deque()
+        tree.append(root)
+        while tree:
+            length = len(tree)
+            for i in range(length):
+                node = tree.popleft()
+                if not node:
+                    continue
+                tree.append(node.left)
+                tree.append(node.right)
+            depth += 1
+        return depth - 1
+
+
+        
