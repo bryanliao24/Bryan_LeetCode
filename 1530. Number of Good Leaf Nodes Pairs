@@ -1,0 +1,36 @@
+# dfs左子樹
+# dfs右子樹
+# left_d維護左子樹leaf到root的左子樹距離
+# right_d維護右子樹leaf到root的右子樹距離
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def countPairs(self, root: Optional[TreeNode], distance: int) -> int:
+        self.count = 0
+
+        def dfs(node):
+            if not node :
+                return []
+            if not node.left and not node.right:
+                return [1]
+
+            left_d = dfs(node.left)
+            right_d = dfs(node.right)
+
+            for i in left_d:
+                for j in right_d:
+                    if i + j <= distance:
+                       self.count += 1
+
+            all_d = left_d + right_d
+            print(all_d)
+            return [d+1 for d in all_d]
+    
+
+        dfs(root)
+        return self.count 
