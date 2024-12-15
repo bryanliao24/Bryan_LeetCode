@@ -1,0 +1,13 @@
+# 既然要求我们从前到后遍历，那么在遍历的时候保存已经看到的最小值和次小值，然后再发现比这两个值大的的第3小的值存在的时候，那么就说明有长度为3的递增的子序列了。
+
+class Solution:
+    def increasingTriplet(self, nums: List[int]) -> bool:
+        first, second = float('inf'), float('inf')
+        for num in nums:
+            if num <= first:
+                first = num
+            elif num <= second:
+                second = num
+            else:
+                return True
+        return False
