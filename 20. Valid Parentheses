@@ -38,3 +38,19 @@ bool isValid(char * s){
     free(stack);
     return top == 0 ? true : false;
 }
+
+-------------------------------------------------------------------
+class Solution:
+    def isValid(self, s: str) -> bool:
+        ans = []
+        form = {")":"(", "}":"{", "]":"["}
+
+        for i in s:
+            if i in form.values():
+                ans.append(i)
+
+            elif ans and i in form.keys():
+                if not ans or form[i] != ans.pop():
+                    return False
+
+        return True if len(ans) == 0 else False
