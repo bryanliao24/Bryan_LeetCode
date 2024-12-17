@@ -1,0 +1,52 @@
+        1
+       / \
+      2   3
+     / \
+    4   5
+
+# 定义 TreeNode 类
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+# 定义遍历函数
+def inorder(root):
+    if not root:
+        return []
+    result = []
+    result += inorder(root.left)
+    result.append(root.val)
+    result += inorder(root.right)
+    return result
+
+def preorder(root):
+    if not root:
+        return []
+    result = []
+    result.append(root.val)
+    result += preorder(root.left)
+    result += preorder(root.right)
+    return result
+
+def postorder(root):
+    if not root:
+        return []
+    result = []
+    result += postorder(root.left)
+    result += postorder(root.right)
+    result.append(root.val)
+    return result
+
+# 构建示例树
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(3)
+root.left.left = TreeNode(4)
+root.left.right = TreeNode(5)
+
+# 调用遍历函数
+print("Inorder Traversal:", inorder(root))    # 左 -> 根 -> 右
+print("Preorder Traversal:", preorder(root))  # 根 -> 左 -> 右
+print("Postorder Traversal:", postorder(root))# 左 -> 右 -> 根
