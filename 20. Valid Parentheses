@@ -49,8 +49,9 @@ class Solution:
             if i in form.values():
                 ans.append(i)
 
-            elif ans and i in form.keys():
+            elif i in form.keys():
                 if not ans or form[i] != ans.pop():
                     return False
 
         return True if len(ans) == 0 else False
+
