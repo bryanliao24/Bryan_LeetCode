@@ -93,5 +93,34 @@ class Solution(object):
             temp=temp2
         return ret
 
+---------------------------------------------------------------------------------
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root: return []
+
+        ans = []
+        que = deque()
+        que.append(root)
+
+        while que :
+            length = len(que)
+            pair = []
+            for i in range(length):
+                node = que.popleft() 
+                pair.append(node.val)
+                print(pair)
+                print("----------------")
+                if node.left:
+                    que.append(node.left)
+                if node.right:
+                    que.append(node.right)
+            ans.append(pair)
+        return ans
 
         
