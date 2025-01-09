@@ -1,0 +1,58 @@
+# BFS
+
+from collections import deque
+q = deque([start])
+visited = set()
+print(q)
+print("---")
+
+while q:
+    idx = q.popleft()
+    
+    if arr[idx] == 0:
+        print(True)
+    
+    if idx in visited:
+        continue
+
+    visited.add(idx)
+    
+    if idx + arr[idx] < len(arr):
+        q.append(idx + arr[idx])
+
+    if idx - arr[idx] >= 0:
+        q.append(idx - arr[idx])
+        
+    print(q)
+    print("---")
+
+--------------------------------------------------------------------------------
+
+# DFS
+def dfs(idx: int) -> bool:
+
+    # Return if idx is seen
+    if idx in seen:
+        return
+    seen.add(idx)
+
+    # Base Case
+    if arr[idx] == 0:
+        return True
+
+    # Left Path
+    l_idx = idx - arr[idx]
+    if l_idx >= 0:
+        if dfs(l_idx):
+            return True
+
+    # Right Path
+    r_idx = idx + arr[idx]
+    if r_idx < n:
+        if dfs(r_idx):
+            return True
+
+
+n = len(arr)
+seen = set()
+print(dfs(start) == True)
