@@ -5,21 +5,17 @@ class Solution(object):
         :rtype: int
         """
         if not nums: return 0
-        longest = 0
-        cur_num = cur_len = 0
+        ans = 0
         numset = set(nums) # 去重
         
         for i in numset:
             if i - 1 not in numset: # 若兩兩個數都無法組成就無法連續 若可以才開始計算
-                cur_num = i
-                cur_len = 1
-
-                while cur_num + 1 in numset:
-                    cur_num += 1
-                    cur_len += 1
-                longest = max(longest, cur_len)
+                length = 1
+                while i + length in numset:
+                    length += 1
+                ans = max(ans, length)
         
-        return longest
+        return ans
 
 -------------------------------------------------------------------
 
