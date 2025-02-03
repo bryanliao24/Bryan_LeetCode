@@ -1,0 +1,37 @@
+# bfs classic problem
+
+class Solution:
+    def shortestPathBinaryMatrix(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        
+        # Check if start or end cell is blocked
+        if grid[0][0] != 0 or grid[n - 1][n - 1] != 0:
+            return -1
+
+        # Directions for 8 possible moves
+        directions = [
+            (0, -1), (0, 1), (1, 0), (-1, 0), 
+            (-1, -1), (1, 1), (-1, 1), (1, -1)
+        ]
+
+        q = deque()
+        q.append([0, 0, 1]) # row, col, length
+
+        visited = [[False for i in range(n)] for j in range(n)]
+        visited[0][0] = True
+
+        while q:
+            row, col, distance = q.popleft()
+
+            if row == n - 1 and col == n - 1: # reach bottom right endpoint 
+                return distance
+
+            for d in directions:
+                x = row + d[0]
+                y = col + d[1]
+                if 0 <= x < n and 0 <= y < n and grid[x][y] == 0 and not visited[x][y]:
+                    q.append([x, y, distance + 1])
+                    visited[x][y] = True
+
+        return -1  
+
