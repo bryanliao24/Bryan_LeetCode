@@ -1,0 +1,28 @@
+BFS 经典题
+
+最短路径问题
+LeetCode 1091: Shortest Path in Binary Matrix
+LeetCode 127: Word Ladder
+
+层次遍历
+LeetCode 102: Binary Tree Level Order Traversal
+LeetCode 107: Binary Tree Level Order Traversal II
+
+棋盘问题
+LeetCode 773: Sliding Puzzle
+LeetCode 752: Open the Lock
+
+
+DFS 经典题
+
+连通性检查
+LeetCode 200: Number of Islands
+LeetCode 547: Number of Provinces
+
+所有路径搜索
+LeetCode 797: All Paths From Source to Target
+LeetCode 39: Combination Sum
+
+回溯问题
+LeetCode 51: N-Queens
+LeetCode 22: Generate Parentheses
