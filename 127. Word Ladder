@@ -1,0 +1,20 @@
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        wordList = set(wordList)
+        if endWord not in wordList: return 0
+
+        q = deque()
+        q.append([beginWord, 1]) # word, length
+
+        while q :
+            word, length = q.popleft()
+            if word == endWord:
+                return length
+
+            for i in range(len(word)):
+                for c in "abcdefghijklmnopqrstuvwxyz":
+                    newWord = word[:i] + c + word[i+1:]
+                    if newWord in wordList and newWord != word:
+                        q.append([newWord, length + 1])
+                        wordList.remove(newWord)
+        return 0
