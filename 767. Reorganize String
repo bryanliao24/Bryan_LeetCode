@@ -1,0 +1,21 @@
+class Solution:
+    def reorganizeString(self, s: str) -> str:
+        
+        wordFreq = Counter(s)
+        ans = "@"
+        
+        while wordFreq:
+            stop = True 
+            for char, times in wordFreq.most_common(): # 高 -> 低返回
+                if ans[-1] != char:
+                    ans += char
+                    wordFreq[char] -= 1
+                    if wordFreq[char] == 0:
+                        del wordFreq[char]
+
+                    stop = False
+                    break
+
+            if stop: break
+
+        return ans[1:] if len(ans) == len(s) + 1 else ""
