@@ -19,3 +19,53 @@ class Solution:
             if stop: break
 
         return ans[1:] if len(ans) == len(s) + 1 else ""
+
+------------------------------------------------------------------
+# 最优解 -> heapq 注意*-1最大堆
+
+class Solution:
+    def reorganizeString(self, s: str) -> str:
+        freq = {}
+        for i in s:
+            freq[i] = freq.get(i, 0) + 1
+
+        que = [(-times, char) for char, times in freq.items()]
+        heapq.heapify(que)
+        ans = []
+
+        while len(que) >= 2: # 每次取两个char
+            top_t, top_c = heapq.heappop(que) # 最多次数的
+            next_t, next_c = heapq.heappop(que) # 第二多次数的
+
+            ans.append(top_c)
+            ans.append(next_c)
+
+            if top_t + 1: # (-2, a) -> + 1 代表减一频率
+                heapq.heappush(que, (top_t+1, top_c))
+            if next_t + 1:
+                heapq.heappush(que, (next_t+1, next_c))
+            
+        # 剩下(-1, a) or (-1, c)
+        if que:
+            last_t, last_c = heapq.heappop(que)
+            if last_t != -1:
+                return ""
+            
+            if ans:
+                if last_c == ans[-1]:
+                    return ""
+                else:
+                    ans.append(last_c)
+
+            else:
+                ans.append(last_c)
+
+        return "".join(ans)
+
+
+
+        
+        
+
+
+
