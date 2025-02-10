@@ -1,0 +1,7 @@
+# 等同于找出有几个不同非零元素的数量
+
+class Solution:
+    def minimumOperations(self, nums: List[int]) -> int:
+        nums_set = set(nums)
+        
+        return len(nums_set) if 0 not in nums_set else len(nums_set) - 1
