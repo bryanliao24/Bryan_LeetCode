@@ -1,0 +1,18 @@
+# 检查数组中是否存在另一个元素，等于“总和减去两倍的当前元素”。
+# 如果存在这样的元素，并且不是重复使用同一个元素（除非它在数组中出现多次），那么这个元素就是“异常值”。
+
+class Solution:
+    def getLargestOutlier(self, nums: List[int]) -> int:
+        total_sum = sum(nums)  
+        num_counts = Counter(nums)
+    
+        largest_outlier = float('-inf')
+        
+        for num in num_counts.keys():
+            potential_outlier = total_sum - 2 * num  
+            
+            if potential_outlier in num_counts:
+                if potential_outlier != num or num_counts[num] > 1: 
+                    largest_outlier = max(largest_outlier, potential_outlier)
+        
+        return largest_outlier
