@@ -1,0 +1,36 @@
+# 判断给定的 n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]是否形成一棵树
+# 检查： 1. 是否有环 2. 是否连通
+
+class Solution:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        if len(edges) != n - 1:
+            return False  # 树的边数必须等于节点数 - 1
+            
+        graph = collections.defaultdict(list)
+        for u, v in edges:
+            graph[u].append(v)
+            graph[v].append(u) 
+
+        visited = [0] * n
+
+        if self.dfs(visited, graph, 0, -1):
+            return False  # 如果发现环，返回 False
+
+        return True if (v == 2 for v in visited) else False # 确保连通
+
+
+    def dfs(self, visited, graph, index, parent):
+        if visited[index] == 1:return True
+        
+        visited[index] = 1
+
+        for node in graph[index]:
+            if node == parent:
+                continue
+            if self.dfs(visited, graph, node, index):
+                return True
+
+        visited[index] = 2
+        return False
+
+        
