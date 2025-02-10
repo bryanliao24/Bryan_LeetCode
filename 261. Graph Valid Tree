@@ -16,7 +16,11 @@ class Solution:
         if self.dfs(visited, graph, 0, -1):
             return False  # 如果发现环，返回 False
 
-        return True if (v == 2 for v in visited) else False # 确保连通
+        for i in visited: # 确保连通
+            if i != 2:
+                return False
+        return True 
+        # return all(v == 2 for v in visited) # 确保连通
 
 
     def dfs(self, visited, graph, index, parent):
