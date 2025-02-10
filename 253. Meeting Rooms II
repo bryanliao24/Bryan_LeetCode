@@ -1,0 +1,20 @@
+# Input: intervals = [[0,30],[5,10],[15,20]]
+# Output: 2
+# -> 求需要预定多少个包间
+
+class Solution:
+    def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+        intervals.sort()  # 将会议按开始时间排序
+        heap = []  # 小顶堆，用于存储会议的结束时间
+        
+        for i in intervals:
+            if heap and i[0] >= heap[0]: 
+                # 如果当前会议的开始时间 >= 最早结束的会议时间，可以复用该会议室
+                heapq.heapreplace(heap, i[1])
+            else:
+                # 否则，需要开辟新的会议室
+                heapq.heappush(heap, i[1])
+        
+        return len(heap)  # 堆中元素数量即为所需的会议室数量
+
+
