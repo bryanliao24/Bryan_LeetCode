@@ -1,0 +1,69 @@
+1. permutation
+def perm():
+    a = ["a", "b", "c"]
+    ans = []
+    path = []
+    def dfs():
+        if len(path) == len(a):
+            ans.append(path[:])
+            return 
+        
+        for i in a:
+            if i not in path:
+                path.append(i)
+                dfs()
+                path.pop()
+               
+    dfs() 
+    return ans 
+ans = perm()
+print(ans)
+[['a', 'b', 'c'], ['a', 'c', 'b'], ['b', 'a', 'c'], ['b', 'c', 'a'], ['c', 'a', 'b'], ['c', 'b', 'a']]
+
+
+######################################################################################
+2. Combination
+def perm():
+    a = ["a", "b", "c"]
+    ans = []
+    path = []
+    def dfs(index):
+        if path:  # 只保存非空组合
+            ans.append(path[:])
+        
+        for i in range(index, len(a)):
+            path.append(a[i])  # 选择当前元素
+            dfs(i + 1)         # 递归到下一个元素
+            path.pop()         # 回溯，移除最后一个元素
+
+    dfs(0)
+    return ans
+
+ans = perm()
+print(ans)
+[['a'], ['a', 'b'], ['a', 'b', 'c'], ['a', 'c'], ['b'], ['b', 'c'], ['c']]
+
+
+######################################################################################
+
+3. 制定组合长度 k
+
+def perm():
+    a = ["a", "b", "c"]
+    ans = []
+    path = []
+    k = 2
+    def dfs(index):
+        if len(path) == k:
+            ans.append(path[:])
+            return 
+        
+        for i in range(index, len(a)):
+            path.append(a[i])
+            dfs(i+1)
+            path.pop()
+               
+    dfs(0) 
+    return ans 
+ans = perm()
+print(ans)
