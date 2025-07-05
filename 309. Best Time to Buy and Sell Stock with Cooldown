@@ -1,0 +1,37 @@
+我們用 DP 記錄三種狀態：
+
+hold: 今天結束後持有股票的最大收益
+
+sold: 今天賣出股票後的最大收益
+
+rest: 今天處於冷卻期或啥都沒做的最大收益
+
+狀態轉移公式
+
+hold[i] = max(hold[i-1], rest[i-1] - prices[i])
+（今天持股，要嘛昨天就持股，要嘛今天買入）
+
+sold[i] = hold[i-1] + prices[i]
+（今天賣出，就是昨天持股 + 今天價格）
+
+rest[i] = max(rest[i-1], sold[i-1])
+（今天休息，要嘛昨天就休息，要嘛昨天剛賣出進入冷卻）
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        n = len(prices)
+        hold = [0] * n
+        sold = [0] * n
+        rest = [0] * n
+
+        hold[0] = -prices[0]
+        sold[0] = 0
+        rest[0] = 0
+
+        for i in range(1, n):
+            hold[i] = max(hold[i-1], rest[i-1] - prices[i])
+            sold[i] = hold[i-1] + prices[i]
+            rest[i] = max(rest[i-1], sold[i-1])
+
+        return max(sold[-1], rest[-1])
+        
