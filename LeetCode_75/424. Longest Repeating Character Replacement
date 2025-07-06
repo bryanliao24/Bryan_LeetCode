@@ -38,23 +38,22 @@ int characterReplacement(char * s, int k){
 
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        ans = 0 
-        dic = {}
-        max_count = 0 
-        left = 0 
+        left = 0
+        right = 0
+        string = {}
+        max_count = 0
+        ans = 0
+
         for right in range(len(s)):
-            right_char = s[right]
-            dic[right_char] = dic.get(right_char, 0) + 1
-            max_count = max(max_count, dic[right_char])
-            
-            exceed = right - left + 1 - max_count
-            
-            if exceed > k :
-                left_char = s[left]
-                dic[left_char] -= 1
+            string[s[right]] = string.get(s[right], 0) + 1
+            max_count = max(max_count, string[s[right]])
+
+            if right - left + 1 - max_count > k:
+                string[s[left]] -= 1
                 left += 1
+
             ans = max(ans, right - left + 1)
-        
+       
         return ans
 -------------------------------------------------------------------
 
