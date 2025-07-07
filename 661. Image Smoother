@@ -1,0 +1,21 @@
+
+import numpy as np
+from scipy.signal import convolve2d
+class Solution:
+    def imageSmoother(self, img: List[List[int]]) -> List[List[int]]:
+
+        img_np = np.array(img)
+        kernel = np.ones((3, 3), dtype=int)
+
+        # 求加總矩陣
+        sums = convolve2d(img_np, kernel, mode='same', boundary='fill', fillvalue=0)
+
+        # 求有效元素個數矩陣
+        ones = np.ones_like(img_np)
+        counts = convolve2d(ones, kernel, mode='same', boundary='fill', fillvalue=0)
+
+        # 求平均（向下取整）
+        result = np.floor_divide(sums, counts)
+
+        return result.tolist()
+       
