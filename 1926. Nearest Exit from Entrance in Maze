@@ -39,3 +39,31 @@ def nearestExit(maze, entrance):
     
     
 print(nearestExit(maze, entrance))
+
+
+---------------------------------------------------------------------------------------------
+
+class Solution:
+    def nearestExit(self, maze: List[List[str]], entrance: List[int]) -> int:
+        row, col = len(maze), len(maze[0])
+        directions = [(1,0), (0,1), (-1,0), (0,-1)]
+        min_steps = [float('inf')]  # 用列表封装，方便在递归中修改
+
+        def dfs(x, y, steps):
+            # 如果走到边界且不是入口，更新最小步数
+            if (x == 0 or y == 0 or x == row -1 or y == col -1) and [x,y] != entrance:
+                min_steps[0] = min(min_steps[0], steps)
+                return
+
+            for dx, dy in directions:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < row and 0 <= ny < col and maze[nx][ny] == '.':
+                    maze[nx][ny] = '+'  # 标记已访问
+                    dfs(nx, ny, steps + 1)
+                    maze[nx][ny] = '.'  # 回溯，恢复状态
+
+        # 从入口开始 DFS
+        maze[entrance[0]][entrance[1]] = '+'  # 标记入口
+        dfs(entrance[0], entrance[1], 0)
+
+        return min_steps[0] if min_steps[0] != float('inf') else -1
