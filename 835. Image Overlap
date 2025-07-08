@@ -1,0 +1,19 @@
+class Solution:
+    def largestOverlap(self, img1: List[List[int]], img2: List[List[int]]) -> int:
+        n = len(img1)
+        
+        # Step 1: 找出兩張圖中所有為 1 的座標
+        ones1 = [(i, j) for i in range(n) for j in range(n) if img1[i][j] == 1]
+        ones2 = [(i, j) for i in range(n) for j in range(n) if img2[i][j] == 1]
+        
+        # Step 2: 統計所有平移向量的出現次數
+        count = defaultdict(int)
+        max_overlap = 0
+
+        for (x1, y1) in ones1:
+            for (x2, y2) in ones2:
+                dx, dy = x2 - x1, y2 - y1
+                count[(dx, dy)] += 1
+                max_overlap = max(max_overlap, count[(dx, dy)])
+
+        return max_overlap
