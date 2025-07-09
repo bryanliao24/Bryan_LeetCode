@@ -62,7 +62,45 @@ class Solution:
 
         return "".join(ans)
 
+------------------------------------------------------------------
 
+class Solution:
+    def reorganizeString(self, s: str) -> str:
+        freq = Counter(s)
+
+        mh = []
+        for char, values in freq.items():
+            heapq.heappush(mh, (-values, char))
+        
+        ans = ""
+
+        while len(mh) >= 2:
+            fv, fc = heapq.heappop(mh)
+            sv, sc = heapq.heappop(mh)
+
+            ans += fc
+            ans += sc
+
+            if fv + 1:
+                heapq.heappush(mh, (fv+1, fc))
+            
+            if sv + 1:
+                heapq.heappush(mh, (sv+1, sc))
+
+            
+        if mh:
+            lv, lc = heapq.heappop(mh)
+
+            if lv != -1:
+                return ""
+            
+            else:
+                ans += lc
+
+        return ans
+
+
+        
 
         
         
