@@ -6,3 +6,11 @@ class Solution(object):
         
         for i in range(len(ans)):
             nums[i] = ans[i]
+
+-----------------------------------------------
+
+        n = len(nums)
+        k = k % n
+        
+        if (k != 0) and (n != 1):
+            nums[:k], nums[k:] = nums[-k:], nums[:-k]
