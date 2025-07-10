@@ -1,16 +1,12 @@
-class Solution(object):
-    def maxProfit(self, prices):
-        """
-        :type prices: List[int]
-        :rtype: int
-        """
-        price = prices[0]
-        daily = 0
-        profit = 0
-        for i in prices:
-            if i < price:
-                price = i
-            if i - price > 0:
-                profit += i - price
-                price = i
-        return profit 
+# 只要比昨天涨，就直接卖，一直赚 一直贪心
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        ans = 0
+
+        for i in range(1, len(prices)):
+            if prices[i] > prices[i-1]:
+                ans += prices[i] - prices[i-1]
+
+        return ans 
+
