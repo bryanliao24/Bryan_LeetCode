@@ -1,0 +1,34 @@
+双指针：read 负责读，write 负责写
+
+遇到连续字符就统计，统计完立刻写入一段压缩结果
+
+计数 >1 才写数字，保证压缩后的格式正确
+
+最终返回 write，即压缩后有效长度
+
+class Solution:
+    def compress(self, chars: List[str]) -> int:
+        write = 0
+        read = 0
+        n = len(chars)
+
+        while read < n:
+            ch = chars[read]
+            count = 0
+            # 统计当前字符重复次数
+            while read < n and chars[read] == ch:
+                read += 1
+                count += 1
+
+            # 写入字符
+            chars[write] = ch
+            write += 1
+
+            # 写入计数（如果 > 1）
+            if count > 1:
+                for c in str(count):
+                    chars[write] = c
+                    write += 1
+
+        return write
+        
