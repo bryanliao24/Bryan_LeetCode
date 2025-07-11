@@ -1,0 +1,36 @@
+Case 1: 当 k >= n // 2 时
+你优化为「无限次交易」版本
+
+Case 2: 限制交易次数
+
+l[j] 表示 第 j 次交易在今天必须卖出时的最大利润
+
+g[j] 表示 最多 j 次交易，不强制今天卖的最大利润
+
+
+class Solution:
+    def maxProfit(self, k: int, prices: List[int]) -> int:
+        days = len(prices)
+
+        # case 1 
+        mv = float("inf")
+        mp = 0
+        if k >= days / 2:
+            for i in range(1, days):
+                if prices[i] > prices[i-1]:
+                    mp += prices[i] - prices[i-1]
+
+            return mp
+        
+        # case 2 
+        else:
+            l = [0] * (k + 1)
+            g = [0] * (k + 1)
+
+            for i in range(days - 1):
+                diff = prices[i + 1] - prices[i]
+                for j in range(k, 0, -1):
+                    l[j] = max(g[j - 1] + max(diff, 0), l[j] + diff)
+                    g[j] = max(l[j], g[j])
+            return g[-1]
+        
