@@ -1,0 +1,14 @@
+    if x - arr[left] > arr[right] - x:
+        left += 1          # 左邊比較遠，丟掉 arr[left]
+    else:
+        right -= 1         # 右邊比較遠 (或同距離但較大)，丟掉 arr[right]
+
+class Solution:
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        left, right = 0, len(arr) - 1
+        while right - left >= k:
+            if x - arr[left] > arr[right] - x:
+                left += 1
+            else:
+                right -= 1
+        return arr[left:left + k]
