@@ -1,0 +1,18 @@
+子数组（subarray）就是一段连续区间 nums[i:j]，
+
+而 pre[j] - pre[i] = k 就恰好说明：
+从 i 到 j-1 的这一段区间的和是 k，这段就是你要找的子数组。
+
+class Solution:
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        prefix_sum = 0
+        ans = 0
+        prefix_dic = defaultdict(int)
+        prefix_dic[0] = 1
+
+        for i in nums:
+            prefix_sum += i
+            ans += prefix_dic[prefix_sum - k]
+            prefix_dic[prefix_sum] += 1
+
+        return ans
