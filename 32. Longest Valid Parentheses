@@ -1,6 +1,12 @@
 使用一个栈来追踪左括号的位置索引，每当遇到右括号，就尝试匹配栈顶的左括号。
 每次匹配成功，我可以用当前索引减去上一个未匹配的位置，来计算当前的有效长度。
 
+栈来保存“上一个还没匹配的左括号的位置”
+if len(stack) == 0: stack.append(i) 是为了记录最新的“不合法右括号的位置”，
+从这个点之后才能重新开始计算有效括号长度。
+
+
+
 class Solution:
     def longestValidParentheses(self, s: str) -> int:
         stack = [-1]
