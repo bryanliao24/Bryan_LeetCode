@@ -1,0 +1,22 @@
+一旦在左右指针比较中发现不相等，你有一次机会删除一个字符，这时候你尝试跳过左边或右边的字符，然后检查剩下的是否是回文。
+
+class Solution:
+    def validPalindrome(self, s: str) -> bool:
+        def is_palindrome_range(i, j):
+            while i < j:
+                if s[i] != s[j]:
+                    return False
+                i += 1
+                j -= 1
+            return True
+
+        left, right = 0, len(s) - 1
+
+        while left < right:
+            if s[left] != s[right]:
+                # 尝试删除左边或右边的字符
+                return is_palindrome_range(left + 1, right) or is_palindrome_range(left, right - 1)
+            left += 1
+            right -= 1
+
+        return True
