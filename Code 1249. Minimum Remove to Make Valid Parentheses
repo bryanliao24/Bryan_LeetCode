@@ -4,16 +4,20 @@
 
 class Solution:
     def minRemoveToMakeValid(self, s: str) -> str:
-        s = list(s)
-        stack = []
+        s = list(s)      # 将字符串转为列表，方便原地修改字符
+        stack = []       # 用于追踪未匹配的 '(' 的索引
+        
+        # 第一轮遍历：标记不合法的 ')'
         for i, char in enumerate(s):
             if char == '(':
-                stack.append(i)
+                stack.append(i)          # 记录 '(' 的索引
             elif char == ')':
                 if stack:
-                    stack.pop()
+                    stack.pop()          # 有匹配的 '(', 匹配掉
                 else:
-                    s[i] = ''
+                    s[i] = ''            # 没有匹配的 '(', 移除当前 ')'
+        
+        print(stack)
+        # 第二轮：移除剩余未匹配的 '('
         while stack:
-            s[stack.pop()] = ''
-        return ''.join(s)
+            s[stack.pop()] = ''          # 把多余的 '(' 清空
