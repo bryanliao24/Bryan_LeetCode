@@ -1,0 +1,19 @@
+# 两个步骤
+# 第一步 匹配所有的"()" 把不符合的（单独")"的index加到stack）
+# 第二步 把所有加入的index删掉 变成""
+
+class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+        s = list(s)
+        stack = []
+        for i, char in enumerate(s):
+            if char == '(':
+                stack.append(i)
+            elif char == ')':
+                if stack:
+                    stack.pop()
+                else:
+                    s[i] = ''
+        while stack:
+            s[stack.pop()] = ''
+        return ''.join(s)
