@@ -1,0 +1,16 @@
+def get_first_m_primes(m):
+    primes = []
+    num = 2
+    while len(primes) < m:
+        is_prime = True
+        for p in primes:
+            if p * p > num:
+                break
+            if num % p == 0:
+                is_prime = False
+                break
+        if is_prime:
+            primes.append(num)
+        num += 1
+    return primes
+print(get_first_m_primes(5))
