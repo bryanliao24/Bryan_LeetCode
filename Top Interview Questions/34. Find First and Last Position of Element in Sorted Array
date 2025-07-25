@@ -1,83 +1,33 @@
-# lower_bound找左边的元素 
-# upper_bound找右边的元素
-# lower_bound返回的是开始的第一个满足条件的位置
-# 而upper_bound返回的是第一个不满足条件的位置 -> 第一个出现不等于target的数字
+class Solution:
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        def findFirst():
+            left = 0 
+            right = len(nums) - 1
+            ans = -1
+            while left <= right:
+                mid = (left + right) // 2
+                if nums[mid] < target:
+                    left = mid + 1
+                else:
+                    if nums[mid] == target:
+                        ans = mid
+                    right = mid - 1
 
-class Solution(object):
-    def searchRange(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
-        if not nums:
-            return [-1, -1]
-        left = self.lowerbound(nums, target)
-        right = self.upperbound(nums, target)
-        if left == right:
-            return [-1, -1]
-        return [left, right - 1]
-
-    def lowerbound(self, nums, target):
-        left = 0 
-        right = len(nums)
-        while left < right:
-            mid = left + (right - left) / 2
-            if nums[mid] >= target:
-                right = mid
-            else:
-                left = mid + 1
-        return left
-    def upperbound(self, nums, target):
-        left = 0 
-        right = len(nums)
-        while left < right:
-            mid = left + (right - left) / 2
-            if nums[mid] > target:
-                right = mid
-            else:
-                left = mid + 1
-        return left
+            return ans 
         
+        def findLast():
+            left = 0 
+            right = len(nums) - 1
+            ans = -1
+            while left <= right:
+                mid = (left + right) // 2
+                if nums[mid] > target:
+                    right = mid - 1
+                else:
+                    if nums[mid] == target:
+                        ans = mid
+                    left = mid + 1
 
---------------------------------------------------------
-# two pointer
-class Solution(object):
-    def searchRange(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
-        if not nums:
-            return [-1, -1]
-        ans = []
-        left = 0
-        right = len(nums) - 1
-       
-        while left < right:
-            if nums[left] == target and nums[right] == target:
-                break
-            elif nums[left] == target:
-                right -= 1
-            elif nums[right] == target :
-                left += 1
-            else:
-                left += 1
-                right -= 1
-        if left == right:
-            if nums[left] == target:
-                ans.append(left)
-                ans.append(right)
-            else:
-                ans.append(-1)
-                ans.append(-1)
-        elif left > right:
-            ans.append(-1)
-            ans.append(-1)
-        else:
-            ans.append(left)
-            ans.append(right)
-        return ans
+            return ans
 
-            
+        return [findFirst(), findLast()]
