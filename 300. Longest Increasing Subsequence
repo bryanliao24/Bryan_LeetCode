@@ -31,3 +31,29 @@ for i in range(0, len(nums)):
         if nums[i] > nums[j]:
             dp[i] = max(dp[i], dp[j] + 1)
 return max(dp)
+
+-----------------------------------------
+
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        sub = []
+
+        for num in nums:
+            # 手写二分查找：找 sub 中第一个 >= num 的位置
+            left, right = 0, len(sub) - 1
+            pos = len(sub)  # 默认位置是末尾（即 num 比所有都大）
+            
+            while left <= right:
+                mid = (left + right) // 2
+                if sub[mid] >= num:
+                    pos = mid
+                    right = mid - 1
+                else:
+                    left = mid + 1
+
+            if pos == len(sub):
+                sub.append(num)
+            else:
+                sub[pos] = num
+
+        return len(sub)
