@@ -1,0 +1,21 @@
+栈里只放还没找到更热温度的索引。
+
+一旦发现当前温度比栈顶那天高，说明：栈顶那天 找到了答案，并且越早找到越好，所以弹出它、填答案。
+
+最后栈里剩下的天都是“再也等不到更热”的 → 留下 0
+
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+
+        stack = []  # 存储等待找到更热温度的天数的索引
+        answer = [0] * len(temperatures)  # 初始化答案列表为全0
+
+        for i in range(len(temperatures)):
+            # 如果当前温度比栈顶（之前的某天）高
+            while stack and temperatures[stack[-1]] < temperatures[i]:
+                j = stack.pop()           # 弹出那个更冷的日子的索引
+                answer[j] = i - j         # 当前天比它热 → 记录间隔天数
+
+            stack.append(i)               # 当前天入栈（等待未来找到更热日子）
+
+        return answer
