@@ -51,7 +51,7 @@ class Solution:
                 else:
                     left = mid + 1
 
-            if pos == len(sub):
+            if pos == len(sub): #只有在 sub 中存在至少一个 >= num 的元素时，pos 才会被更新，才可能小于 len(sub)。 # 否则，pos 会保持 len(sub)，即我们应当把 num 加到末尾。代表当前num比所有element都大
                 sub.append(num)
             else:
                 sub[pos] = num
