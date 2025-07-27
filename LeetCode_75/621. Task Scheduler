@@ -52,11 +52,12 @@ class Solution:
             heapq.heappush(heap, -value)
         
         while heap or cooldown:
+            timer+=1
             if heap:
                 task = -heapq.heappop(heap)
                 if task > 1:
-                    cooldown.append((task-1, timer+n+1))
-            timer+=1
+                    cooldown.append((task-1, timer+n))
+            
             
             while cooldown and cooldown[0][1] == timer:
                 task_count, next_iteration = cooldown[0]
