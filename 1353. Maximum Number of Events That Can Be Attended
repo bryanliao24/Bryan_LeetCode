@@ -1,0 +1,37 @@
+把所有活动按开始时间升序排列。
+
+用一个 最小堆（优先队列） 保存“当前天可以参加的活动”的结束时间。
+
+每天：
+
+把当天开始的活动都放进堆里。
+
+把堆里已经结束的活动删掉（因为过期了）。
+
+从堆里取出最早结束的活动参加。
+
+class Solution:
+    def maxEvents(self, events: List[List[int]]) -> int:
+        events.sort()  # sort by start day
+        total_days = max(end for _, end in events)
+        event_id = 0
+        attended = 0
+        min_heap = []
+
+        for day in range(1, total_days + 1):
+            # Push all events starting today into the heap
+            while event_id < len(events) and events[event_id][0] == day:
+                heapq.heappush(min_heap, events[event_id][1])
+                event_id += 1
+
+            # Remove all events that already ended
+            while min_heap and min_heap[0] < day:
+                heapq.heappop(min_heap)
+
+            # Attend the event that ends the earliest
+            if min_heap:
+                heapq.heappop(min_heap)
+                attended += 1
+
+        return attended
+       
