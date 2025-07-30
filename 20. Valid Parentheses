@@ -42,16 +42,16 @@ bool isValid(char * s){
 -------------------------------------------------------------------
 class Solution:
     def isValid(self, s: str) -> bool:
-        ans = []
         form = {")":"(", "}":"{", "]":"["}
+        ans = []
 
         for i in s:
-            if i in form.values():
+            if i not in form:
                 ans.append(i)
 
-            elif i in form.keys():
+            else:
                 if not ans or form[i] != ans.pop():
                     return False
 
-        return True if len(ans) == 0 else False
+        return not ans
 
