@@ -1,0 +1,24 @@
+class Solution:
+    def rotateTheBox(self, boxGrid: List[List[str]]) -> List[List[str]]:
+        row = len(boxGrid)
+        col = len(boxGrid[0])
+
+        # Step 1: Apply gravity row by row
+        for i in range(row):
+            write = col - 1
+            for j in range(col - 1, -1, -1):
+                if boxGrid[i][j] == '*':
+                    write = j - 1
+                elif boxGrid[i][j] == '#':
+                    if j != write:
+                        boxGrid[i][j] = '.'
+                        boxGrid[i][write] = '#'
+                    write -= 1
+
+        # Step 2: Rotate the matrix 90 degrees clockwise
+        rotated = [[0] * row for _ in range(col)]
+        for i in range(row):
+            for j in range(col):
+                rotated[j][row - 1 - i] = boxGrid[i][j]
+        
+        return rotated
