@@ -1,0 +1,41 @@
+class Solution:
+    def minimumOperationsToWriteY(self, grid: List[List[int]]) -> int:
+        row = len(grid)
+        col = len(grid[0])
+        center = row // 2
+
+        y_pos = set()
+        y_count = defaultdict(int)
+        other_count = defaultdict(int)
+
+        # Step 1: 收集 Y 形状上的 cell
+        for i in range(row):
+            if i <= center:
+                y_pos.add((i, i))             # 左上 -> 中心 对角线
+                y_pos.add((i, col - 1 - i))   # 右上 -> 中心 对角线
+            if i >= center:
+                y_pos.add((i, center))        # 中心向下的竖线
+
+        # Step 2: 统计 Y 区 和 非 Y 区各数字数量
+        for i in range(row):
+            for j in range(col):
+                val = grid[i][j]
+                if (i, j) in y_pos:
+                    y_count[val] += 1
+                else:
+                    other_count[val] += 1
+
+        total_y = len(y_pos)
+        total_other = row * col - total_y
+
+        # Step 3: 穷举所有合法组合 (y_val ≠ other_val)，计算操作次数
+        res = float('inf')
+        for y_val in [0, 1, 2]:
+            for o_val in [0, 1, 2]:
+                if y_val == o_val:
+                    continue
+                y_ops = total_y - y_count[y_val]
+                o_ops = total_other - other_count[o_val]
+                res = min(res, y_ops + o_ops)
+
+        return res
