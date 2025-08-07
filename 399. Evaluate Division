@@ -1,0 +1,37 @@
+class Solution:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        dic = collections.defaultdict(list)
+        seen = set()
+
+        for i in range(len(equations)):
+            dic[equations[i][0]].append([equations[i][1], values[i]])
+            dic[equations[i][1]].append([equations[i][0], 1/values[i]])
+            seen.add(equations[i][0])
+            seen.add(equations[i][1])
+
+        ans = []
+        # DFS 实现
+        def dfs(curr, target, visited):
+            if curr == target:
+                return 1.0
+            visited.add(curr)
+            for neighbor, weight in dic[curr]:
+                if neighbor in visited:
+                    continue
+                result = dfs(neighbor, target, visited)
+
+                if result != -1:
+                    return result * weight
+            return -1.0
+
+        # 执行每个 query
+        ans = []
+
+        for fenzi, fenmu in queries:
+            if fenzi not in seen or fenmu not in seen:
+                ans.append(-1.0)
+            else:
+                visited = set()
+                ans.append(dfs(fenzi, fenmu, visited))
+
+        return ans
