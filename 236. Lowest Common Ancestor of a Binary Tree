@@ -1,0 +1,19 @@
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        # ✅ 如果当前节点是 None，或等于 p 或 q，直接返回当前节点
+        # 说明找到了目标节点（p 或 q），或者已经遍历到空节点了
+        if not root or root == p or root == q:
+            return root
+        
+        # 🔁 递归往左子树和右子树寻找 p 和 q
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+
+        # ✅ 如果左右子树都找到了目标节点（left 和 right 都非空）
+        # 说明当前节点 root 是 p 和 q 的最近公共祖先
+        if left and right:
+            return root
+
+        # 🚨 如果只有一边找到了目标节点，返回那一边（可能是 LCA，也可能是目标节点本身）
+        # 如果都没找到（left 和 right 都是 None），返回 None
+        return left if left else right
