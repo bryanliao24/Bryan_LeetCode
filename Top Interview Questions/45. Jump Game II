@@ -1,23 +1,14 @@
-# longest 表示当前步能到达的最远位置
-# prev 表示上一次能到达的最远位置
-# 遍历在上一步的覆盖范围内，当前能跳的最远位置来更新longest
-# pos作為當前走到的，遍歷的位子index
-# 这样每次检查的范围是pos~prev
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        jumps = 0                 # 跳跃次数
+        current_end = 0           # 当前能跳到的最大边界
+        farthest = 0              # 下一步最远能跳到哪里
 
-class Solution(object):
-    def jump(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        longest = 0
-        count = 0
-        pos = 0
-         
-        while longest < len(nums) - 1:
-            count += 1
-            prev = longest
-            while pos <= prev:
-                longest = max(longest, pos + nums[pos])
-                pos += 1
-        return count
+        for i in range(len(nums) - 1):  # 不需要跳到最后，只要跳到倒数第一个
+            farthest = max(farthest, i + nums[i])
+
+            if i == current_end:
+                jumps += 1
+                current_end = farthest
+
+        return jumps
