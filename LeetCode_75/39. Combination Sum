@@ -4,31 +4,26 @@
 # 因为是递归 所以在for回圈后会依序往回走path回到上一个少了最后一个元素的list中
 
 
-class Solution(object):
-    def combinationSum(self, candidates, target):
-        """
-        :type candidates: List[int]
-        :type target: int
-        :rtype: List[List[int]]
-        """
-        def dfs(candidates, target, index, ans, path):
-            if target < 0:
-                return None
-            
-            elif target == 0:
-                ans.append(path)
-                return None
-            
-            for i in range(index, len(candidates)):
-                if candidates[index] > target:
-                    return None
-                dfs(candidates, target - candidates[i], i, ans, path + [candidates[i]])
-                
-        ans = []
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+
+        def dfs(start, target):
+            if target == 0:
+                ans.append(path[:])
+                return  
+
+            for i in range(start, len(candidates)):
+                if candidates[i] > target:
+                    break
+                path.append(candidates[i])
+                dfs(i, target - candidates[i])
+                path.pop()
+
         candidates.sort()
-        dfs(candidates, target, 0, ans, [])
-        
-        return ans
+        ans = []
+        path = []
+        dfs(0, target)
+        return ans 
 -------------------------------------------------------------
 # <法二> 快！
 
