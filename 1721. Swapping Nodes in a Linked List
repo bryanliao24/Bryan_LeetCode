@@ -1,0 +1,34 @@
+class Solution:
+    def swapNodes(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        nodes = []
+        cur = head
+
+        # 第一次遍历：存到数组
+        while cur:
+            nodes.append(cur)
+            cur = cur.next
+        
+        # 交换值
+        nodes[k-1].val, nodes[-k].val = nodes[-k].val, nodes[k-1].val
+        
+        return head
+
+--------------------------------------------------------------
+
+class Solution:
+    def swapNodes(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        # 1) 找到从头数第 k 个节点 a
+        a = head
+        for _ in range(k - 1):
+            a = a.next  # 题目保证 k 合法
+
+        # 2) 用 fast 从 a 出发扫到尾，同时 b 从头走，最终 b 为倒数第 k 个
+        fast = a
+        b = head
+        while fast.next:
+            fast = fast.next
+            b = b.next
+
+        # 3) 交换值
+        a.val, b.val = b.val, a.val
+        return head
