@@ -1,3 +1,4 @@
+只从连续段的第一个元素开始计数。
 class Solution(object):
     def longestConsecutive(self, nums):
         """
@@ -9,7 +10,7 @@ class Solution(object):
         numset = set(nums) # 去重
         
         for i in numset:
-            if i - 1 not in numset: # 若兩兩個數都無法組成就無法連續 若可以才開始計算
+            if i - 1 not in numset: # 若兩兩個數都無法組成就無法連續 若可以才開始計算 因为这样代表他才是起点 
                 length = 1
                 while i + length in numset:
                     length += 1
