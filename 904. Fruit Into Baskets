@@ -1,0 +1,18 @@
+題目相當於找longest substring中不超過兩種重複element
+
+def totalFruit(self, fruits: List[int]) -> int:
+        count = Counter()
+        left = 0
+        best = 0
+
+        for right, x in enumerate(fruits):
+            count[x] += 1
+            # 若种类超过 2，则收缩左边直到回到 ≤2
+            while len(count) > 2:
+                y = fruits[left]
+                count[y] -= 1
+                if count[y] == 0:
+                    del count[y]
+                left += 1
+            best = max(best, right - left + 1)
+        return best
