@@ -1,0 +1,70 @@
+class Solution:
+    def findUnsortedSubarray(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n <= 1:
+            return 0
+
+        # 设成这样：若数组已排好序，end 仍为 -1，则返回 end-start+1 = 0
+        start, end = 0, -1
+
+        # 从左向右，维护到目前为止的最大值
+        # 只要出现 nums[i] < run_max，说明 i 必须被包含在待排序区间里，更新 end
+        run_max = nums[0]
+        for i in range(1, n):
+            if nums[i] < run_max:
+                end = i
+            else:
+                run_max = nums[i]
+
+        # 从右向左，维护到目前为止的最小值
+        # 只要出现 nums[i] > run_min，说明 i 必须被包含，更新 start
+        run_min = nums[-1]
+        for i in range(n - 2, -1, -1):
+            if nums[i] > run_min:
+                start = i
+            else:
+                run_min = nums[i]
+
+        return end - start + 1
+
+-----------------------------------------------------------------
+一样的写法
+
+    def findUnsortedSubarray(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n < 2:
+            return 0
+
+        # --- Pass 1: Find the right boundary (end) ---
+        # We iterate from left to right to find the last element that is
+        # smaller than the maximum value seen so far.
+        end = -1
+        max_so_far = nums[0]
+        i = 1  # Initialize the counter for the while loop
+        while i < n:
+            if nums[i] < max_so_far:
+                end = i
+            else:
+                max_so_far = nums[i]
+            
+            i += 1  # Manually increment the counter
+
+        # If the array is already sorted, 'end' will not have been updated.
+        if end == -1:
+            return 0
+
+        # --- Pass 2: Find the left boundary (start) ---
+        # We iterate from right to left to find the first element that is
+        # larger than the minimum value seen so far.
+        start = -1
+        min_so_far = nums[n - 1]
+        i = n - 2  # Initialize the counter for the reverse while loop
+        while i >= 0:
+            if nums[i] > min_so_far:
+                start = i
+            else:
+                min_so_far = nums[i]
+            
+            i -= 1  # Manually decrement the counter
+        
+        return end - start + 1
