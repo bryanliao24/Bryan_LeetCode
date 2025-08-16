@@ -65,4 +65,41 @@ class Solution:
                 heapq.heappush(heap, -task_count)
         
         return timer
-        
+
+
+------------------------------------------------------------
+印出顺序：
+
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        freq = defaultdict(int)
+        for i in tasks:
+            freq[i] += 1
+
+        max_heap = []
+        for letter, count in freq.items():
+            heapq.heappush(max_heap, (-count, letter))
+
+        ans = []
+
+        cooldown = deque()
+        timer = 0
+
+        while max_heap or cooldown:
+            timer += 1
+            if max_heap:
+                occurence, char = heapq.heappop(max_heap)
+                ans.append(char)
+                if occurence + 1:
+                    cooldown.append([timer + n, occurence + 1, char])
+            else:
+                ans.append("idle")  # 没任务可执行
+
+
+            if cooldown and cooldown[0][0] == timer:
+                _, counts, ch = cooldown.popleft()
+                heapq.heappush(max_heap, (counts, ch))
+        print("->".join(ans))
+        return timer
+
+
