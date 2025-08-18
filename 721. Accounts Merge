@@ -1,0 +1,35 @@
+class Solution:
+    def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
+        graph = defaultdict(list)
+        email_to_name = {}
+
+        # 建图：每行第一个邮箱和其他邮箱连边
+        for acc in accounts:
+            name = acc[0]
+            first = acc[1]
+            for e in acc[1:]:
+                email_to_name[e] = name
+                graph[first].append(e)
+                graph[e].append(first)
+                email_to_name[first] = name
+
+        seen = set()
+        res = []
+
+        for email in email_to_name:
+            if email in seen:
+                continue
+            # BFS/DFS 找连通分量
+            comp = []
+            q = deque([email])
+            seen.add(email)
+            while q:
+                cur = q.popleft()
+                comp.append(cur)
+                for nei in graph[cur]:
+                    if nei not in seen:
+                        seen.add(nei)
+                        q.append(nei)
+            comp.sort()
+            res.append([email_to_name[email]] + comp)
+        return res
