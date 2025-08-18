@@ -17,3 +17,44 @@ bool hasPathSum(struct TreeNode* root, int targetSum){
     targetSum=targetSum-root->val;
     return hasPathSum(root->left,targetSum) || hasPathSum(root->right,targetSum);
 }
+
+
+---------------------------------------------------------------------
+
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+
+        if not root:return False
+
+        def dfs(root, target):
+            if not root:
+                return False
+            if not root.left and not root.right and target == root.val:
+                return True
+            
+            return dfs(root.left, target - root.val) or dfs(root.right, target - root.val) 
+            
+        return dfs(root, targetSum)
+
+---------------------------------------------------------------------
+
+class Solution:
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        if not root:return False
+
+        q = deque()
+        q.append([root, targetSum - root.val])
+
+        while q :
+            node, total = q.popleft()
+
+            if not node.left and not node.right and total == 0:
+                return True
+            
+            if node.left:
+                q.append([node.left, total - node.left.val])
+            if node.right:
+                q.append([node.right, total - node.right.val])
+
+        return False
+
