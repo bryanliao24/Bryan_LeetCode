@@ -12,3 +12,19 @@ class Solution:
             else:
                 right = mid            # 这对不正常（错位），答案在左侧或即为 mid
         return nums[left]
+
+-------------------------------------------------------
+参考一下136
+//XOR:如果两个相应位相同，则结果为0，否则为1。
+//即：0^0=0， 1^0=1， 0^1=1， 1^1=0
+//A XOR 0 = A
+
+
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+       
+        ans = 0
+        for n in nums:
+            ans ^= n
+        
+        return ans
