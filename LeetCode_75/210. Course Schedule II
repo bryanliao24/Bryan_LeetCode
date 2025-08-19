@@ -5,39 +5,43 @@
 # 找一个入度为0的点，并把它的入度变为-1，作为不再使用的点
 # 同时把从这个点指向的点的入度都减1
 
-class Solution(object):
-    def findOrder(self, numCourses, prerequisites):
+def findOrder(self, numCourses, prerequisites):
         """
         :type numCourses: int
         :type prerequisites: List[List[int]]
         :rtype: List[int]
         """
         graph = collections.defaultdict(list)
-        indegrees = collections.defaultdict(int)
+        indegree = [0] * numCourses
 
-        # u是要上的课 v是先修课
+        # u 是要上的课, v 是先修课
         for u, v in prerequisites:
             graph[v].append(u)
-            indegrees[u] += 1
-        # graph = {0: [1, 2], 1: [3], 2: [3]}
-        # indegrees = {1: 1, 2: 1, 3: 2}
+            indegree[u] += 1
+
+        # 初始化队列: 入度为 0 的课可以先上
+        queue = collections.deque()
+        for i in range(numCourses):
+            if indegree[i] == 0:
+                queue.append(i)
 
         path = []
-        for i in range(numCourses):
-            zeroDegree = False
-            for j in range(numCourses):
-                if indegrees[j] == 0:
-                    zeroDegree = True
-                    break
-            if not zeroDegree:
-                return []
-            
-            indegrees[j] -= 1 
-            path.append(j)
-            for node in graph[j]:
-                indegrees[node] -= 1      
-    
-        return path
+
+        while queue:
+            cur = queue.popleft()
+            path.append(cur)
+
+            # 遍历它指向的课，把入度减 1
+            for nxt in graph[cur]:
+                indegree[nxt] -= 1
+                if indegree[nxt] == 0:
+                    queue.append(nxt)
+
+        # 如果有环，说明没法上完所有课
+        if len(path) == numCourses:
+            return path
+        else:
+            return []
      
 -------------------------------------------------------------
 # <法二> O(N)
