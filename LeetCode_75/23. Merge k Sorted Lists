@@ -1,0 +1,19 @@
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        heap = []
+        # 初始化：把每个链表的头结点放入堆
+        for i, node in enumerate(lists):
+            if node:
+                heapq.heappush(heap, (node.val, i, node))  # (值, 索引防止比较冲突, 节点)
+
+        dummy = ListNode()
+        cur = dummy
+
+        while heap:
+            _, i, node = heapq.heappop(heap)
+            cur.next = node
+            cur = cur.next
+            if node.next:
+                heapq.heappush(heap, (node.next.val, i, node.next))
+
+        return dummy.next
