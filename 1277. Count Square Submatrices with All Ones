@@ -18,3 +18,27 @@ class Solution:
                     ans += dp[i][j]
 
         return ans
+
+------------------------------------------------------------
+优化一维dp
+
+class Solution:
+    def countSquares(self, matrix: List[List[int]]) -> int:
+        m, n = len(matrix), len(matrix[0])
+        dp = [0] * n
+        ans = 0
+
+        for i in range(m):
+            prev = 0  # 左上角 (dp[i-1][j-1])
+            for j in range(n):
+                temp = dp[j]  # 保存当前列的上一行值 (dp[i-1][j])
+                if matrix[i][j] == 1:
+                    if j == 0:  
+                        dp[j] = 1   # 第一列，只能是自己
+                    else:
+                        dp[j] = min(dp[j], dp[j-1], prev) + 1
+                    ans += dp[j]
+                else:
+                    dp[j] = 0
+                prev = temp  # 更新左上角
+        return ans
