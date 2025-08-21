@@ -1,0 +1,31 @@
+对每一行 r，我们把矩阵当成一张“直方图”, heights[c] 表示从当前行 r 往上连续的 1 的个数
+
+class Solution:
+    def numSubmat(self, mat: List[List[int]]) -> int:
+        if not mat or not mat[0]:
+            return 0
+        m, n = len(mat), len(mat[0])
+        heights = [0] * n
+        ans = 0
+
+        for r in range(m):
+            # 1) 更新直方图高度
+            for c in range(n):
+                heights[c] = heights[c] + 1 if mat[r][c] == 1 else 0
+
+            # 2) 用单调栈统计以每一列为右边界的子矩阵数量
+            stack = []          # (height, count)
+            curr_sum = 0        # 以当前列为右边界的矩形总数
+            for c in range(n):
+                h = heights[c]
+                count = 1
+                while stack and stack[-1][0] >= h:
+                    prev_h, prev_cnt = stack.pop()
+                    curr_sum -= (prev_h - h) * prev_cnt
+                    count += prev_cnt
+                stack.append((h, count))
+                curr_sum += h
+                ans += curr_sum
+
+        return ans
+        
