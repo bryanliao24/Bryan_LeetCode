@@ -49,22 +49,24 @@ class Solution:
         heights = [0] * n
         ans = 0
 
-        for r in range(m):
-            # 1) 更新直方图高度
-            for c in range(n):
-                heights[c] = heights[c] + 1 if mat[r][c] == 1 else 0
+        for i in range(m):
+            # 1) 更新直方圖高度
+            for j in range(n):
+                heights[j] = heights[j] + 1 if mat[i][j] == 1 else 0
 
-            # 2) 用单调栈统计以每一列为右边界的子矩阵数量
-            stack = []          # (height, count)
-            curr_sum = 0        # 以当前列为右边界的矩形总数
-            for c in range(n):
-                h = heights[c]
-                count = 1
+            # 2) 以本行為底，單調棧計數（每行 O(n)）
+            stack = []      # (height, count)  非降
+            curr_sum = 0    # 以當前列為右邊界的矩形總數
+            for j in range(n):
+                h = heights[j]
+                count = 1   # 至少有一個新後綴（寬=1）
+                # 壓低所有 >= h 的段到高度 h
                 while stack and stack[-1][0] >= h:
                     prev_h, prev_cnt = stack.pop()
                     curr_sum -= (prev_h - h) * prev_cnt
                     count += prev_cnt
                 stack.append((h, count))
+                # 只為新後綴加貢獻（舊後綴已在扣差時改成 h 了）
                 curr_sum += h
                 ans += curr_sum
 
