@@ -1,3 +1,4 @@
+然后看 471
 # 将3[a2[c]]提取成3a2c -> 3*(a+2*(c))
 
 class Solution(object):
