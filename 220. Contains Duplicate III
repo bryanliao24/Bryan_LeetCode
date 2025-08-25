@@ -1,0 +1,29 @@
+bucket: { bucket_id -> 該桶現在的值 }
+一旦同一 bucket 再来第二个值，就已经满足 |nums[i]-nums[j]| ≤ valueDiff，可以立刻 return True，因此没必要在同一 bucket 里堆更多值。
+
+
+class Solution:
+    def containsNearbyAlmostDuplicate(self, nums: List[int], indexDiff: int, valueDiff: int) -> bool:
+        bucket = {}
+        w = valueDiff + 1
+        for i, num in enumerate(nums):
+            bucket_id = num // w   # STEP 1
+
+            # STEP 2: 同桶 ⇒ 值差一定 ≤ valueDiff
+            if bucket_id in bucket:
+                return True
+
+            # STEP 3: 檢查相鄰桶
+            if bucket_id-1 in bucket and abs(bucket[bucket_id-1] - num) <= valueDiff:
+                return True
+            if bucket_id+1 in bucket and abs(bucket[bucket_id+1] - num) <= valueDiff:
+                return True
+            
+            # STEP 4: 放入桶
+            bucket[bucket_id] = num
+            
+            # STEP 5: 維持滑窗大小 ≤ indexDiff
+            if i >= indexDiff:
+                old_bucket_id = nums[i-indexDiff] // w
+                del bucket[old_bucket_id]
+        return False
