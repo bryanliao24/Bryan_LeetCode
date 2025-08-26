@@ -1,0 +1,24 @@
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        res = []
+        q = deque()  # 维护一个“从大到小”的单调队列，里面放的是候选最大值（这里放的是值）
+
+        for idx, num in enumerate(nums):
+            # 1) 入队：为了保持“从大到小”，把比当前 num 小的都弹掉
+            #    这样队首永远是窗口里的最大值候选
+            while q and q[-1] < num:
+                q.pop()
+            q.append(num)
+
+            # 2) 出队（过期）：当窗口长度超过 k 时，最左边那个要被移出窗口。
+            #    如果它正好等于队首（最大值），就把队首弹出（只弹出一个）。
+            #    注意：此处用的是“值==值”的比较，因为本实现存的是值而不是下标。
+            if idx >= k and nums[idx - k] == q[0]:
+                q.popleft()
+
+            # 3) 记录答案：当形成了第一个完整窗口（idx >= k-1）后，
+            #    队首就是当前窗口的最大值
+            if idx >= k - 1:
+                res.append(q[0])
+
+        return res
