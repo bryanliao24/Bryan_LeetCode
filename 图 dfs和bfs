@@ -1,0 +1,48 @@
+    A
+   / \
+  B   C
+  |   |
+  D   E
+   \ /
+    F
+
+
+from collections import deque
+
+# 定义图
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D'],
+    'C': ['E'],
+    'D': ['F'],
+    'E': ['F'],
+    'F': []
+}
+
+def dfs(node, visited, result):
+    if node in visited:
+        return
+    visited.add(node)
+    result.append(node)  
+    for neighbor in graph[node]:
+        dfs(neighbor, visited, result)
+    return result
+
+dfs_result = dfs('A', set(), [])
+print("DFS result:", dfs_result)  # ['A', 'B', 'D', 'F', 'C', 'E']
+
+def bfs(start):
+    visited = set()
+    queue = deque([start])
+    result = []
+    while queue:
+        node = queue.popleft()
+        if node not in visited:
+            visited.add(node)
+            result.append(node)   
+            for neighbor in graph[node]:
+                queue.append(neighbor)
+    return result
+
+bfs_result = bfs('A')
+print("BFS result:", bfs_result)  # ['A', 'B', 'C', 'D', 'E', 'F']
