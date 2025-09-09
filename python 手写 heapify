@@ -1,0 +1,48 @@
+heapify 的作用是把一个 无序数组 转换成一个 堆（heap）
+我们要从 非叶子节点 开始，逐个调用 下沉 (sift-down)，确保每个子树满足堆的性质。
+
+完全二叉树的性质：
+
+- 父节点下标：i
+- 左子节点：2*i + 1
+- 右子节点：2*i + 2
+
+def heapify(arr, n, i):
+    """
+    调整下标 i 处的元素，使得以它为根的子树满足最大堆性质
+    :param arr: 数组
+    :param n: 数组长度
+    :param i: 当前节点下标
+    """
+    largest = i       # 假设当前节点最大
+    left = 2 * i + 1  # 左子节点
+    right = 2 * i + 2 # 右子节点
+
+    # 如果左子节点比当前最大值大
+    if left < n and arr[left] > arr[largest]:
+        largest = left
+
+    # 如果右子节点比当前最大值大
+    if right < n and arr[right] > arr[largest]:
+        largest = right
+
+    # 如果最大值不是当前节点，交换并递归下沉
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        heapify(arr, n, largest)
+
+
+def build_max_heap(arr):
+    n = len(arr)
+    # 从最后一个非叶子节点开始往上调整
+    # 最後一個非葉子節點下標是 n//2 - 1
+    for i in range(n // 2 - 1, -1, -1):
+        heapify(arr, n, i)
+    return arr
+
+
+# 测试
+arr = [3, 9, 2, 1, 4, 5]
+print("原数组:", arr)
+build_max_heap(arr)
+print("最大堆:", arr)
