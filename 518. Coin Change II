@@ -1,0 +1,12 @@
+Coin Change I：问最少要几个硬币。
+Coin Change II：问有多少种不同组合能组成 amount。
+
+def change(self, amount: int, coins: List[int]) -> int:
+      dp = [0] * (amount + 1)
+      dp[0] = 1  # 组成0元的方法数是1：不用硬币
+
+      for coin in coins:          # 先遍历硬币，避免重复计数
+          for j in range(coin, amount + 1):
+              dp[j] += dp[j - coin]
+
+      return dp[amount]
