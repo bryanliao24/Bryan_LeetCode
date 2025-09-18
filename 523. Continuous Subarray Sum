@@ -1,0 +1,32 @@
+# 预放 (0: -1) 是为了处理“从开头开始到结尾整串和是k倍数的”的情况
+class Solution:
+    def checkSubarraySum(self, nums: List[int], k: int) -> bool:
+        n = len(nums)
+        if n < 2:
+            return False
+
+        # 特判：k == 0 时，题意等价于找长度≥2且和为0的子数组。
+        # 在LC原题里 nums 为非负整数，因此必须要有至少两个连续的 0 才能满足。
+        if k == 0:
+            for i in range(n - 1):
+                if nums[i] == 0 and nums[i + 1] == 0:
+                    return True
+            return False
+
+        # 正常情况：前缀和取模 + 首次出现位置
+        remainder_first_idx = {0: -1}  # 余数0在下标-1首次出现（处理从头开始的子数组）
+        prefix = 0
+
+        for i, x in enumerate(nums):
+            prefix += x
+            r = prefix % k  # Python下对正k取模得到[0,k-1]
+
+            if r in remainder_first_idx:
+                # 子数组长度至少2
+                if i - remainder_first_idx[r] >= 2:
+                    return True
+            else:
+                # 只记录“首次出现”的下标，保证形成的子数组尽可能长，从而满足长度>=2
+                remainder_first_idx[r] = i
+
+        return False
