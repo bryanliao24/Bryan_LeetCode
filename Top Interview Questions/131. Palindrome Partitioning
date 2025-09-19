@@ -39,7 +39,6 @@ def palin(s):
 --------------------------------------------------------------------
 
 # <法二> dp
-# dp[i]存的為s 从 0 到 i 的所有回文子字串
 
 class Solution(object):
     def partition(self, s):
@@ -47,17 +46,37 @@ class Solution(object):
         :type s: str
         :rtype: List[List[str]]
         """
-        palin = lambda s : s == s[::-1]
-        dp = [ [] for _ in range(len(s)+1)]
+        n = len(s)
 
-        for i in range(1,len(s)+1):
-            for j in range(i):
-                if palin(s[j:i]): #若s[j:i]為回文 
-                    if len(dp[j]) > 0:
-                        #把dp[j]儲存的所有分割與s[j:i]連線並append到dp[i]中
-                        #dp[j]是储存到当前字母所有可能的方法
-                        for path in dp[j]:
-                            dp[i].append(path+[s[j:i]])
-                    else:
-                        dp[i].append([s[j:i]])
-        return dp[-1]
+        # 1) 预处理：和你 longestPalindrome 用的一样的区间 DP
+        #    dp[l][r] 表示 s[l..r] 是否为回文
+        dp = [[False] * n for _ in range(n)]
+
+        # 单字符必然是回文
+        for i in range(n):
+            dp[i][i] = True
+
+        # 按右端点递增去填表（确保 dp[l+1][r-1] 已经被计算）
+        for r in range(n):
+            for l in range(r + 1):
+                if s[l] == s[r] and (r - l <= 2 or dp[l + 1][r - 1]):
+                    dp[l][r] = True
+
+        # 2) 回溯：用 dp 快速判断回文，枚举所有切分
+        res, path = [], []
+
+        def dfs(start):
+            # 如果已经切到结尾，记录一种方案
+            if start == n:
+                res.append(path[:])
+                return
+            # 尝试以 start 开头的每个 end
+            for end in range(start, n):
+                if dp[start][end]:
+                    path.append(s[start:end + 1])  # 这段是回文，加入当前切分
+                    dfs(end + 1)                   # 继续切剩下的串
+                    path.pop()                     # 回退
+
+        dfs(0)
+        return res
+
