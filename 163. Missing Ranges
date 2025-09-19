@@ -1,6 +1,8 @@
-nums = [0, 1, 3, 50, 75]
-lower = 0
-upper = 95
+#题目大意
+Input: nums = [0, 1, 3, 50, 75], lower = 0 and upper = 99,
+Output: ["2", "4->49", "51->74", "76->99"]
+
+
 ans = []
 i = lower - 1
 v = 0
