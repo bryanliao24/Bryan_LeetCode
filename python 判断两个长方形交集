@@ -1,0 +1,23 @@
+判断两个rectangle是否重叠 
+输入是每个rectangle给定origin的x y坐标以及width和height 
+
+def is_overlapping(rect1, rect2):
+    x1, y1, w1, h1 = rect1
+    x2, y2, w2, h2 = rect2
+
+    # 不重叠的四种情况
+    if x1 + w1 <= x2:  # rect1 在 rect2 左边
+        return False
+    if x2 + w2 <= x1:  # rect2 在 rect1 左边
+        return False
+    if y1 + h1 <= y2:  # rect1 在 rect2 下边
+        return False
+    if y2 + h2 <= y1:  # rect2 在 rect1 下边
+        return False
+
+    return True  # 其他情况必然重叠
+
+
+# 示例
+print(is_overlapping((0, 0, 4, 4), (2, 2, 3, 3)))  # True
+print(is_overlapping((0, 0, 4, 4), (5, 5, 2, 2)))  # False
