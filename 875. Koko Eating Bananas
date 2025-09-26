@@ -1,0 +1,35 @@
+
+class Solution:
+    def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        """
+        思路：在速度区间 [1, max(piles)] 做二分，找“最小可行的 k”。
+        对于某个速度 k，吃完所有香蕉所需的总小时数：
+            hours(k) = sum( ceil(pile / k) for pile in piles )
+        如果 hours(k) <= h，说明 k 足够快（可行），可以尝试更小的速度；
+        否则说明 k 太慢，需要更大的速度。
+        使用 lower_bound 模式的二分，返回最小可行的 k。
+        时间：O(n log max(piles))，空间：O(1)
+        """
+
+        # 二分边界：最慢 1 / 小时，最快不需要超过最大那堆（再快也无意义）
+        left, right = 1, max(piles)
+
+        # 小函数：计算以速度 k 吃完全部需要的小时数
+        # time = sum([math.ceil(i/mid) for i in piles])
+        # 用整数技巧代替 math.ceil(x / k) -> (x + k - 1) // k，避免引入浮点和额外导入
+
+        def hours_needed(k: int) -> int:
+            return sum((p + k - 1) // k for p in piles)
+
+        # lower_bound 模式：区间收缩到单点
+        while left < right:
+            mid = (left + right) // 2
+            if hours_needed(mid) <= h:
+                # mid 可行：尝试更小速度，保留 mid（右边界收缩到 mid）
+                right = mid
+            else:
+                # mid 不可行（太慢）：必须提速
+                left = mid + 1
+
+        # 循环结束时，left == right 即为最小可行解
+        return left
