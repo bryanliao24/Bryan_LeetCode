@@ -1,0 +1,18 @@
+class Solution:
+    def taskSchedulerII(self, tasks: List[int], space: int) -> int:
+        if len(tasks) == 1:
+            return 1
+
+        last = {}      # 记录每种 task 上一次执行的“日子”
+        cur = 1        # 当前天数，从 1 开始
+
+        for v in tasks:
+            if v in last and cur <= last[v] + space:
+                # 还在冷却期，需要跳到最早允许的那天
+                cur = last[v] + space + 1
+
+            # 在 cur 这天执行 v
+            last[v] = cur
+            cur += 1    # 执行完后推进到下一天
+
+        return cur - 1  # cur 被推进到最后执行日的下一天，减 1 返回最后一日
