@@ -1,0 +1,30 @@
+class Solution:
+    def intersectionSizeTwo(self, intervals: List[List[int]]) -> int:
+        intervals.sort(key=lambda x: (x[1], -x[0]))
+        
+        # a: 目前已選集合中的最大值
+        # b: 目前已選集合中的第二大值 (b <= a)
+        a = -1
+        b = -1
+        ans = 0  # 被選點的總數（答案）
+
+        for l, r in intervals:
+            if l <= b:
+                # 情況 A：這個區間裡已經有 >= 2 個點 (b 和 a)
+                # 不用選新點
+                continue
+            elif l > a:
+                # 情況 C：目前沒有任何點在這個區間中
+                # 需要補 2 個：r-1, r
+                b = r - 1
+                a = r
+                ans += 2
+            else:
+                # 情況 B：目前只有一個點在區間中 (只有 a 在 [l, r])
+                # 再補 1 個點：r
+                b = a
+                a = r
+                ans += 1
+        
+        return ans
+        
