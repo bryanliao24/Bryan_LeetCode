@@ -1,0 +1,29 @@
+初始化长度 26（字母表）的空阵列
+记录每个字母的最左最右位置。
+对每个字母区间内的所有不重复字母都是一组答案
+
+class Solution:
+    def countPalindromicSubsequence(self, s: str) -> int:
+        n = len(s)
+        first = [-1] * 26
+        last = [-1] * 26
+        
+        # 记录最左/最右
+        for i, ch in enumerate(s):
+            idx = ord(ch) - ord('a')
+            if first[idx] == -1:
+                first[idx] = i
+            last[idx] = i
+        
+        ans = 0
+        # 枚举两端字符 a
+        for a in range(26):
+            L, R = first[a], last[a]
+            if L == -1 or L == R:
+                continue  # 出现不到2次，不能做两端
+            seen = set()
+            for i in range(L + 1, R):
+                seen.add(s[i])
+            ans += len(seen)
+        
+        return ans
