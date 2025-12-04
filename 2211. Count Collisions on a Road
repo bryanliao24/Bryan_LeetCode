@@ -1,0 +1,27 @@
+去头去尾后，在中间子串中，每一辆会动的车（L 或 R）最终都会刚好参与一次碰撞，
+无论是： 撞上一辆 S，还是
+和对向的车互撞（两辆各记一次）
+
+所以碰撞次数 = 中间子串里所有不是 S 的字符数量
+
+class Solution:
+    def countCollisions(self, directions: str) -> int:
+        
+        left = 0
+        right = len(directions) - 1
+        
+        while left < right:
+            if directions[left] == "L":
+                left += 1
+            elif directions[right] == "R":
+                right -= 1
+            else:
+                break
+        if left == right:return 0
+        cur = directions[left:right+1]
+        ans = 0
+        for i in cur:
+            if i != "S":
+                ans += 1
+        return ans
+            
