@@ -1,0 +1,26 @@
+# 参考 560
+# 前缀和在两个不同位置相同，表示中间那段 subarray 的总和为 0。
+# 因为 pre[i] - pre[j] = 0。
+# 遇到 0 -> -1 
+# 遇到 1 -> +1
+
+
+class Solution:
+    def findMaxLength(self, nums: List[int]) -> int:
+        summap = defaultdict(int)
+        ans = 0
+        pre = 0
+        summap[0] = -1
+
+        for i in range(len(nums)):
+            if nums[i] == 0:
+                pre -= 1
+            else:
+                pre += 1
+
+            if pre in summap:
+                ans = max(ans, i - summap[pre])
+            else:
+                summap[pre] = i
+
+        return ans
