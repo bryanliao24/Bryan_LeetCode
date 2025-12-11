@@ -1,0 +1,47 @@
+Step 1：先掃一遍，記每一 row / col 的：
+
+row_count[x]：這 row 有幾棟樓
+row_min[x]：這 row 最小的 y
+row_max[x]：這 row 最大的 y 
+
+然後同理col
+
+Step 2：再掃一次所有 building (x, y)：
+要有左右 ⇒ row_cnt[x] >= 3 且 row_min[x] < y < row_max[x]
+要有上下 ⇒ col_cnt[y] >= 3 且 col_min[y] < x < col_max[y]
+兩者都成立 ⇒ 這棟樓被覆蓋，答案 +1
+
+def countCoveredBuildings(self, n: int, buildings: List[List[int]]) -> int:
+        rowCount = defaultdict(int)
+        rowMin = {}
+        rowMax = {}
+
+        colCount = defaultdict(int)
+        colMin = {}
+        colMax = {}
+
+        # 第一遍：統計 row/col 的 min/max & count
+        for x, y in buildings:
+            rowCount[x] += 1
+            if x not in rowMin or y < rowMin[x]:
+                rowMin[x] = y
+            if x not in rowMax or y > rowMax[x]:
+                rowMax[x] = y
+            
+            colCount[y] += 1
+            if y not in colMin or x < colMin[y]:
+                colMin[y] = x
+            if y not in colMax or x > colMax[y]:
+                colMax[y] = x
+            
+        ans = 0
+
+        # 第二遍：檢查每一棟是否四面都有
+        for x, y in buildings:
+            rowCovered = rowCount[x] >= 3 and rowMin[x] < y < rowMax[x]
+            colCovered = colCount[y] >= 3 and colMin[y] < x < colMax[y]
+
+            if rowCovered and colCovered:
+                ans += 1
+
+        return ans
